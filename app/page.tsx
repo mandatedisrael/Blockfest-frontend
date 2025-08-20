@@ -10,11 +10,18 @@ import Speakers from "@/components/carousel";
 const HomePage = () => {
   const OPTIONS: EmblaOptionsType = { loop: true }
   const SLIDES = [
-    "/images/img.webp",
-    "/images/img.webp",
-    "/images/img.webp",
-    "/images/img.webp",
-    "/images/img.webp",]
+    {
+      name: "Nduka Blessing",
+      title: "CEO SOLUTIONS",
+      image: "/images/img.webp",
+
+    },
+    {
+      name: "John Smith",
+      title: "CTO INNOVATIONS",
+      image: "/images/img.webp",
+
+    }]
   return (
     <main>
       <section className="relative w-full flex items-center justify-center bg-[url('/images/hero.webp')] bg-cover bg-center bg-no-repeat min-h-[65vh] lg:min-h-screen object-contain ">
@@ -168,7 +175,7 @@ const HomePage = () => {
       </section>
       <section className="flex flex-col items-center justify-center  py-[80px] px-[70px]">
         <h2 className="font-[350px] text-[69.65px] leading-[82px] tracking-[-5%] mb-[50px] text-black">Our Speakers </h2>
-        <Speakers slides={SLIDES} options={OPTIONS} />
+        <Speakers speakers={SLIDES} options={OPTIONS} />
       </section>
 
     </main>
