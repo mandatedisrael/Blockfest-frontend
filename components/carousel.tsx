@@ -7,13 +7,19 @@ import Autoplay from 'embla-carousel-autoplay';
 import Image from 'next/image';
 import { NextButton, PrevButton, usePrevNextButtons } from './carouselbuttons';
 
+type Speaker = {
+  name: string;
+  title: string;
+  image: string;
+};
+
 type PropType = {
-  slides: string[]; // Array of image URLs
+  speakers: Speaker[];
   options?: EmblaOptionsType;
 };
 
 const Speakers: React.FC<PropType> = (props) => {
-  const { slides, options } = props;
+  const { speakers, options } = props;
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay()]);
 
   const onNavButtonClick = useCallback((emblaApi: EmblaCarouselType) => {
@@ -36,32 +42,60 @@ const Speakers: React.FC<PropType> = (props) => {
   } = usePrevNextButtons(emblaApi, onNavButtonClick);
 
   return (
-    <section className="embla w-full flex items-end  justify-center flex-col">
-      <div className="overflow-hidden" ref={emblaRef}>
-        <div className="flex touch-pan-y touch-pinch-zoom -ml-[1.5rem]">
-          {slides.map((src, index) => (
-            <div
-              className="transform-gpu flex-[0_0_70%]  md:min-w-0 xl:min-w-0 min-w-full pl-[1.5rem] flex justify-center items-center"
-              // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-              key={index}
-            >
-              <Image
-                src={src}
-                alt={`Brand ${index + 1}`}
-                width={550}
-                height={400}
-                priority
-                className="w-auto h-auto aspect-[550/400] rounded-md"
-              />
-            </div>
-          ))}
-        </div>
+    <section className="embla w-full flex items-center justify-center flex-col relative px-4 lg:px-20">
+      {/* Navigation Buttons - Positioned absolutely */}
+      <div className="absolute left-4 lg:left-8 top-1/2 transform -translate-y-1/2 z-10">
+        <PrevButton
+          onClick={onPrevButtonClick}
+          disabled={prevBtnDisabled}
+          className="w-[100px] h-[100px] bg-[#D9D9D9] hover:bg-gray-300 rounded-full flex items-center justify-center  transition-colors duration-200"
+        />
       </div>
 
-      <div className="grid grid-cols-[auto_1fr] justify-between gap-[1.2rem] mt-[1.8rem]">
-        <div className="grid grid-cols-2 gap-[0.6rem] items-center">
-          <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
-          <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
+      <div className="absolute right-4 lg:right-8 top-1/2 transform -translate-y-1/2 z-10">
+        <NextButton
+          onClick={onNextButtonClick}
+          disabled={nextBtnDisabled}
+          className="w-[100px] h-[100px] bg-[#D9D9D9] hover:bg-gray-300 rounded-full flex items-center justify-center transition-colors duration-200"
+        />
+      </div>
+
+      {/* Carousel Container */}
+      <div className="overflow-hidden w-full max-w-5xl mx-auto" ref={emblaRef}>
+        <div className="flex touch-pan-y touch-pinch-zoom">
+          {speakers.map((speaker, index) => (
+            <div
+              className="transform-gpu flex-[0_0_100%] min-w-0 flex justify-center items-center px-4"
+              key={`${speaker.name}-${index}`}
+            >
+              {/* Speaker Card */}
+              <div className="bg-gradient-to-b from-[#0F377E] to-[#1B64E4] rounded-3xl p-6 lg:p-8 w-full max-w-[839px] mx-auto">
+                <div className="flex items-center justify-between gap-6">
+                  {/* Text Content */}
+                  <div className="text-white flex-1 basis-[60%]">
+                    <h2 className="text-2xl lg:text-[57.65px] lg:leading-[68.05px] font-[350px] mb-2 uppercase">
+                      {speaker.name}
+                    </h2>
+                    <p className="text-[#E9EBF8] font-light text-base lg:text-[26.49px] lg:leading-[32px] italic">
+                      {speaker.title}
+                    </p>
+                  </div>
+
+                  {/* Speaker Image */}
+                  <div className="w-28 h-28 lg:w-80 lg:h-80 basis-[40%] rounded-2xl overflow-hidden flex-shrink-0">
+                    <Image
+                      src={speaker.image}
+                      alt={speaker.name}
+                      width={340}
+                      height={322}
+                      priority
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
