@@ -41,7 +41,7 @@ const Navbar = () => {
         alt="Logo"
         width={140}
         height={38}
-        className="w-[140px] h-[38px] aspect-[140/38]"
+        className="xl:w-[140px] xl:h-[38px] xl:aspect-[140/38] aspect-[124/24] w-[124px] h-[24px]"
       />
       <nav className="hidden md:flex items-center gap-x-[28px]">
         {navbarMenu.map((item) => (
