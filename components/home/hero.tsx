@@ -8,37 +8,37 @@ export function HeroSection() {
   return (
     <section className="relative w-full flex items-center justify-center bg-[url('/images/hero.webp')] bg-cover bg-center bg-no-repeat min-h-[65vh] lg:min-h-screen object-contain ">
       <div className="flex items-center flex-col space-y-4  text-center text-black">
-        <p className="font-medium text-base xl:text-[22.3px] uppercase bg-[#F2CB45] px-7 py-5 xl:px-[35px] xl:py-[26px] rounded-[10.71px]">
+        <p className="font-medium text-base lg:text-[22.3px] uppercase bg-[#F2CB45] px-7 py-5 lg:px-[35px] lg:py-[26px] rounded-[10.71px] mt-10 lg:mt-0">
           welcome to blockfest 2025
         </p>
-        <p className="text-5xl leading-14 xl:text-[69.65px] xl:leading-[82px] tracking-[-5%] font-[350px]">
+        <p className="text-5xl leading-14 lg:text-[69.65px] lg:leading-[82px] tracking-[-5%] font-[350px]">
           Africa&apos;s biggest web<span className="text-[#F2CB45]">3</span> {""}
           festival
         </p>
-        <div className="flex items-center justify-center space-x-2 text-xl xl:text-[28px] font-medium text-[#1A63E3]">
+        <div className="flex items-center justify-center space-x-2 text-xl lg:text-[28px] font-medium text-[#1A63E3]">
           <p>BUIDL</p>
           <GoDotFill />
           <p>BRIDGE</p>
           <GoDotFill />
           <p>BECOME</p>
         </div>
-        <div className="flex items-center justify-center space-x-8 text-sm xl:text-base font-medium text-black">
-          <div className="flex items-center space-x-1 xl:space-x-2 uppercase ">
+        <div className="flex items-center justify-center space-x-8 text-sm lg:text-base font-medium text-black">
+          <div className="flex items-center space-x-1 lg:space-x-2 uppercase ">
             <FaLocationDot className="text-[#F34C73]" />
             <span>lagos,nigeria</span>
           </div>
-          <div className="flex items-center space-x-1 xl:space-x-2 uppercase">
+          <div className="flex items-center space-x-1 lg:space-x-2 uppercase">
             <IoCalendarClearOutline className="text-[#F34C73]" />
             <span>October 11th, 2025</span>
           </div>
         </div>
-        <div className="flex xl:flex-row flex-col items-center justify-center gap-4 mt-5">
-          <Button className="font-semibold text-lg xl:text-[22px] rounded-[13px] p-[34px] w-full xl:w-fit">
+        <div className="flex md:flex-row flex-col items-center justify-center gap-4 mt-5">
+          <Button className="font-semibold text-lg lg:text-[22px] rounded-[13px] p-[34px] w-full md:w-fit">
             Register Now
           </Button>
           <Button
             variant={"outline"}
-            className="font-semibold text-lg xl:text-[22px] rounded-[13px] p-[34px] w-full xl:w-fit"
+            className="font-semibold text-lg lg:text-[22px] rounded-[13px] p-[34px] w-full md:w-fit"
           >
             Become a sponsor
           </Button>

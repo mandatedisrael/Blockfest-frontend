@@ -44,7 +44,7 @@ const Speakers: React.FC<PropType> = (props) => {
   return (
     <section className="embla w-full flex items-center justify-center flex-col relative px-0 lg:px-20">
       {/* Navigation Buttons - Positioned absolutely */}
-      <div className="hidden xl:block">
+      <div className="hidden lg:block">
         <div className="absolute left-4 lg:left-8 top-1/2 transform -translate-y-1/2 z-10">
           <PrevButton
             onClick={onPrevButtonClick}
@@ -62,7 +62,7 @@ const Speakers: React.FC<PropType> = (props) => {
         </div>
       </div>
       {/* Mobile Navigation Buttons - Below the card */}
-      <div className="block xl:hidden w-full my-4 px-5">
+      <div className="block lg:hidden w-full my-4 px-5">
         <div className="flex justify-end gap-3">
           <PrevButton
             onClick={onPrevButtonClick}
@@ -102,7 +102,7 @@ const Speakers: React.FC<PropType> = (props) => {
                   </div>
 
                   {/* Speaker Image */}
-                  <div className="w-28 h-28 lg:w-80 lg:h-80 basis-[40%] rounded-2xl overflow-hidden flex-shrink-0">
+                  <div className="w-40 h-40 lg:w-80 lg:h-80 basis-[40%] rounded-2xl overflow-hidden flex-shrink-0">
                     <Image
                       src={speaker.image}
                       alt={speaker.name}
