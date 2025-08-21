@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "../ui/button";
 import React from "react";
 
@@ -33,12 +34,12 @@ export function PartnersSection() {
           <Button className="font-semibold text-lg xl:text-[22px] rounded-[13px] p-[34px] md:w-fit w-full border border-[#3D7BE8] bg-[#3D7BE8] text-white">
             Register Now
           </Button>
-          <Button
-            variant={"secondary"}
-            className="font-semibold text-lg xl:text-[22px] rounded-[13px] p-[34px] text-white border border-white md:w-fit w-full"
+          <Link
+            href="mailto:partnership@blockfestafrica.com"
+            className="font-semibold text-black text-lg lg:text-[22px] rounded-[13px] p-[18px]  w-full md:w-fit  border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50"
           >
             Become a sponsor
-          </Button>
+          </Link>
         </div>
       </div>
     </section>
