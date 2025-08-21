@@ -21,7 +21,7 @@ export function CountdownGallerySection() {
           </div>
           <div className="bg-gray-300 rounded-[24px] h-[300px] lg:h-[446px] flex-1 lg:basis-[60%] overflow-hidden">
             <Image
-              src="/images/img2.webp"
+              src="/images/img7.webp"
               alt=""
               width={700}
               height={446}

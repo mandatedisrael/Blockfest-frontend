@@ -3,6 +3,7 @@ import { GoDotFill } from "react-icons/go";
 import { IoCalendarClearOutline } from "react-icons/io5";
 import { Button } from "../ui/button";
 import React from "react";
+import Link from "next/link";
 
 export function HeroSection() {
   return (
@@ -36,12 +37,12 @@ export function HeroSection() {
           <Button className="font-semibold text-lg lg:text-[22px] rounded-[13px] p-[34px] w-full md:w-fit">
             Register Now
           </Button>
-          <Button
-            variant={"outline"}
-            className="font-semibold text-lg lg:text-[22px] rounded-[13px] p-[34px] w-full md:w-fit"
+          <Link
+            href="mailto:partnership@blockfestafrica.com"
+            className="font-semibold text-lg lg:text-[22px] rounded-[13px] p-[18px]  w-full md:w-fit  border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 text-black"
           >
             Become a sponsor
-          </Button>
+          </Link>
         </div>
       </div>
     </section>
