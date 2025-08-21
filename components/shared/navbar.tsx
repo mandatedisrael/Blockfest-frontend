@@ -3,7 +3,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import { Menu } from "@/types";
 import Link from "next/link";
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
+import { Sheet, SheetClose, SheetContent, SheetTitle, SheetTrigger } from "../ui/sheet";
 import { CiMenuBurger } from "react-icons/ci";
 import { AiOutlineClose } from "react-icons/ai";
 import localFont from "next/font/local";
@@ -37,7 +37,7 @@ const Navbar = () => {
       className={`${Gotham.className} bg-black px-5 lg:px-[70px] py-5 lg:py-10 flex items-center justify-between`}
     >
       <Image
-        src="/images/Logo.svg"
+        src="/images/logo.svg"
         alt="Logo"
         width={140}
         height={38}
