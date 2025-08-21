@@ -26,28 +26,28 @@ function FeaturesComp() {
     },
     {
       image: "/images/features.webp",
-      header: "Africa's Web3 SuperBowl",
-      text: "Blockchain Africa is not just an event – it's a movement. When Africa throws a party, the world tunes in. Get ready for Web3 like never before.",
+      header: "Live Panels & Masterclasses",
+      text: "Hear from the continent's boldest builders, creators, and thinkers. Dive into sessions that go beyond talk — straight into action."
     },
     {
       image: "/images/features.webp",
-      header: "Africa's Web3 SuperBowl",
-      text: "Blockchain Africa is not just an event – it's a movement. When Africa throws a party, the world tunes in. Get ready for Web3 like never before.",
+      header: "Founders, Creators & Communities",
+      text: "From your first NFT to your next big Web3 project, BLOCKFEST connects the minds shaping Africa’s digital frontier."
     },
     {
       image: "/images/features.webp",
-      header: "Africa's Web3 SuperBowl",
-      text: "Blockchain Africa is not just an event – it's a movement. When Africa throws a party, the world tunes in. Get ready for Web3 like never before.",
+      header: "BUIDL • BRIDGE • BECOME",
+      text: "These aren't just themes , they're a roadmap to unlocking Africa's blockchain potential."
     },
     {
       image: "/images/features.webp",
-      header: "Africa's Web3 SuperBowl",
-      text: "Blockchain Africa is not just an event – it's a movement. When Africa throws a party, the world tunes in. Get ready for Web3 like never before.",
+      header: "Your Web3 Journey Starts Here",
+     text:" Whether you're a curious newcomer or a seasoned pro, BLOCKFEST is your gateway to the future of Africa's digital economy."
     },
     {
       image: "/images/features.webp",
-      header: "Africa's Web3 SuperBowl",
-      text: "Blockchain Africa is not just an event – it's a movement. When Africa throws a party, the world tunes in. Get ready for Web3 like never before.",
+      header: "For Builders, Dreamers & Doers",
+      text: "Web3 isn’t for someday. It’s now. Join a community of disruptors turning vision into products, code, and movements."
     },
   ];
 
