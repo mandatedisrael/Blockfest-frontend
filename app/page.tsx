@@ -38,7 +38,7 @@ export const metadata: Metadata = {
       "Join builders, founders, investors, and enthusiasts shaping the future of Web3 in Africa. Register now!",
     images: [
       {
-        url: "/images/og-home.jpg",
+        url: "/images/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Blockfest Africa 2025 Conference",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     title: "Blockfest Africa 2025 - Africa's Premier Blockchain Conference",
     description:
       "Join builders, founders, investors, and enthusiasts shaping the future of Web3 in Africa. Register now!",
-    images: ["/images/twitter-home.jpg"],
+    images: ["/images/twitter-image.jpg"],
   },
 };
 

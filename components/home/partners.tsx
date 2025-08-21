@@ -14,14 +14,49 @@ export function PartnersSection() {
         <h2 className="font-medium text-5xl lg:text-[69.65px] lg:leading-[82px] tracking-[-5%] md:my-[25px] lg:my-[50px] text-center text-white">
           Our Partners
         </h2>
-        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 w-full mt-[30px] place-items-center">
+
+        {/* Revealing Soon Design */}
+        <div className="w-full max-w-5xl mx-auto">
+          <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 lg:p-12 text-center border border-white/20">
+            <div className="mb-6">
+              <div className="w-20 h-20 lg:w-24 lg:h-24 mx-auto mb-6 bg-[#F2CB45]/20 rounded-full flex items-center justify-center">
+                <div className="text-3xl lg:text-4xl">🤝</div>
+              </div>
+              <h3 className="text-2xl lg:text-4xl font-bold mb-4 text-white">
+                <span className="text-[#F2CB45]">Revealing Soon!</span>
+              </h3>
+              <p className="text-base lg:text-lg text-white/90 max-w-3xl mx-auto leading-relaxed">
+                We&apos;re partnering with Africa&apos;s leading blockchain
+                companies, innovative startups, and global Web3 organizations to
+                bring you an unprecedented festival experience.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
+              {[...Array(8)].map((_, index) => (
+                <div
+                  key={index}
+                  className="bg-white/5 rounded-2xl p-6 h-20 flex items-center justify-center border border-white/10 hover:bg-white/10 transition-all duration-300"
+                >
+                  <div
+                    className="w-3 h-3 bg-[#F2CB45] rounded-full animate-pulse"
+                    style={{ animationDelay: `${index * 200}ms` }}
+                  ></div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Original partners grid commented out */}
+        {/* <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 w-full mt-[30px] place-items-center">
           {[...Array(6)].map((_, index) => (
             <div
               key={index}
               className=" h-[50px] w-[50px] md:aspect-[195/116] bg-[#D9D9D9] 2xl:w-[195px] 2xl:h-[116px] 2xl:aspect-[195/116] xl:w-[120px] xl:h-[80px] md:rounded-[16px] rounded-full flex items-center justify-center"
             />
           ))}
-        </div>
+        </div> */}
       </div>
 
       <div className="flex flex-col items-center justify-center space-y-5 mt-12.5 lg:mt-[110px] text-white text-center">
