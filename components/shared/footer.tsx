@@ -35,8 +35,8 @@ const footerMenu: Menu[] = [
 
 const Footer = () => {
   return (
-    <footer className="bg-black px-4 py-10 pt-14 xl:p-[70px] flex xl:flex-row flex-col gap-y-10 xl:items-end justify-between">
-      <div className="order-last xl:order-first">
+    <footer className="bg-black px-4 py-10 pt-14 xl:p-[70px] flex md:flex-row flex-col gap-y-10 md:items-end justify-between">
+      <div className="order-last md:order-first">
         <Image
           src="/images/footer-logo.svg"
           alt="Logo"
@@ -46,9 +46,9 @@ const Footer = () => {
         />
       </div>
 
-      <div className="flex flex-col xl:flex-row xl:items-end xl:gap-x-12.5 gap-y-10">
+      <div className="flex flex-col md:flex-row md:items-end md:gap-x-12.5 gap-y-10">
         {/* Navigation Menu */}
-        <nav className="grid grid-cols-1 xl:grid-cols-3 xl:gap-x-12.5 gap-y-6">
+        <nav className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 md:gap-x-12.5 gap-y-6">
           {footerMenu.map((item) => (
             <Link
               key={item.title}
@@ -76,7 +76,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="hidden xl:block">
+      <div className="hidden md:block">
         <Button
           type="button"
           variant="ghost"
