@@ -4,7 +4,7 @@ import React from "react";
 
 export function CountdownGallerySection() {
   return (
-    <section className="flex flex-col items-center justify-center px-5 py-10 xl:py-[80px] xl:px-[70px]">
+    <section className="flex flex-col items-center justify-center px-5 py-20 xl:py-[80px] xl:px-[70px]">
       <Countdown targetDate={"2025-10-11T23:59:59"} />
 
       <div className="flex flex-col gap-4 w-full mt-10 xl:mt-[80px]">
