@@ -61,7 +61,6 @@ const Speakers: React.FC<PropType> = (props) => {
           />
         </div>
       </div>
-   
 
       {/* Carousel Container */}
       <div
@@ -91,9 +90,10 @@ const Speakers: React.FC<PropType> = (props) => {
                   <div className="w-40 h-40 lg:w-80 lg:h-80 basis-[40%] rounded-2xl overflow-hidden flex-shrink-0">
                     <Image
                       src={speaker.image}
-                      alt={speaker.name}
+                      alt={`${speaker.name} - ${speaker.title}`}
                       width={340}
                       height={322}
+                      sizes="(max-width: 768px) 160px, (max-width: 1024px) 320px, 340px"
                       priority
                       className="w-full h-full object-cover"
                     />

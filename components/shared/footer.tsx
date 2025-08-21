@@ -72,9 +72,11 @@ const Footer = () => {
       <div className="order-last md:order-first">
         <Image
           src="/images/footer-logo.svg"
-          alt="Logo"
+          alt="Blockfest Africa Footer Logo"
           width={150}
           height={49}
+          sizes="(max-width: 768px) 124px, 150px"
+          loading="lazy"
           className="xl:w-[150px] w-[124px] h-[42px] xl:h-[49px] aspect-[124/42] xl:aspect-[150/49]"
         />
       </div>
@@ -130,7 +132,20 @@ const Footer = () => {
         <Button
           type="button"
           variant="ghost"
-          onClick={() => toast("Registration is coming soon 🚀")}
+          onClick={() =>
+            toast("� Registration is coming soon!", {
+              description: "Stay tuned for the biggest Web3 event in Africa",
+              style: {
+                background: "linear-gradient(145deg, #000000 0%, #1A3461 100%)",
+                border: "1px solid #F2CB45",
+                color: "#FFFFFF",
+                borderRadius: "10px",
+                backdropFilter: "blur(10px)",
+              },
+              className: "font-medium text-base",
+              duration: 4500,
+            })
+          }
           className="text-white border-2 px-[38px] py-5 text-lg font-semibold cursor-pointer rounded-[12px]"
         >
           Register

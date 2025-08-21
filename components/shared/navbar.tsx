@@ -27,15 +27,20 @@ const scrollToSection = (id: string) => {
 };
 
 const Navbar = () => {
+  const contactEmail =
+    process.env.NEXT_PUBLIC_CONTACT_EMAIL || "partnership@blockfestafrica.com";
+
   return (
     <div
       className={`${Gotham.className} bg-black px-5 lg:px-[70px] py-5 lg:py-10 flex items-center justify-between`}
     >
       <Image
         src="/images/logo.svg"
-        alt="Logo"
+        alt="Blockfest Africa Logo"
         width={140}
         height={38}
+        sizes="(max-width: 768px) 124px, 140px"
+        priority
         className="xl:w-[140px] xl:h-[38px] xl:aspect-[140/38] aspect-[124/24] w-[124px] h-[24px] "
       />
       <nav className="hidden md:flex items-center gap-x-[28px]">
@@ -51,7 +56,7 @@ const Navbar = () => {
 
         {/* Contact mailto link */}
         <Link
-          href="mailto:partnership@blockfestafrica.com"
+          href={`mailto:${contactEmail}`}
           className="text-base font-normal text-[#A4A4A4] hover:text-white transition-colors duration-300 ease-in-out"
         >
           Contact
@@ -60,7 +65,7 @@ const Navbar = () => {
 
       <div className="flex items-center gap-x-5">
         <Link
-          href="mailto:partnership@blockfestafrica.com"
+          href={`mailto:${contactEmail}`}
           className="md:p-5 text-base font-medium text-white w-fit p-3 bg-[#3D7BE8]  shadow-xs hover:bg-[#6597ED] h-9 px-5 py-2 flex items-center justify-center rounded-md transition-colors duration-300 ease-in-out"
         >
           Sponsor
@@ -81,6 +86,9 @@ const Navbar = () => {
 };
 
 const MobileMenu = () => {
+  const contactEmail =
+    process.env.NEXT_PUBLIC_CONTACT_EMAIL || "partnership@blockfestafrica.com";
+
   return (
     <div
       className={`${Gotham.className} px-6 py-8 flex flex-col h-full bg-black`}
@@ -110,7 +118,7 @@ const MobileMenu = () => {
         {/* Contact mailto link in mobile */}
         <SheetClose asChild>
           <a
-            href="mailto:user@gmail.com"
+            href={`mailto:${contactEmail}`}
             className="text-lg font-medium text-[#A4A4A4] hover:text-white hover:underline transition w-fit"
           >
             Contact

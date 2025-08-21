@@ -12,9 +12,10 @@ export function CountdownGallerySection() {
           <div className="bg-gray-300 rounded-[24px] h-[300px] lg:h-[446px] flex-1 lg:basis-[40%] overflow-hidden">
             <Image
               src="/images/img4.webp"
-              alt=""
+              alt="Blockfest Africa event gallery image"
               width={500}
               height={446}
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 40vw, 500px"
               priority
               className="w-full h-full object-cover rounded-[24px]"
             />
@@ -22,9 +23,10 @@ export function CountdownGallerySection() {
           <div className="bg-gray-300 rounded-[24px] h-[300px] lg:h-[446px] flex-1 lg:basis-[60%] overflow-hidden">
             <Image
               src="/images/img7.webp"
-              alt=""
+              alt="Blockfest Africa networking event"
               width={700}
               height={446}
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 60vw, 700px"
               priority
               className="w-full h-full object-cover rounded-[24px]"
             />
@@ -35,20 +37,22 @@ export function CountdownGallerySection() {
           <div className="bg-gray-300 rounded-[24px] h-[300px] lg:h-[446px] flex-1 lg:basis-[60%] overflow-hidden">
             <Image
               src="/images/img-3.webp"
-              alt=""
+              alt="Blockfest Africa conference speakers"
               width={700}
               height={446}
-              priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 60vw, 700px"
+              loading="lazy"
               className="w-full h-full object-cover rounded-[24px]"
             />
           </div>
           <div className="bg-gray-300 rounded-[24px] h-[300px] lg:h-[446px] flex-1 lg:basis-[40%] overflow-hidden">
             <Image
               src="/images/img1.webp"
-              alt=""
+              alt="Blockfest Africa community gathering"
               width={500}
               height={446}
-              priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 40vw, 500px"
+              loading="lazy"
               className="w-full h-full object-cover rounded-[24px]"
             />
           </div>

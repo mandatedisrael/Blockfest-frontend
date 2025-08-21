@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { FaLocationDot } from "react-icons/fa6";
 import { GoDotFill } from "react-icons/go";
 import { IoCalendarClearOutline } from "react-icons/io5";
@@ -8,14 +8,21 @@ import Link from "next/link";
 import { toast } from "sonner";
 
 export function HeroSection() {
+  const contactEmail =
+    process.env.NEXT_PUBLIC_CONTACT_EMAIL || "partnership@blockfestafrica.com";
+
   return (
-    <section className="relative w-full flex items-center justify-center bg-[url('/images/hero.webp')] bg-cover bg-center bg-no-repeat min-h-[65vh] 2xl:min-h-[65vh] xl:min-h-screen md:min-h-screen lg:min-h-screen object-contain  " id="home">
+    <section
+      className="relative w-full flex items-center justify-center bg-[url('/images/hero.webp')] bg-cover bg-center bg-no-repeat min-h-[65vh] 2xl:min-h-[65vh] xl:min-h-screen md:min-h-screen lg:min-h-screen object-contain  "
+      id="home"
+    >
       <div className="flex items-center flex-col space-y-4  text-center text-black">
         <p className="font-medium text-base lg:text-[22.3px] uppercase bg-[#F2CB45] px-7 py-5 lg:px-[35px] lg:py-[26px] rounded-[10.71px] mt-10 lg:mt-0">
           welcome to blockfest 2025
         </p>
         <p className="text-5xl leading-14 lg:text-[69.65px] lg:leading-[82px] tracking-[-5%] font-[350px]">
-          Africa&apos;s biggest web<span className="text-[#F2CB45]">3</span> {""}
+          Africa&apos;s biggest web<span className="text-[#F2CB45]">3</span>{" "}
+          {""}
           festival
         </p>
         <div className="flex items-center justify-center space-x-2 text-xl lg:text-[28px] font-medium text-[#1A63E3]">
@@ -38,12 +45,31 @@ export function HeroSection() {
         <div className="flex md:flex-row flex-col items-center justify-center gap-4 mt-5 mb-10 lg:mb-0">
           <Button
             className="font-semibold text-lg lg:text-[22px] rounded-[13px] p-[34px] w-full md:w-fit"
-            onClick={() => toast("Registration is coming soon 🚀")}
+            onClick={() =>
+              toast("🚀 Registration is coming soon!", {
+                // description: "Africa's biggest Web3 festival awaits you",
+                style: {
+                  background:
+                    "linear-gradient(145deg, #FFFFFF 0%, #F8FAFC 100%)",
+                  border: "3px solid #1B64E4",
+                  color: "#000000",
+                  borderRadius: "16px",
+                  boxShadow:
+                    "0 20px 40px rgba(27, 100, 228, 0.4), 0 6px 20px rgba(0, 0, 0, 0.15)",
+                  fontWeight: "700",
+                  backdropFilter: "blur(8px)",
+                  transform: "scale(1.02)",
+                },
+                className:
+                  "font-extrabold text-lg [&>div]:text-black [&>div>div]:text-gray-700",
+                duration: 6000,
+              })
+            }
           >
             Register Now
           </Button>
           <Link
-            href="mailto:partnership@blockfestafrica.com"
+            href={`mailto:${contactEmail}`}
             className="font-semibold text-lg lg:text-[22px] rounded-[13px] p-[18px]  w-full md:w-fit  border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 text-black"
           >
             Become a sponsor
