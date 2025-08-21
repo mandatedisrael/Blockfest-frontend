@@ -1,9 +1,11 @@
+"use client"
 import { FaLocationDot } from "react-icons/fa6";
 import { GoDotFill } from "react-icons/go";
 import { IoCalendarClearOutline } from "react-icons/io5";
 import { Button } from "../ui/button";
 import React from "react";
 import Link from "next/link";
+import { toast } from "sonner";
 
 export function HeroSection() {
   return (
@@ -34,7 +36,10 @@ export function HeroSection() {
           </div>
         </div>
         <div className="flex md:flex-row flex-col items-center justify-center gap-4 mt-5 mb-10 lg:mb-0">
-          <Button className="font-semibold text-lg lg:text-[22px] rounded-[13px] p-[34px] w-full md:w-fit">
+          <Button
+            className="font-semibold text-lg lg:text-[22px] rounded-[13px] p-[34px] w-full md:w-fit"
+            onClick={() => toast("Registration is coming soon 🚀")}
+          >
             Register Now
           </Button>
           <Link

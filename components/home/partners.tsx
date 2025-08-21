@@ -1,6 +1,8 @@
+"use client"
 import Link from "next/link";
 import { Button } from "../ui/button";
 import React from "react";
+import { toast } from "sonner";
 
 export function PartnersSection() {
   return (
@@ -31,7 +33,8 @@ export function PartnersSection() {
         </p>
 
         <div className="flex md:flex-row flex-col gap-y-4 items-center justify-center gap-x-4 mt-[25px] lg:mt-[50px]">
-          <Button className="font-semibold text-lg xl:text-[22px] rounded-[13px] p-[34px] md:w-fit w-full border border-[#3D7BE8] bg-[#3D7BE8] text-white">
+          <Button className="font-semibold text-lg xl:text-[22px] rounded-[13px] p-[34px] md:w-fit w-full border border-[#3D7BE8] bg-[#3D7BE8] text-white" onClick={() => toast("Registration is coming soon 🚀")}
+>
             Register Now
           </Button>
           <Link

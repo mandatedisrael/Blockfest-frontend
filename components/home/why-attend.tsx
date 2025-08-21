@@ -20,32 +20,32 @@ export function WhyAttendSection() {
 function FeaturesComp() {
   const categories = [
     {
-      image: "/images/features.webp",
+      image: "/images/super.webp",
       header: "Africa's Web3 SuperBowl",
       text: "Blockchain Africa is not just an event – it's a movement. When Africa throws a party, the world tunes in. Get ready for Web3 like never before.",
     },
     {
-      image: "/images/features.webp",
+      image: "/images/img2.webp",
       header: "Live Panels & Masterclasses",
       text: "Hear from the continent's boldest builders, creators, and thinkers. Dive into sessions that go beyond talk — straight into action."
     },
     {
-      image: "/images/features.webp",
+      image: "/images/founders.webp",
       header: "Founders, Creators & Communities",
       text: "From your first NFT to your next big Web3 project, BLOCKFEST connects the minds shaping Africa’s digital frontier."
     },
     {
-      image: "/images/features.webp",
+      image: "/images/become.webp",
       header: "Buidl • Bridge • Become",
       text: "These aren't just themes , they're a roadmap to unlocking Africa's blockchain potential."
     },
     {
-      image: "/images/features.webp",
+      image: "/images/starts.webp",
       header: "Your Web3 Journey Starts Here",
       text: " Whether you're a curious newcomer or a seasoned pro, BLOCKFEST is your gateway to the future of Africa's digital economy."
     },
     {
-      image: "/images/features.webp",
+      image: "/images/builders.webp",
       header: "For Builders, Dreamers & Doers",
       text: "Web3 isn’t for someday. It’s now. Join a community of disruptors turning vision into products, code, and movements."
     },
@@ -60,7 +60,7 @@ function FeaturesComp() {
             className="flex items-center bg-white rounded-[20px] shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
             {/* Image Section */}
-            <div className="basis-full h-full md:basis-[40%] hidden md:flex  overflow-hidden rounded-[20px] flex-shrink-0">
+            <div className="basis-full md:h-[243px] h-full md:basis-[40%] hidden md:flex  overflow-hidden rounded-[20px] flex-shrink-0">
               <Image
                 src={category.image}
                 alt={category.header}
