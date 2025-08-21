@@ -2,6 +2,11 @@
 
 import { useEffect } from "react";
 
+// Extend PerformanceEntry to include optional value property for web vitals
+interface PerformanceEntryWithValue extends PerformanceEntry {
+  value?: number;
+}
+
 export function PerformanceMonitor() {
   useEffect(() => {
     // Only run in production
@@ -13,10 +18,11 @@ export function PerformanceMonitor() {
         for (const entry of list.getEntries()) {
           // Log performance metrics
           if (typeof window !== "undefined" && window.gtag) {
+            const entryWithValue = entry as PerformanceEntryWithValue;
             window.gtag("event", "web_vital", {
               event_category: "Web Vitals",
               event_label: entry.name,
-              value: Math.round((entry as any).value || entry.duration || 0),
+              value: Math.round(entryWithValue.value || entry.duration || 0),
               non_interaction: true,
             });
           }
