@@ -8,8 +8,8 @@ const montserrat = Montserrat({
 });
 export function WhyAttendSection() {
   return (
-    <section className="flex flex-col items-center justify-center px-5 py-20 xl:py-[80px] xl:px-[70px] bg-gradient-to-b from-[#1A3461] to-[#005DFF]">
-      <h2 className="font-[350px] text-5xl xl:text-[69.65px] xl:leading-[82px] tracking-[-5%] my-[25px] xl:my-[50px] text-white">
+    <section className="flex flex-col items-center justify-center px-5 py-20 lg:py-[80px] lg:px-[70px] bg-gradient-to-b from-[#1A3461] to-[#005DFF]">
+      <h2 className="font-[350px] text-5xl lg:text-[69.65px] lg:leading-[82px] tracking-[-5%] my-[25px] lg:my-[50px] text-white">
         Why Attend<span className="text-[#F2CB45]">?</span>
       </h2>
       <FeaturesComp />
@@ -53,7 +53,7 @@ function FeaturesComp() {
 
   return (
     <div className="">
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {categories.map((category, index) => (
           <div
             key={`${category.header}-${index}`}

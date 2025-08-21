@@ -34,7 +34,7 @@ const navbarMenu: Menu[] = [
 const Navbar = () => {
   return (
     <div
-      className={`${Gotham.className} bg-black px-5 xl:px-[70px] py-5 xl:py-10 flex items-center justify-between`}
+      className={`${Gotham.className} bg-black px-5 lg:px-[70px] py-5 lg:py-10 flex items-center justify-between`}
     >
       <Image
         src="/images/Logo.svg"
