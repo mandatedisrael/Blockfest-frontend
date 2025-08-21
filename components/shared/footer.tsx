@@ -47,6 +47,7 @@ const Footer = () => {
   return (
     <footer
       className={`${Gotham.className} bg-black px-5 py-10 pt-14 lg:p-[70px] flex md:flex-row flex-col gap-y-10 md:items-end justify-between`}
+      id="contact"
     >
       <div className="order-last md:order-first">
         <Image

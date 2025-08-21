@@ -15,19 +15,19 @@ const Gotham = localFont({
 const navbarMenu: Menu[] = [
   {
     title: "Home",
-    path: "/",
+    path: "#home",
   },
   {
     title: "About",
-    path: "/",
+    path: "#about",
   },
   {
     title: "Speakers",
-    path: "/",
+    path: "#speakers",
   },
   {
     title: "Contact",
-    path: "/",
+    path: "#contact",
   },
 ];
 
