@@ -61,21 +61,7 @@ const Speakers: React.FC<PropType> = (props) => {
           />
         </div>
       </div>
-      {/* Mobile Navigation Buttons - Below the card */}
-      <div className="block lg:hidden w-full my-4 px-5">
-        <div className="flex justify-end gap-3">
-          <PrevButton
-            onClick={onPrevButtonClick}
-            disabled={prevBtnDisabled}
-            className="w-[50px] h-[50px] bg-[#D9D9D9] hover:bg-gray-300 rounded-full flex items-center justify-center transition-colors duration-200"
-          />
-          <NextButton
-            onClick={onNextButtonClick}
-            disabled={nextBtnDisabled}
-            className="w-[50px] h-[50px] bg-[#D9D9D9] hover:bg-gray-300 rounded-full flex items-center justify-center transition-colors duration-200"
-          />
-        </div>
-      </div>
+   
 
       {/* Carousel Container */}
       <div
@@ -116,6 +102,21 @@ const Speakers: React.FC<PropType> = (props) => {
               </div>
             </div>
           ))}
+        </div>
+      </div>
+      {/* Mobile Navigation Buttons - Below the card */}
+      <div className="block lg:hidden w-full my-4 px-5">
+        <div className="flex justify-end gap-3">
+          <PrevButton
+            onClick={onPrevButtonClick}
+            disabled={prevBtnDisabled}
+            className="w-[50px] h-[50px] bg-[#D9D9D9] hover:bg-gray-300 rounded-full flex items-center justify-center transition-colors duration-200"
+          />
+          <NextButton
+            onClick={onNextButtonClick}
+            disabled={nextBtnDisabled}
+            className="w-[50px] h-[50px] bg-[#D9D9D9] hover:bg-gray-300 rounded-full flex items-center justify-center transition-colors duration-200"
+          />
         </div>
       </div>
     </section>

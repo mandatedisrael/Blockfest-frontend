@@ -4,22 +4,22 @@ import React from "react";
 export function PartnersSection() {
   return (
     <section className="flex flex-col items-center justify-center px-5 py-14 lg:py-[80px] lg:px-[70px] bg-[#1B64E4]">
-      <div className="flex flex-col items-center justify-center space-y-4">
+      <div className="flex flex-col items-center justify-center space-y-5">
         <h2 className="font-medium text-5xl lg:text-[69.65px] lg:leading-[82px] tracking-[-5%] md:my-[25px] lg:my-[50px] text-center text-white">
           Our Partners
         </h2>
-        <div className="hidden lg:flex md:flex-wrap items-center justify-between space-x-3">
+        <div className="flex flex-wrap items-center justify-between space-x-3 mt-[30px]">
           {[...Array(6)].map((_, index) => (
             <div
               key={index}
-              className="2xl:w-[195px] 2xl:h-[116px] 2xl:aspect-[195/116] xl:w-[120px] xl:h-[80px] bg-[#D9D9D9] rounded-[24px]"
+              className="2xl:w-[195px] 2xl:h-[116px] 2xl:aspect-[195/116] xl:w-[120px] xl:h-[80px] h-[50px] w-[50px] bg-[#D9D9D9] rounded-[24px]"
             />
           ))}
         </div>
       </div>
 
       <div className="flex flex-col items-center justify-center space-y-5 mt-12.5 lg:mt-[110px] text-white text-center">
-        <h1 className="font-medium text-5xl lg:text-[69.65px] lg:leading-[82.21px] tracking-[-5%] xl:w-[55%] ">
+        <h1 className="font-medium text-4xl lg:text-[69.65px] lg:leading-[82.21px] tracking-[-5%] xl:w-[55%] ">
           Be part of Africa&apos;s web3 Revolution
         </h1>
         <p className="font-medium text-lg lg:text-2xl lg:leading-[1.2] xl:w-[65%]">

@@ -32,7 +32,7 @@ export function HeroSection() {
             <span>October 11th, 2025</span>
           </div>
         </div>
-        <div className="flex md:flex-row flex-col items-center justify-center gap-4 mt-5">
+        <div className="flex md:flex-row flex-col items-center justify-center gap-4 mt-5 mb-10 lg:mb-0">
           <Button className="font-semibold text-lg lg:text-[22px] rounded-[13px] p-[34px] w-full md:w-fit">
             Register Now
           </Button>
