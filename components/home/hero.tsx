@@ -22,7 +22,7 @@ export function HeroSection() {
           <GoDotFill />
           <p>BECOME</p>
         </div>
-        <div className="flex items-center justify-center space-x-8 text-sm lg:text-base font-medium text-black">
+        <div className="flex items-center justify-center md:space-x-8 space-x-4 text-sm lg:text-base font-medium text-black">
           <div className="flex items-center space-x-1 lg:space-x-2 uppercase ">
             <FaLocationDot className="text-[#F34C73]" />
             <span>lagos,nigeria</span>

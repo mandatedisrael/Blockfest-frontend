@@ -57,7 +57,7 @@ const Navbar = () => {
       <div className="flex items-center gap-x-5">
         <Button
           variant="default"
-          className="p-5 text-base font-medium text-white"
+          className="md:p-5 text-base font-medium text-white w-fit p-3"
         >
           Sponsor
         </Button>
