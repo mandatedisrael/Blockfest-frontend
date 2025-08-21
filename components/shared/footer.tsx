@@ -4,6 +4,11 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { FaInstagram, FaLinkedin, FaXTwitter, FaYoutube } from "react-icons/fa6";
 import { Menu } from "@/types";
+import localFont from "next/font/local"
+
+const Gotham = localFont({
+  src: "../../app/fonts/Gotham-Medium.otf",
+});
 
 const socialIcons: Menu[] = [
   {
@@ -35,7 +40,7 @@ const footerMenu: Menu[] = [
 
 const Footer = () => {
   return (
-    <footer className="bg-black px-4 py-10 pt-14 xl:p-[70px] flex md:flex-row flex-col gap-y-10 md:items-end justify-between">
+    <footer className={`${Gotham.className} bg-black px-4 py-10 pt-14 xl:p-[70px] flex md:flex-row flex-col gap-y-10 md:items-end justify-between`}>
       <div className="order-last md:order-first">
         <Image
           src="/images/footer-logo.svg"

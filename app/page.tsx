@@ -7,6 +7,11 @@ import { IoCalendarClearOutline } from "react-icons/io5";
 import { EmblaOptionsType } from "embla-carousel";
 import Speakers from "@/components/carousel";
 import { Countdown } from "@/components/countdown";
+import localFont from "next/font/local"
+
+const Gotham = localFont({
+  src: "../app/fonts/Gotham-Medium.otf",
+});
 
 const HomePage = () => {
   const OPTIONS: EmblaOptionsType = { loop: true }
@@ -24,7 +29,7 @@ const HomePage = () => {
 
     }]
   return (
-    <main>
+    <main className={`${Gotham.className}`}>
       <section className="relative w-full flex items-center justify-center bg-[url('/images/hero.webp')] bg-cover bg-center bg-no-repeat min-h-[65vh] lg:min-h-screen object-contain ">
         <div className="flex items-center flex-col space-y-4  text-center text-black">
           <p className="font-medium text-[22.3px] uppercase bg-[#F2CB45] px-[35px] py-[32px] rounded-[10.71px] w-[442.46px]">
@@ -161,7 +166,7 @@ const HomePage = () => {
       <section className="flex flex-col items-center justify-center  py-[80px] px-[70px] bg-[#1B64E4]">
         <div className="flex flex-col items-center justify-center space-y-4">
           <h2 className="font-[350px] text-[69.65px] leading-[82px] tracking-[-5%] my-[50px] text-white">Our Partners </h2>
-          <div className="flex items-center justify-between space-x-3">
+          <div className="flex flex-wrap items-center justify-between gap-3 gap-y-5">
             <div className="w-[195px] h-[116px] bg-[#D9D9D9] rounded-[24px]" />
             <div className="w-[195px] h-[116px] bg-[#D9D9D9] rounded-[24px]" />
             <div className="w-[195px] h-[116px] bg-[#D9D9D9] rounded-[24px]" />

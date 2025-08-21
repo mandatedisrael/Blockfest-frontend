@@ -6,6 +6,11 @@ import Link from "next/link";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
 import { CiMenuBurger } from "react-icons/ci";
 import { AiOutlineClose } from "react-icons/ai";
+import localFont from "next/font/local"
+
+const Gotham = localFont({
+  src: "../../app/fonts/Gotham-Medium.otf",
+});
 
 const navbarMenu: Menu[] = [
   {
@@ -28,7 +33,7 @@ const navbarMenu: Menu[] = [
 
 const Navbar = () => {
   return (
-    <div className="bg-black px-4 xl:px-[70px] py-5 xl:py-10 flex items-center justify-between">
+    <div className={`${Gotham.className} bg-black px-4 xl:px-[70px] py-5 xl:py-10 flex items-center justify-between`}>
       <Image
         src="/images/Logo.svg"
         alt="Logo"
@@ -71,12 +76,12 @@ const Navbar = () => {
 
 const MobileMenu = () => {
   return (
-    <div className="px-6 py-8 flex flex-col h-full">
+    <div className={`${Gotham.className} px-6 py-8 flex flex-col h-full bg-black`}>
       {/* Close Button */}
       <div className="flex justify-end mb-8">
         <SheetClose asChild>
           <button className="p-2 rounded-full hover:bg-gray-100 transition">
-            <AiOutlineClose size={28} className="text-gray-700" />
+            <AiOutlineClose size={28} className="text-white" />
           </button>
         </SheetClose>
       </div>
@@ -87,7 +92,7 @@ const MobileMenu = () => {
           <SheetClose asChild key={item.title}>
             <Link
               href={item.path}
-              className="text-lg font-medium text-gray-900 hover:text-black hover:underline transition"
+              className="text-lg font-medium text-[#A4A4A4] hover:text-white hover:underline transition w-fit"
             >
               {item.title}
             </Link>
