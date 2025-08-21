@@ -6,6 +6,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import { IoCalendarClearOutline } from "react-icons/io5";
 import { EmblaOptionsType } from "embla-carousel";
 import Speakers from "@/components/carousel";
+import { Countdown } from "@/components/countdown";
 
 const HomePage = () => {
   const OPTIONS: EmblaOptionsType = { loop: true }
@@ -98,27 +99,7 @@ const HomePage = () => {
         </div>
       </section>
       <section className="flex flex-col items-center justify-center  py-[80px] px-[70px]">
-        <div className="flex items-start justify-center border-4 border-[#3870D3] w-fit space-x-5 rounded-[24px] py-[30px] px-[50px]">
-          <div className="flex items-center flex-col ">
-            <p className="text-[#3870D3] font-normal text-[104.95px] leading-[110px]">84</p>
-            <p className="font-[325px] text-[31.98px] leading-[120%] uppercase ">days</p>
-          </div>
-          <span className="text-[#3870D3] font-normal text-[104.95px] leading-[110px]">:</span>
-          <div className="flex items-center flex-col ">
-            <p className="text-[#3870D3] font-normal text-[104.95px] leading-[110px]">54</p>
-            <p className="font-[325px] text-[31.98px] leading-[120%] uppercase ">hours</p>
-          </div>
-          <span className="text-[#3870D3] font-normal text-[104.95px] leading-[110px]">:</span>
-          <div className="flex items-center flex-col ">
-            <p className="text-[#3870D3] font-normal text-[104.95px] leading-[110px]">36</p>
-            <p className="font-[325px] text-[31.98px] leading-[120%] uppercase ">minutes</p>
-          </div>
-          <span className="text-[#3870D3] font-normal text-[104.95px] leading-[110px]">:</span>
-          <div className="flex items-center flex-col ">
-            <p className="text-[#3870D3] font-normal text-[104.95px] leading-[110px]">06</p>
-            <p className="font-[325px] text-[31.98px] leading-[120%] uppercase ">seconds</p>
-          </div>
-        </div>
+        <Countdown targetDate={"2025-10-11T23:59:59"} />
 
 
         <div className="flex flex-col gap-4 w-full mt-[80px]">
