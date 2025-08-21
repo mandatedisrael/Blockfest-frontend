@@ -9,7 +9,7 @@ const montserrat = Montserrat({
 export function WhyAttendSection() {
   return (
     <section className="flex flex-col items-center justify-center px-5 py-20 lg:py-[80px] lg:px-[70px] bg-gradient-to-b from-[#1A3461] to-[#005DFF]">
-      <h2 className="font-[350px] text-5xl lg:text-[69.65px] lg:leading-[82px] tracking-[-5%] my-[25px] lg:my-[50px] text-white">
+      <h2 className="font-[350px] text-5xl lg:text-[69.65px] lg:leading-[82px] tracking-[-5%] my-[40px] lg:my-[50px] text-white">
         Why Attend<span className="text-[#F2CB45]">?</span>
       </h2>
       <FeaturesComp />
@@ -36,13 +36,13 @@ function FeaturesComp() {
     },
     {
       image: "/images/features.webp",
-      header: "BUIDL • BRIDGE • BECOME",
+      header: "Buidl • Bridge • Become",
       text: "These aren't just themes , they're a roadmap to unlocking Africa's blockchain potential."
     },
     {
       image: "/images/features.webp",
       header: "Your Web3 Journey Starts Here",
-     text:" Whether you're a curious newcomer or a seasoned pro, BLOCKFEST is your gateway to the future of Africa's digital economy."
+      text: " Whether you're a curious newcomer or a seasoned pro, BLOCKFEST is your gateway to the future of Africa's digital economy."
     },
     {
       image: "/images/features.webp",
@@ -73,7 +73,7 @@ function FeaturesComp() {
 
             {/* Content Section */}
             <div className="flex flex-col gap-y-2.5 md:gap-y-0 justify-center md:ml-4 flex-1 text-left basis-full md:basis-[60%] p-4">
-              <h3 className="text-[#1B64E4] font-medium text-3xl xl:text-[41.03px] xl:leading-[42.74px] xl:mb-2 ">
+              <h3 className="text-[#1B64E4] text-center md:text-left font-medium text-2xl xl:text-[41.03px] xl:leading-[42.74px] xl:mb-2 ">
                 {category.header}
               </h3>
               <p className={`${montserrat.className} text-[#808080] text-sm xl:text-[17.1px] xl:leading-[1.2] font-medium`}>
