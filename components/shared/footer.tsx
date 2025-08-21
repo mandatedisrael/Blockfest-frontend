@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import React from "react";
 import { Button } from "../ui/button";
@@ -10,6 +11,7 @@ import {
 } from "react-icons/fa6";
 import { Menu } from "@/types";
 import localFont from "next/font/local";
+import { toast } from "sonner";
 
 const Gotham = localFont({
   src: "../../app/fonts/Gotham-Medium.otf",
@@ -34,14 +36,21 @@ const socialIcons: Menu[] = [
   },
 ];
 
+// Footer menu (removed "Contacts" and "Sponsors" for special handling)
 const footerMenu: Menu[] = [
-  { path: "/", title: "Agenda" },
-  { path: "/", title: "About" },
-  { path: "/", title: "Sponsors" },
-  { path: "/", title: "Blogs" },
-  { path: "/", title: "Speakers" },
-  { path: "/", title: "Contacts" },
+  { path: "agenda", title: "Agenda" },
+  { path: "about", title: "About" },
+  { path: "/blogs", title: "Blogs" },
+  { path: "speakers", title: "Speakers" },
 ];
+
+// Smooth scroll helper
+const scrollToSection = (id: string) => {
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+};
 
 const Footer = () => {
   return (
@@ -63,14 +72,30 @@ const Footer = () => {
         {/* Navigation Menu */}
         <nav className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 md:gap-x-12.5 gap-y-6">
           {footerMenu.map((item) => (
-            <Link
+            <button
               key={item.title}
-              href={item.path}
-              className="text-base xl:text-2xl font-medium cursor-pointer text-[#A4A4A4] hover:text-white transition-colors duration-300 ease-in-out"
+              onClick={() => scrollToSection(item.path)}
+              className="text-base xl:text-2xl font-medium cursor-pointer text-[#A4A4A4] hover:text-white transition-colors duration-300 ease-in-out text-left"
             >
               {item.title}
-            </Link>
+            </button>
           ))}
+
+          {/* Sponsors mailto link */}
+          <Link
+            href="mailto:partnership@blockfestafrica.com"
+            className="text-base xl:text-2xl font-medium cursor-pointer text-[#A4A4A4] hover:text-white transition-colors duration-300 ease-in-out"
+          >
+            Sponsors
+          </Link>
+
+          {/* Contact mailto link */}
+          <Link
+            href="mailto:partnership@blockfestafrica.com"
+            className="text-base xl:text-2xl font-medium cursor-pointer text-[#A4A4A4] hover:text-white transition-colors duration-300 ease-in-out"
+          >
+            Contact
+          </Link>
         </nav>
 
         {/* Social Icons */}
@@ -94,6 +119,7 @@ const Footer = () => {
         <Button
           type="button"
           variant="ghost"
+           onClick={() => toast("Registration is coming soon 🚀")}
           className="text-white border-2 px-[38px] py-5 text-lg font-semibold cursor-pointer rounded-[12px]"
         >
           Register
