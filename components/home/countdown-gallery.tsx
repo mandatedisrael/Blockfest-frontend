@@ -4,10 +4,10 @@ import React from "react";
 
 export function CountdownGallerySection() {
   return (
-    <section className="flex flex-col items-center justify-center  py-[80px] px-[70px]">
+    <section className="flex flex-col items-center justify-center px-5 py-20 lg:py-[80px] lg:px-[70px]">
       <Countdown targetDate={"2025-10-11T23:59:59"} />
 
-      <div className="flex flex-col gap-4 w-full mt-[80px]">
+      <div className="flex flex-col gap-4 w-full mt-10 lg:mt-[80px]">
         <div className="flex flex-col lg:flex-row gap-4">
           <div className="bg-gray-300 rounded-[24px] h-[300px] lg:h-[446px] flex-1 lg:basis-[40%] overflow-hidden">
             <Image
