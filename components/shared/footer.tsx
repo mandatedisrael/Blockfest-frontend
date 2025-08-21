@@ -35,25 +35,25 @@ const footerMenu: Menu[] = [
 
 const Footer = () => {
   return (
-    <footer className="bg-black p-[70px] flex items-end justify-between">
-      <div>
+    <footer className="bg-black px-4 py-10 pt-14 xl:p-[70px] flex xl:flex-row flex-col gap-y-10 xl:items-end justify-between">
+      <div className="order-last xl:order-first">
         <Image
           src="/images/footer-logo.svg"
           alt="Logo"
           width={150}
           height={49}
-          className="w-[150px] h-[49px] aspect-[150/49]"
+          className="xl:w-[150px] w-[124px] h-[42px] xl:h-[49px] aspect-[124/42] xl:aspect-[150/49]"
         />
       </div>
 
-      <div className="flex items-end gap-x-12.5">
+      <div className="flex flex-col xl:flex-row xl:items-end xl:gap-x-12.5 gap-y-10">
         {/* Navigation Menu */}
-        <nav className="grid grid-cols-3 gap-x-12.5 gap-y-6">
+        <nav className="grid grid-cols-1 xl:grid-cols-3 xl:gap-x-12.5 gap-y-6">
           {footerMenu.map((item) => (
             <Link
               key={item.title}
               href={item.path}
-              className="text-2xl font-medium cursor-pointer text-[#A4A4A4] hover:text-white transition-colors duration-300 ease-in-out"
+              className="text-base xl:text-2xl font-medium cursor-pointer text-[#A4A4A4] hover:text-white transition-colors duration-300 ease-in-out"
             >
               {item.title}
             </Link>
@@ -76,7 +76,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div>
+      <div className="hidden xl:block">
         <Button
           type="button"
           variant="ghost"
