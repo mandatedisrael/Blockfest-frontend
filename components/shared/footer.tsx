@@ -3,14 +3,9 @@ import React from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { FaInstagram, FaLinkedin, FaXTwitter, FaYoutube } from "react-icons/fa6";
+import { Menu } from "@/types";
 
-interface FooterMenu {
-  path: string;
-  title?: string;
-  icon?: React.ReactNode; // change to React.ReactNode instead of string
-}
-
-const socialIcons: FooterMenu[] = [
+const socialIcons: Menu[] = [
   {
     path: "/",
     icon: <FaXTwitter size={24} />,
@@ -29,7 +24,7 @@ const socialIcons: FooterMenu[] = [
   },
 ];
 
-const footerMenu: FooterMenu[] = [
+const footerMenu: Menu[] = [
   { path: "/", title: "Agenda" },
   { path: "/", title: "About" },
   { path: "/", title: "Sponsors" },
