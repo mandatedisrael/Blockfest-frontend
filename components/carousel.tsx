@@ -71,7 +71,7 @@ const Speakers: React.FC<PropType> = (props) => {
         <div className="flex touch-pan-y touch-pinch-zoom">
           {speakers.map((speaker, index) => (
             <div
-              className="transform-gpu flex-[0_0_100%] min-w-0 flex justify-center items-center px-5"
+              className="transform-gpu flex-[0_0_100%] min-w-0 flex justify-center items-center px-2 md:px-5"
               key={`${speaker.name}-${index}`}
             >
               {/* Speaker Card */}

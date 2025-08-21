@@ -8,13 +8,13 @@ export function PartnersSection() {
         <h2 className="font-medium text-5xl lg:text-[69.65px] lg:leading-[82px] tracking-[-5%] md:my-[25px] lg:my-[50px] text-center text-white">
           Our Partners
         </h2>
-        <div className="flex flex-wrap items-center justify-between space-x-3 mt-[30px]">
-          {[...Array(6)].map((_, index) => (
+        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 w-full mt-[30px] place-items-center">
+            {[...Array(6)].map((_, index) => (
             <div
               key={index}
-              className="2xl:w-[195px] 2xl:h-[116px] 2xl:aspect-[195/116] xl:w-[120px] xl:h-[80px] h-[50px] w-[50px] bg-[#D9D9D9] rounded-[24px]"
+                className=" h-[50px] w-[50px] md:aspect-[195/116] bg-[#D9D9D9] 2xl:w-[195px] 2xl:h-[116px] 2xl:aspect-[195/116] xl:w-[120px] xl:h-[80px] md:rounded-[16px] rounded-full flex items-center justify-center"
             />
-          ))}
+            ))}
         </div>
       </div>
 
