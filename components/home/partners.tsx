@@ -8,7 +8,7 @@ export function PartnersSection() {
         <h2 className="font-[350px] text-[69.65px] leading-[82px] tracking-[-5%] my-[50px] text-white">
           Our Partners
         </h2>
-        <div className="flex items-center justify-between space-x-3">
+        <div className="flex md:flex-wrap items-center justify-between space-x-3">
           <div className="w-[195px] h-[116px] bg-[#D9D9D9] rounded-[24px]" />
           <div className="w-[195px] h-[116px] bg-[#D9D9D9] rounded-[24px]" />
           <div className="w-[195px] h-[116px] bg-[#D9D9D9] rounded-[24px]" />
