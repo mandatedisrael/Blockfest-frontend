@@ -9,7 +9,7 @@ import { toast } from "sonner";
 
 export function HeroSection() {
   return (
-    <section className="relative w-full flex items-center justify-center bg-[url('/images/hero.webp')] bg-cover bg-center bg-no-repeat min-h-[65vh] lg:min-h-screen object-contain " id="home">
+    <section className="relative w-full flex items-center justify-center bg-[url('/images/hero.webp')] bg-cover bg-center bg-no-repeat min-h-[65vh] 2xl:min-h-[65vh] xl:min-h-screen md:min-h-screen lg:min-h-screen object-contain  " id="home">
       <div className="flex items-center flex-col space-y-4  text-center text-black">
         <p className="font-medium text-base lg:text-[22.3px] uppercase bg-[#F2CB45] px-7 py-5 lg:px-[35px] lg:py-[26px] rounded-[10.71px] mt-10 lg:mt-0">
           welcome to blockfest 2025
