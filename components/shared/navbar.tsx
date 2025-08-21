@@ -3,7 +3,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import { Menu } from "@/types";
 import Link from "next/link";
-import { Sheet, SheetClose, SheetContent, SheetTitle, SheetTrigger } from "../ui/sheet";
+import { Sheet, SheetClose, SheetContent,SheetTrigger } from "../ui/sheet";
 import { CiMenuBurger } from "react-icons/ci";
 import { AiOutlineClose } from "react-icons/ai";
 import localFont from "next/font/local";
