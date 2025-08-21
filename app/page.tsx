@@ -5,10 +5,15 @@ import { CountdownGallerySection } from "@/components/home/countdown-gallery";
 import { WhyAttendSection } from "@/components/home/why-attend";
 import { SpeakersSection } from "@/components/home/speakers";
 import { PartnersSection } from "@/components/home/partners";
+import localFont from "next/font/local"
+
+const Gotham = localFont({
+  src: "../app/fonts/Gotham-Medium.otf",
+});
 
 const HomePage = () => {
   return (
-    <main>
+    <main className={`${Gotham.className}`}>
       <HeroSection />
       <StatsSection />
       <CountdownGallerySection />
@@ -20,18 +25,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
