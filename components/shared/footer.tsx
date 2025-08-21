@@ -83,7 +83,7 @@ const Footer = () => {
 
       <div className="flex flex-col md:flex-row md:items-end md:gap-x-12.5 gap-y-10">
         {/* Navigation Menu */}
-        <nav className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 md:gap-x-12.5 gap-y-6">
+        <nav className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-4 md:gap-x-12.5 md:gap-y-6">
           {footerMenu.map((item) => (
             <button
               key={item.title}
