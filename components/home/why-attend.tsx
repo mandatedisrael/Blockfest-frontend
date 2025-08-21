@@ -8,7 +8,7 @@ const montserrat = Montserrat({
 });
 export function WhyAttendSection() {
   return (
-    <section className="flex flex-col items-center justify-center px-5 py-20 lg:py-[80px] lg:px-[70px] bg-gradient-to-b from-[#1A3461] to-[#005DFF]">
+    <section className="flex flex-col items-center justify-center px-5 py-20 lg:py-[80px] lg:px-[70px] bg-gradient-to-b from-[#1A3461] to-[#005DFF]" id="about">
       <h2 className="font-[350px] text-5xl lg:text-[69.65px] lg:leading-[82px] tracking-[-5%] my-[40px] lg:my-[50px] text-white">
         Why Attend<span className="text-[#F2CB45]">?</span>
       </h2>
