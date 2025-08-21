@@ -1,6 +1,17 @@
 // Google Analytics configuration
 export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || "";
 
+// Declare global gtag interface
+declare global {
+  interface Window {
+    gtag: (
+      command: string,
+      targetId: string,
+      config?: Record<string, unknown>
+    ) => void;
+  }
+}
+
 // Google Analytics functions
 export const pageview = (url: string) => {
   if (typeof window !== "undefined" && window.gtag) {
@@ -29,10 +40,3 @@ export const event = ({
     });
   }
 };
-
-// Declare global gtag interface
-declare global {
-  interface Window {
-    gtag: (...args: any[]) => void;
-  }
-}

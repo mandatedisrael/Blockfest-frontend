@@ -11,7 +11,6 @@ const siteDescription =
   "Africa's premier blockchain conference bringing together builders, founders, investors, and DeFi professionals in Africa.";
 const twitterHandle =
   process.env.NEXT_PUBLIC_TWITTER_HANDLE || "@blockfestafrica";
-const facebookPage = process.env.NEXT_PUBLIC_FACEBOOK_PAGE || "blockfestafrica";
 const instagramHandle =
   process.env.NEXT_PUBLIC_INSTAGRAM_HANDLE || "blockfestafrica";
 const linkedinPage =
@@ -21,6 +20,7 @@ const youtubeChannel =
 const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
     default: siteName,
     template: `%s | ${siteName}`,
@@ -195,12 +195,52 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Performance optimization: preconnect to external domains */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin=""
+        />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://www.google-analytics.com" />
+
+        {/* DNS prefetch for social media domains */}
+        <link rel="dns-prefetch" href="//twitter.com" />
+        <link rel="dns-prefetch" href="//linkedin.com" />
+        <link rel="dns-prefetch" href="//instagram.com" />
+        <link rel="dns-prefetch" href="//youtube.com" />
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(structuredData),
           }}
         />
+
+        {/* Google Analytics */}
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <>
+            <script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+            />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
+                    page_title: document.title,
+                    page_location: window.location.href,
+                  });
+                `,
+              }}
+            />
+          </>
+        )}
+
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-touch-fullscreen" content="yes" />
