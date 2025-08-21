@@ -14,13 +14,13 @@ const HomePage = () => {
     {
       name: "Nduka Blessing",
       title: "CEO SOLUTIONS",
-      image: "/images/img.webp",
+      image: "/images/speaker.webp",
 
     },
     {
       name: "John Smith",
       title: "CTO INNOVATIONS",
-      image: "/images/img.webp",
+      image: "/images/speaker.webp",
 
     }]
   return (
@@ -106,7 +106,7 @@ const HomePage = () => {
           <div className="flex flex-col lg:flex-row gap-4">
             <div className="bg-gray-300 rounded-[24px] h-[300px] lg:h-[446px] flex-1 lg:basis-[40%] overflow-hidden">
               <Image
-                src="/images/img.webp"
+                src="/images/img-4.webp"
                 alt=""
                 width={500}
                 height={446}
@@ -116,7 +116,7 @@ const HomePage = () => {
             </div>
             <div className="bg-gray-300 rounded-[24px] h-[300px] lg:h-[446px] flex-1 lg:basis-[60%] overflow-hidden">
               <Image
-                src="/images/img.webp"
+                src="/images/img2.webp"
                 alt=""
                 width={700}
                 height={446}
@@ -129,7 +129,7 @@ const HomePage = () => {
           <div className="flex flex-col lg:flex-row gap-4">
             <div className="bg-gray-300 rounded-[24px] h-[300px] lg:h-[446px] flex-1 lg:basis-[60%] overflow-hidden">
               <Image
-                src="/images/img.webp"
+                src="/images/img-3.webp"
                 alt=""
                 width={700}
                 height={446}
@@ -139,7 +139,7 @@ const HomePage = () => {
             </div>
             <div className="bg-gray-300 rounded-[24px] h-[300px] lg:h-[446px] flex-1 lg:basis-[40%] overflow-hidden">
               <Image
-                src="/images/img.webp"
+                src="/images/img1.webp"
                 alt=""
                 width={500}
                 height={446}
@@ -212,32 +212,32 @@ export default HomePage;
 function FeaturesComp() {
   const categories = [
     {
-      image: "/images/img.webp",
+      image: "/images/features.webp",
       header: "Africa's Web3 SuperBowl",
       text: "Blockchain Africa is not just an event – it's a movement. When Africa throws a party, the world tunes in. Get ready for Web3 like never before."
     },
     {
-      image: "/images/img.webp",
+      image: "/images/features.webp",
       header: "Africa's Web3 SuperBowl",
       text: "Blockchain Africa is not just an event – it's a movement. When Africa throws a party, the world tunes in. Get ready for Web3 like never before."
     },
     {
-      image: "/images/img.webp",
+      image: "/images/features.webp",
       header: "Africa's Web3 SuperBowl",
       text: "Blockchain Africa is not just an event – it's a movement. When Africa throws a party, the world tunes in. Get ready for Web3 like never before."
     },
     {
-      image: "/images/img.webp",
+      image: "/images/features.webp",
       header: "Africa's Web3 SuperBowl",
       text: "Blockchain Africa is not just an event – it's a movement. When Africa throws a party, the world tunes in. Get ready for Web3 like never before."
     },
     {
-      image: "/images/img.webp",
+      image: "/images/features.webp",
       header: "Africa's Web3 SuperBowl",
       text: "Blockchain Africa is not just an event – it's a movement. When Africa throws a party, the world tunes in. Get ready for Web3 like never before."
     },
     {
-      image: "/images/img.webp",
+      image: "/images/features.webp",
       header: "Africa's Web3 SuperBowl",
       text: "Blockchain Africa is not just an event – it's a movement. When Africa throws a party, the world tunes in. Get ready for Web3 like never before."
     },
