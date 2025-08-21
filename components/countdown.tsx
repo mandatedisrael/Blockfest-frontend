@@ -71,9 +71,9 @@ export function Countdown ({ targetDate, onExpire }: CountdownProps)  {
   };
 
   return (
-    <div className={`${bebasNeue.className} flex items-start justify-center border-4 border-[#3870D3] w-fit space-x-2 xl:space-x-5 rounded-[24px] p-5 md:px-10 xl:py-[30px] xl:px-[50px]`}>
+    <div className={`${bebasNeue.className} flex items-start justify-between xl:justify-center border-4 border-[#3870D3] w-[80%] xl:w-fit space-x-2 xl:space-x-5 rounded-[24px] p-5 md:px-10 xl:py-[30px] xl:px-[50px]`}>
       <div className="flex items-center flex-col">
-        <p className="text-[#3870D3] font-normal text-2xl md:text-4xl xl:text-[104.95px] xl:leading-[110px] tabular-nums">
+        <p className="text-[#3870D3] font-normal text-3xl md:text-4xl xl:text-[104.95px] xl:leading-[110px] tabular-nums">
           {formatNumber(timeLeft.days)}
         </p>
         <p className="font-light text-base md:text-lg xl:text-[31.98px] xl:leading-[120%] uppercase">
@@ -81,10 +81,10 @@ export function Countdown ({ targetDate, onExpire }: CountdownProps)  {
         </p>
       </div>
 
-      <span className="text-[#3870D3] font-normal text-2xl md:text-4xl xl:text-[104.95px] xl:leading-[110px]">:</span>
+      <span className="text-[#3870D3] font-normal text-3xl md:text-4xl xl:text-[104.95px] xl:leading-[110px]">:</span>
 
       <div className="flex items-center flex-col">
-        <p className="text-[#3870D3] font-normal text-2xl md:text-4xl xl:text-[104.95px] xl:leading-[110px] tabular-nums">
+        <p className="text-[#3870D3] font-normal text-3xl md:text-4xl xl:text-[104.95px] xl:leading-[110px] tabular-nums">
           {formatNumber(timeLeft.hours)}
         </p>
         <p className="font-light text-base md:text-lg xl:text-[31.98px] xl:leading-[120%] uppercase">
@@ -92,10 +92,10 @@ export function Countdown ({ targetDate, onExpire }: CountdownProps)  {
         </p>
       </div>
 
-      <span className="text-[#3870D3] font-normal text-2xl md:text-4xl xl:text-[104.95px] xl:leading-[110px]">:</span>
+      <span className="text-[#3870D3] font-normal text-3xl md:text-4xl xl:text-[104.95px] xl:leading-[110px]">:</span>
 
       <div className="flex items-center flex-col">
-        <p className="text-[#3870D3] font-normal text-2xl md:text-4xl xl:text-[104.95px] xl:leading-[110px] tabular-nums">
+        <p className="text-[#3870D3] font-normal text-3xl md:text-4xl xl:text-[104.95px] xl:leading-[110px] tabular-nums">
           {formatNumber(timeLeft.minutes)}
         </p>
         <p className="font-light text-base md:text-lg xl:text-[31.98px] xl:leading-[120%] uppercase">
@@ -103,10 +103,10 @@ export function Countdown ({ targetDate, onExpire }: CountdownProps)  {
         </p>
       </div>
 
-      <span className="text-[#3870D3] font-normal text-2xl md:text-4xl xl:text-[104.95px] xl:leading-[110px]">:</span>
+      <span className="text-[#3870D3] font-normal text-3xl md:text-4xl xl:text-[104.95px] xl:leading-[110px]">:</span>
 
       <div className="flex items-center flex-col">
-        <p className="text-[#3870D3] font-normal text-2xl md:text-4xl xl:text-[104.95px] xl:leading-[110px] tabular-nums">
+        <p className="text-[#3870D3] font-normal text-3xl md:text-4xl xl:text-[104.95px] xl:leading-[110px] tabular-nums">
           {formatNumber(timeLeft.seconds)}
         </p>
         <p className="font-light text-base md:text-lg xl:text-[31.98px] xl:leading-[120%] uppercase">
