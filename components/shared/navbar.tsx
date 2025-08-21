@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
 import { CiMenuBurger } from "react-icons/ci";
 import { AiOutlineClose } from "react-icons/ai";
-import localFont from "next/font/local"
+import localFont from "next/font/local";
 
 const Gotham = localFont({
   src: "../../app/fonts/Gotham-Medium.otf",
@@ -33,13 +33,15 @@ const navbarMenu: Menu[] = [
 
 const Navbar = () => {
   return (
-    <div className={`${Gotham.className} bg-black px-4 xl:px-[70px] py-5 xl:py-10 flex items-center justify-between`}>
+    <div
+      className={`${Gotham.className} bg-black px-5 lg:px-[70px] py-5 lg:py-10 flex items-center justify-between`}
+    >
       <Image
         src="/images/Logo.svg"
         alt="Logo"
         width={140}
         height={38}
-        className="w-[140px] h-[38px] aspect-[140/38]"
+        className="xl:w-[140px] xl:h-[38px] xl:aspect-[140/38] aspect-[124/24] w-[124px] h-[24px]"
       />
       <nav className="hidden md:flex items-center gap-x-[28px]">
         {navbarMenu.map((item) => (
@@ -52,7 +54,7 @@ const Navbar = () => {
           </Link>
         ))}
       </nav>
-      <div className="flex items-center gap-x-2">
+      <div className="flex items-center gap-x-5">
         <Button
           variant="default"
           className="p-5 text-base font-medium text-white"
@@ -76,7 +78,9 @@ const Navbar = () => {
 
 const MobileMenu = () => {
   return (
-    <div className={`${Gotham.className} px-6 py-8 flex flex-col h-full bg-black`}>
+    <div
+      className={`${Gotham.className} px-6 py-8 flex flex-col h-full bg-black`}
+    >
       {/* Close Button */}
       <div className="flex justify-end mb-8">
         <SheetClose asChild>
