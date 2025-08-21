@@ -18,8 +18,8 @@ export function SpeakersSection() {
   
       }]
   return (
-    <section className="flex flex-col items-center justify-center  py-[80px] px-[70px]">
-      <h2 className="font-[350px] text-[69.65px] leading-[82px] tracking-[-5%] my-[50px] text-black">
+    <section className="flex flex-col items-center justify-center  xl:py-[80px] xl:px-[70px] py-14 px-5">
+      <h2 className="font-medium text-5xl xl:text-[69.65px] xl:leading-[82px] tracking-[-5%] my-[25px] xl:my-[50px] text-black">
         Our Speakers
       </h2>
       <Speakers speakers={SLIDES} options={OPTIONS} />

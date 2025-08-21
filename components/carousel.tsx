@@ -42,26 +42,46 @@ const Speakers: React.FC<PropType> = (props) => {
   } = usePrevNextButtons(emblaApi, onNavButtonClick);
 
   return (
-    <section className="embla w-full flex items-center justify-center flex-col relative px-5 lg:px-20">
+    <section className="embla w-full flex items-center justify-center flex-col relative px-0 lg:px-20">
       {/* Navigation Buttons - Positioned absolutely */}
-      <div className="absolute left-4 lg:left-8 top-1/2 transform -translate-y-1/2 z-10">
-        <PrevButton
-          onClick={onPrevButtonClick}
-          disabled={prevBtnDisabled}
-          className="w-[100px] h-[100px] bg-[#D9D9D9] hover:bg-gray-300 rounded-full flex items-center justify-center  transition-colors duration-200"
-        />
-      </div>
+      <div className="hidden xl:block">
+        <div className="absolute left-4 lg:left-8 top-1/2 transform -translate-y-1/2 z-10">
+          <PrevButton
+            onClick={onPrevButtonClick}
+            disabled={prevBtnDisabled}
+            className="w-[100px] h-[100px] bg-[#D9D9D9] hover:bg-gray-300 rounded-full flex items-center justify-center  transition-colors duration-200"
+          />
+        </div>
 
-      <div className="absolute right-4 lg:right-8 top-1/2 transform -translate-y-1/2 z-10">
-        <NextButton
-          onClick={onNextButtonClick}
-          disabled={nextBtnDisabled}
-          className="w-[100px] h-[100px] bg-[#D9D9D9] hover:bg-gray-300 rounded-full flex items-center justify-center transition-colors duration-200"
-        />
+        <div className="absolute right-4 lg:right-8 top-1/2 transform -translate-y-1/2 z-10">
+          <NextButton
+            onClick={onNextButtonClick}
+            disabled={nextBtnDisabled}
+            className="w-[100px] h-[100px] bg-[#D9D9D9] hover:bg-gray-300 rounded-full flex items-center justify-center transition-colors duration-200"
+          />
+        </div>
+      </div>
+      {/* Mobile Navigation Buttons - Below the card */}
+      <div className="block xl:hidden w-full my-4 px-5">
+        <div className="flex justify-end gap-3">
+          <PrevButton
+            onClick={onPrevButtonClick}
+            disabled={prevBtnDisabled}
+            className="w-[50px] h-[50px] bg-[#D9D9D9] hover:bg-gray-300 rounded-full flex items-center justify-center transition-colors duration-200"
+          />
+          <NextButton
+            onClick={onNextButtonClick}
+            disabled={nextBtnDisabled}
+            className="w-[50px] h-[50px] bg-[#D9D9D9] hover:bg-gray-300 rounded-full flex items-center justify-center transition-colors duration-200"
+          />
+        </div>
       </div>
 
       {/* Carousel Container */}
-      <div className="overflow-hidden w-full max-w-5xl mx-auto" ref={emblaRef}>
+      <div
+        className="overflow-hidden w-full xl:max-w-5xl mx-auto"
+        ref={emblaRef}
+      >
         <div className="flex touch-pan-y touch-pinch-zoom">
           {speakers.map((speaker, index) => (
             <div
@@ -69,7 +89,7 @@ const Speakers: React.FC<PropType> = (props) => {
               key={`${speaker.name}-${index}`}
             >
               {/* Speaker Card */}
-              <div className="bg-gradient-to-b from-[#0F377E] to-[#1B64E4] rounded-3xl p-6 lg:p-8 w-full max-w-[839px] mx-auto">
+              <div className="bg-gradient-to-b from-[#0F377E] to-[#1B64E4] rounded-3xl p-6 lg:p-8 w-full xl:max-w-[839px] mx-auto">
                 <div className="flex items-center justify-between gap-6">
                   {/* Text Content */}
                   <div className="text-white flex-1 basis-[60%]">

@@ -3,7 +3,7 @@ import React from "react";
 
 export function PartnersSection() {
   return (
-    <section className="flex flex-col items-center justify-center px-5 py-10 xl:py-[80px] xl:px-[70px] bg-[#1B64E4]">
+    <section className="flex flex-col items-center justify-center px-5 py-14 xl:py-[80px] xl:px-[70px] bg-[#1B64E4]">
       <div className="flex flex-col items-center justify-center space-y-4">
         <h2 className="font-medium text-5xl xl:text-[69.65px] xl:leading-[82px] tracking-[-5%] my-[25px] xl:my-[50px] text-center text-white">
           Our Partners
