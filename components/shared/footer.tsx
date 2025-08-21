@@ -17,25 +17,6 @@ const Gotham = localFont({
   src: "../../app/fonts/Gotham-Medium.otf",
 });
 
-const socialIcons: Menu[] = [
-  {
-    path: "https://x.com/blockfestafrica?s=21&t=6lhy88Nx16NRD-zFs2-S9w",
-    icon: <FaXTwitter size={24} />,
-  },
-  {
-    path: "https://www.instagram.com/blockfestafrica?igsh=MXZnZHdlOXhwODFrdQ==",
-    icon: <FaInstagram size={24} />,
-  },
-  {
-    path: "https://youtube.com/@blockfestafrica?si=3dS2Y0_bQZkYVe20",
-    icon: <FaYoutube size={24} />,
-  },
-  {
-    path: "https://www.linkedin.com/company/blockfest-africa/",
-    icon: <FaLinkedin size={24} />,
-  },
-];
-
 // Footer menu (removed "Contacts" and "Sponsors" for special handling)
 const footerMenu: Menu[] = [
   { path: "agenda", title: "Agenda" },
@@ -53,6 +34,36 @@ const scrollToSection = (id: string) => {
 };
 
 const Footer = () => {
+  const contactEmail =
+    process.env.NEXT_PUBLIC_CONTACT_EMAIL || "partnership@blockfestafrica.com";
+  const twitterHandle = (
+    process.env.NEXT_PUBLIC_TWITTER_HANDLE || "@blockfestafrica"
+  ).replace("@", "");
+  const instagramHandle =
+    process.env.NEXT_PUBLIC_INSTAGRAM_HANDLE || "blockfestafrica";
+  const youtubeChannel =
+    process.env.NEXT_PUBLIC_YOUTUBE_CHANNEL || "@blockfestafrica";
+  const linkedinPage =
+    process.env.NEXT_PUBLIC_LINKEDIN_PAGE || "company/blockfest-africa";
+
+  const socialIcons: Menu[] = [
+    {
+      path: `https://x.com/${twitterHandle}`,
+      icon: <FaXTwitter size={24} />,
+    },
+    {
+      path: `https://www.instagram.com/${instagramHandle}`,
+      icon: <FaInstagram size={24} />,
+    },
+    {
+      path: `https://youtube.com/${youtubeChannel}`,
+      icon: <FaYoutube size={24} />,
+    },
+    {
+      path: `https://www.linkedin.com/${linkedinPage}`,
+      icon: <FaLinkedin size={24} />,
+    },
+  ];
   return (
     <footer
       className={`${Gotham.className} bg-black px-5 py-10 pt-14 lg:p-[70px] flex md:flex-row flex-col gap-y-10 md:items-end justify-between`}
@@ -83,7 +94,7 @@ const Footer = () => {
 
           {/* Sponsors mailto link */}
           <Link
-            href="mailto:partnership@blockfestafrica.com"
+            href={`mailto:${contactEmail}`}
             className="text-base xl:text-2xl font-medium cursor-pointer text-[#A4A4A4] hover:text-white transition-colors duration-300 ease-in-out"
           >
             Sponsors
@@ -91,7 +102,7 @@ const Footer = () => {
 
           {/* Contact mailto link */}
           <Link
-            href="mailto:partnership@blockfestafrica.com"
+            href={`mailto:${contactEmail}`}
             className="text-base xl:text-2xl font-medium cursor-pointer text-[#A4A4A4] hover:text-white transition-colors duration-300 ease-in-out"
           >
             Contact
@@ -119,7 +130,7 @@ const Footer = () => {
         <Button
           type="button"
           variant="ghost"
-           onClick={() => toast("Registration is coming soon 🚀")}
+          onClick={() => toast("Registration is coming soon 🚀")}
           className="text-white border-2 px-[38px] py-5 text-lg font-semibold cursor-pointer rounded-[12px]"
         >
           Register

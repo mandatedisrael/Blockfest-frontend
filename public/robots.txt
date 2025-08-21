@@ -1,0 +1,15 @@
+# Robots.txt for Blockfest Africa
+User-agent: *
+Allow: /
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /private/
+
+# Sitemap location
+Sitemap: https://blockfestafrica.com/sitemap.xml
+
+# Crawl-delay for better server performance
+Crawl-delay: 1
