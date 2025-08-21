@@ -1,11 +1,11 @@
 "use client";
-import type React from 'react';
-import { useCallback } from 'react';
-import type { EmblaOptionsType, EmblaCarouselType } from 'embla-carousel';
+import type React from "react";
+import { useCallback } from "react";
+import type { EmblaOptionsType, EmblaCarouselType } from "embla-carousel";
 import useEmblaCarousel from "embla-carousel-react";
-import Autoplay from 'embla-carousel-autoplay';
-import Image from 'next/image';
-import { NextButton, PrevButton, usePrevNextButtons } from './carouselbuttons';
+import Autoplay from "embla-carousel-autoplay";
+import Image from "next/image";
+import { NextButton, PrevButton, usePrevNextButtons } from "./carouselbuttons";
 
 type Speaker = {
   name: string;
@@ -42,7 +42,7 @@ const Speakers: React.FC<PropType> = (props) => {
   } = usePrevNextButtons(emblaApi, onNavButtonClick);
 
   return (
-    <section className="embla w-full flex items-center justify-center flex-col relative px-4 lg:px-20">
+    <section className="embla w-full flex items-center justify-center flex-col relative px-5 lg:px-20">
       {/* Navigation Buttons - Positioned absolutely */}
       <div className="absolute left-4 lg:left-8 top-1/2 transform -translate-y-1/2 z-10">
         <PrevButton
@@ -65,7 +65,7 @@ const Speakers: React.FC<PropType> = (props) => {
         <div className="flex touch-pan-y touch-pinch-zoom">
           {speakers.map((speaker, index) => (
             <div
-              className="transform-gpu flex-[0_0_100%] min-w-0 flex justify-center items-center px-4"
+              className="transform-gpu flex-[0_0_100%] min-w-0 flex justify-center items-center px-5"
               key={`${speaker.name}-${index}`}
             >
               {/* Speaker Card */}

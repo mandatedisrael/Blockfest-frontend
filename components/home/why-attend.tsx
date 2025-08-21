@@ -8,8 +8,8 @@ const montserrat = Montserrat({
 });
 export function WhyAttendSection() {
   return (
-    <section className="flex flex-col items-center justify-center px-10 py-20 xl:py-[80px] xl:px-[70px] bg-gradient-to-b from-[#1A3461] to-[#005DFF]">
-      <h2 className="font-[350px] text-[69.65px] leading-[82px] tracking-[-5%] my-[50px] text-white">
+    <section className="flex flex-col items-center justify-center px-5 py-20 xl:py-[80px] xl:px-[70px] bg-gradient-to-b from-[#1A3461] to-[#005DFF]">
+      <h2 className="font-[350px] text-5xl xl:text-[69.65px] xl:leading-[82px] tracking-[-5%] my-[25px] xl:my-[50px] text-white">
         Why Attend<span className="text-[#F2CB45]">?</span>
       </h2>
       <FeaturesComp />
@@ -73,10 +73,10 @@ function FeaturesComp() {
 
             {/* Content Section */}
             <div className="flex flex-col gap-y-2.5 md:gap-y-0 justify-center md:ml-4 flex-1 text-left basis-full md:basis-[60%] p-4">
-              <h3 className="text-[#1B64E4] font-[350px] text-[41.03px] leading-[42.74px] mb-2 ">
+              <h3 className="text-[#1B64E4] font-medium text-3xl xl:text-[41.03px] xl:leading-[42.74px] xl:mb-2 ">
                 {category.header}
               </h3>
-              <p className={`${montserrat.className} text-[#808080] text-[17.1px] leading-[1.2] font-medium`}>
+              <p className={`${montserrat.className} text-[#808080] text-sm xl:text-[17.1px] xl:leading-[1.2] font-medium`}>
                 {category.text}
               </p>
             </div>
