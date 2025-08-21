@@ -17,19 +17,19 @@ const Gotham = localFont({
 
 const socialIcons: Menu[] = [
   {
-    path: "/",
+    path: "https://x.com/blockfestafrica?s=21&t=6lhy88Nx16NRD-zFs2-S9w",
     icon: <FaXTwitter size={24} />,
   },
   {
-    path: "/",
+    path: "https://www.instagram.com/blockfestafrica?igsh=MXZnZHdlOXhwODFrdQ==",
     icon: <FaInstagram size={24} />,
   },
   {
-    path: "/",
+    path: "https://youtube.com/@blockfestafrica?si=3dS2Y0_bQZkYVe20",
     icon: <FaYoutube size={24} />,
   },
   {
-    path: "/",
+    path: "https://www.linkedin.com/company/blockfest-africa/",
     icon: <FaLinkedin size={24} />,
   },
 ];
@@ -80,6 +80,7 @@ const Footer = () => {
               <Link
                 href={item.path}
                 key={index}
+                target="_blank"
                 className="cursor-pointer text-[#A4A4A4] hover:text-white transition-colors duration-300 ease-in-out"
               >
                 {item.icon}
