@@ -1,5 +1,5 @@
 import React from "react";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { HeroSection } from "@/components/home/hero";
 import { StatsSection } from "@/components/home/stat";
 import { CountdownGallerySection } from "@/components/home/countdown-gallery";
