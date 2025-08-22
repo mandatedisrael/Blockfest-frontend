@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import { Menu } from "@/types";
+import type { Menu } from "@/types";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
 import { CiMenuBurger } from "react-icons/ci";
 import { AiOutlineClose } from "react-icons/ai";
@@ -46,6 +46,7 @@ const Navbar = () => {
       <nav className="hidden md:flex items-center gap-x-[28px]">
         {navbarMenu.map((item) => (
           <button
+          type="button"
             key={item.title}
             onClick={() => scrollToSection(item.path)}
             className="text-base font-normal text-[#A4A4A4] hover:text-white transition-colors duration-300 ease-in-out"
@@ -96,7 +97,7 @@ const MobileMenu = () => {
       {/* Close Button */}
       <div className="flex justify-end mb-8">
         <SheetClose asChild>
-          <button className="p-2 rounded-full hover:bg-gray-100 transition">
+          <button type="button" className="p-2 rounded-full hover:bg-gray-100 transition">
             <AiOutlineClose size={28} className="text-white" />
           </button>
         </SheetClose>
@@ -107,6 +108,7 @@ const MobileMenu = () => {
         {navbarMenu.map((item) => (
           <SheetClose asChild key={item.title}>
             <button
+            type="button"
               onClick={() => scrollToSection(item.path)}
               className="text-lg font-medium text-[#A4A4A4] hover:text-white hover:underline transition w-fit"
             >
