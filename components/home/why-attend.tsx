@@ -9,10 +9,10 @@ const montserrat = Montserrat({
 export function WhyAttendSection() {
   return (
     <section
-      className="flex flex-col items-center justify-center px-5 py-20 lg:py-[80px] lg:px-[70px] bg-gradient-to-b from-[#1A3461] to-[#005DFF]"
+      className="flex flex-col items-center justify-center px-2.5 py-20 lg:py-[80px] lg:px-[70px] bg-gradient-to-b from-[#1A3461] to-[#005DFF]"
       id="about"
     >
-      <h2 className="font-[350px] text-5xl lg:text-[69.65px] lg:leading-[82px] tracking-[-5%] my-[40px] lg:my-[50px] text-white">
+      <h2 className="font-[350px] text-4xl lg:text-[69.65px] lg:leading-[82px] tracking-[-5%] my-[40px] lg:my-[50px] text-white">
         Why Attend<span className="text-[#F2CB45]">?</span>
       </h2>
       <FeaturesComp />
@@ -56,14 +56,14 @@ function FeaturesComp() {
 
   return (
     <div className="">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2.5 lg:gap-6">
         {categories.map((category, index) => (
           <div
             key={`${category.header}-${index}`}
-            className="flex items-center bg-white rounded-[20px] shadow-lg hover:shadow-xl transition-shadow duration-300"
+            className="flex items-center bg-white rounded-[11px] lg:rounded-[20px] shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
             {/* Image Section */}
-            <div className="basis-full md:h-[243px] h-full md:basis-[40%] hidden md:flex  overflow-hidden rounded-[20px] flex-shrink-0">
+            <div className="basis-full h-[141px] md:h-[243px] md:basis-[40%] flex overflow-hidden rounded-[11px] lg:rounded-[20px] lg:flex-shrink-0">
               <Image
                 src={category.image}
                 alt={`${category.header} - Blockfest Africa benefit`}
@@ -77,11 +77,11 @@ function FeaturesComp() {
 
             {/* Content Section */}
             <div className="flex flex-col gap-y-2.5 md:gap-y-0 justify-center md:ml-4 flex-1 text-left basis-full md:basis-[60%] p-4">
-              <h3 className="text-[#1B64E4] text-center md:text-left font-medium text-2xl xl:text-[41.03px] xl:leading-[42.74px] xl:mb-2 ">
+              <h3 className="text-[#1B64E4] text-left font-medium text-[21px] xl:text-[41.03px] leading-[21.91px] xl:leading-[42.74px] xl:mb-2 ">
                 {category.header}
               </h3>
               <p
-                className={`${montserrat.className} text-[#808080] text-sm xl:text-[17.1px] xl:leading-[1.2] font-medium`}
+                className={`${montserrat.className} text-[#808080] text-[9px] xl:text-[17.1px] xl:leading-[1.2] font-medium`}
               >
                 {category.text}
               </p>

@@ -71,45 +71,45 @@ export function Countdown ({ targetDate, onExpire }: CountdownProps)  {
   };
 
   return (
-    <div className={`${bebasNeue.className} flex items-start justify-between lg:justify-center border-4 border-[#3870D3] w-[80%] lg:w-fit space-x-2 lg:space-x-5 rounded-[24px] p-5 md:px-10 lg:py-[30px] lg:px-[50px]`}>
+    <div className={`${bebasNeue.className} flex items-start justify-between lg:justify-center border-[1.44px] lg:border-4 border-[#3870D3] w-[60%] lg:w-fit lg:space-x-5 rounded-[8px] lg:rounded-[24px] py-2.5 px-5 md:px-10 lg:py-[30px] lg:px-[50px]`}>
       <div className="flex items-center flex-col">
-        <p className="text-[#3870D3] font-normal text-3xl md:text-4xl lg:text-[104.95px] lg:leading-[110px] tabular-nums">
+        <p className="text-[#3870D3] font-normal text-[34px] md:text-4xl lg:text-[104.95px] lg:leading-[110px] tabular-nums">
           {formatNumber(timeLeft.days)}
         </p>
-        <p className="font-light text-base md:text-lg lg:text-[31.98px] lg:leading-[120%] uppercase">
+        <p className="font-light text-[10px] md:text-lg lg:text-[31.98px] lg:leading-[120%] uppercase">
           days
         </p>
       </div>
 
-      <span className="text-[#3870D3] font-normal text-3xl md:text-4xl lg:text-[104.95px] lg:leading-[110px]">:</span>
+      <span className="text-[#3870D3] font-normal text-[34px] md:text-4xl lg:text-[104.95px] lg:leading-[110px]">:</span>
 
       <div className="flex items-center flex-col">
-        <p className="text-[#3870D3] font-normal text-3xl md:text-4xl lg:text-[104.95px] lg:leading-[110px] tabular-nums">
+        <p className="text-[#3870D3] font-normal text-[34px] md:text-4xl lg:text-[104.95px] lg:leading-[110px] tabular-nums">
           {formatNumber(timeLeft.hours)}
         </p>
-        <p className="font-light text-base md:text-lg lg:text-[31.98px] lg:leading-[120%] uppercase">
+        <p className="font-light text-[10px] md:text-lg lg:text-[31.98px] lg:leading-[120%] uppercase">
           hours
         </p>
       </div>
 
-      <span className="text-[#3870D3] font-normal text-3xl md:text-4xl lg:text-[104.95px] lg:leading-[110px]">:</span>
+      <span className="text-[#3870D3] font-normal text-[34px] md:text-4xl lg:text-[104.95px] lg:leading-[110px]">:</span>
 
       <div className="flex items-center flex-col">
-        <p className="text-[#3870D3] font-normal text-3xl md:text-4xl lg:text-[104.95px] lg:leading-[110px] tabular-nums">
+        <p className="text-[#3870D3] font-normal text-[34px] md:text-4xl lg:text-[104.95px] lg:leading-[110px] tabular-nums">
           {formatNumber(timeLeft.minutes)}
         </p>
-        <p className="font-light text-base md:text-lg lg:text-[31.98px] lg:leading-[120%] uppercase">
+        <p className="font-light text-[10px] md:text-lg lg:text-[31.98px] lg:leading-[120%] uppercase">
           minutes
         </p>
       </div>
 
-      <span className="text-[#3870D3] font-normal text-3xl md:text-4xl lg:text-[104.95px] lg:leading-[110px]">:</span>
+      <span className="text-[#3870D3] font-normal text-[34px] md:text-4xl lg:text-[104.95px] lg:leading-[110px]">:</span>
 
       <div className="flex items-center flex-col">
-        <p className="text-[#3870D3] font-normal text-3xl md:text-4xl lg:text-[104.95px] lg:leading-[110px] tabular-nums">
+        <p className="text-[#3870D3] font-normal text-[34px] md:text-4xl lg:text-[104.95px] lg:leading-[110px] tabular-nums">
           {formatNumber(timeLeft.seconds)}
         </p>
-        <p className="font-light text-base md:text-lg lg:text-[31.98px] lg:leading-[120%] uppercase">
+        <p className="font-light text-[10px] md:text-lg lg:text-[31.98px] lg:leading-[120%] uppercase">
           seconds
         </p>
       </div>
