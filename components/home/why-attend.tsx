@@ -60,7 +60,7 @@ function FeaturesComp() {
         {categories.map((category, index) => (
           <div
             key={`${category.header}-${index}`}
-            className="flex items-center bg-white rounded-[11px] lg:rounded-[20px] shadow-lg hover:shadow-xl transition-shadow duration-300"
+            className="flex items-center gap-x-4 bg-white rounded-[11px] lg:rounded-[20px] shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
             {/* Image Section */}
             <div className="basis-full h-[141px] md:h-[243px] md:basis-[40%] flex overflow-hidden rounded-[11px] lg:rounded-[20px] lg:flex-shrink-0">
@@ -69,14 +69,14 @@ function FeaturesComp() {
                 alt={`${category.header} - Blockfest Africa benefit`}
                 width={160}
                 height={112}
-                sizes="(max-width: 768px) 0px, (max-width: 1024px) 160px, 160px"
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 40vw, 160px"
                 loading="lazy"
                 className="w-full h-full object-cover"
               />
             </div>
 
             {/* Content Section */}
-            <div className="flex flex-col gap-y-2.5 md:gap-y-0 justify-center md:ml-4 flex-1 text-left basis-full md:basis-[60%] p-4">
+            <div className="flex flex-col gap-y-2.5 md:gap-y-0 justify-center md:ml-4 flex-1 text-left basis-full md:basis-[60%] lg:p-4">
               <h3 className="text-[#1B64E4] text-left font-medium text-[21px] xl:text-[41.03px] leading-[21.91px] xl:leading-[42.74px] xl:mb-2 ">
                 {category.header}
               </h3>
