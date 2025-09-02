@@ -35,13 +35,14 @@ export function PartnersSection() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
               {[...Array(8)].map((_, index) => (
                 <div
+                  // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                   key={index}
                   className="bg-white/5 rounded-2xl p-6 h-20 flex items-center justify-center border border-white/10 hover:bg-white/10 transition-all duration-300"
                 >
                   <div
                     className="w-3 h-3 bg-[#F2CB45] rounded-full animate-pulse"
                     style={{ animationDelay: `${index * 200}ms` }}
-                  ></div>
+                  />
                 </div>
               ))}
             </div>
@@ -101,7 +102,7 @@ export function PartnersSection() {
               asChild
               className="lg:p-[34px] font-semibold text-sm lg:text-[22px] rounded-[13px] p-[21px] w-fit  border border-white text-white bg-transparent shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50"
             >
-              <a>Become a sponsor</a>
+              <p>Become a sponsor</p>
             </Button>
           </Link>
         </div>
