@@ -66,10 +66,10 @@ const Footer = () => {
   ];
   return (
     <footer
-      className={`${Gotham.className} bg-black px-5 py-10 pt-14 lg:p-[70px] flex md:flex-row flex-col gap-y-10 md:items-end justify-between`}
+      className={`${Gotham.className} bg-black px-10 py-10 pt-14 lg:p-[70px] flex gap-y-10  items-center md:items-end justify-between`}
       id="contact"
     >
-      <div className="order-last md:order-first">
+      <div className="">
         <Image
           src="/images/footer-logo.svg"
           alt="Blockfest Africa Footer Logo"
@@ -83,7 +83,7 @@ const Footer = () => {
 
       <div className="flex flex-col md:flex-row md:items-end md:gap-x-12.5 gap-y-10">
         {/* Navigation Menu */}
-        <nav className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-4 md:gap-x-12.5 md:gap-y-6">
+        <nav className="hidden lg:grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-4 md:gap-x-12.5 md:gap-y-6">
           {footerMenu.map((item) => (
             <button
               key={item.title}
