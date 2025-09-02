@@ -55,39 +55,42 @@ function FeaturesComp() {
   ];
 
   return (
-    <div className="">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 lg:gap-6 mx-10 md:mx-5 lg:mx-0">
+    <div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mx-10 md:mx-5 lg:mx-0">
         {categories.map((category, index) => (
           <div
             key={`${category.header}-${index}`}
-            className="flex items-center gap-x-0 lg:gap-x-4 bg-white rounded-[11px] lg:rounded-[20px] shadow-lg hover:shadow-xl transition-shadow duration-300"
+            className="flex flex-col md:flex-row items-stretch gap-x-0 lg:gap-x-4 bg-white rounded-[11px] lg:rounded-[20px] shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden "
           >
             {/* Image Section */}
-            <div className="basis-full h-full md:h-[243px] md:basis-[40%] flex overflow-hidden rounded-[11px] lg:rounded-[20px] lg:flex-shrink-0">
-              <Image
-                src={category.image}
-                alt={`${category.header} - Blockfest Africa benefit`}
-                width={160}
-                height={112}
-                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 40vw, 160px"
-                loading="lazy"
-                className="w-full h-full object-cover"
-              />
+            <div className="w-full md:w-[40%] flex">
+              <div className="relative w-full h-[200px] md:h-auto flex-1">
+                <Image
+                  src={category.image}
+                  alt={`${category.header} - Blockfest Africa benefit`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 40vw, 160px"
+                  loading="lazy"
+                  className="object-cover"
+                />
+              </div>
             </div>
 
             {/* Content Section */}
-            <div className="flex flex-col gap-y-2.5 md:gap-y-0 justify-center md:ml-4 flex-1 text-left basis-full md:basis-[60%] p-2.5 lg:p-4">
-              <h3 className="text-[#1B64E4] text-left font-medium text-[21px] xl:text-[41.03px] leading-[21.91px] xl:leading-[42.74px] xl:mb-2 ">
+            <div className="flex flex-col  justify-center flex-1 text-left p-4 ">
+              <h3 className="text-[#1B64E4] font-medium text-[21px] xl:text-[41.03px] leading-[21.91px] xl:leading-[42.74px] xl:mb-2">
                 {category.header}
               </h3>
               <p
-                className={`${montserrat.className} text-[#808080] text-[9px] xl:text-[17.1px] xl:leading-[1.2] font-medium`}
+                className={`${montserrat.className} text-[#808080] text-[9px] xl:text-[17.1px] xl:leading-[1.2] font-medium w-[90%]`}
               >
                 {category.text}
               </p>
             </div>
           </div>
         ))}
+
+
       </div>
     </div>
   );
