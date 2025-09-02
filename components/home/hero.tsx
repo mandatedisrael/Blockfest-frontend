@@ -17,22 +17,22 @@ export function HeroSection() {
       id="home"
     >
       <div className="flex items-center flex-col space-y-4  text-center text-black">
-        <p className="font-medium text-base lg:text-[22.3px] uppercase bg-[#F2CB45] px-7 py-5 lg:px-[35px] lg:py-[26px] rounded-[10.71px] mt-10 lg:mt-0">
+        <p className="font-medium text-[10px] lg:text-base lg:text-[22.3px] uppercase bg-[#F2CB45] px-4 py-3.5 lg:px-[35px] lg:py-[26px] rounded-[5px] lg:rounded-[10.71px] mt-50 lg:mt-0">
           welcome to blockfest 2025
         </p>
-        <p className="text-5xl leading-14 lg:text-[69.65px] lg:leading-[82px] tracking-[-5%] font-[350px]">
+        <p className="text-[43px] lg:text-5xl leading-13 lg:text-[69.65px] lg:leading-[82px] tracking-[-5%] font-[350px]">
           Africa&apos;s biggest web<span className="text-[#F2CB45]">3</span>{" "}
           {""}
           festival
         </p>
-        <div className="flex items-center justify-center space-x-2 text-xl lg:text-[28px] font-medium text-[#1A63E3]">
+        <div className="flex items-center justify-center lg:space-x-2 text-lg lg:text-[28px] font-medium text-[#1A63E3]">
           <p>BUIDL</p>
           <GoDotFill />
           <p>BRIDGE</p>
           <GoDotFill />
           <p>BECOME</p>
         </div>
-        <div className="flex items-center justify-center md:space-x-8 space-x-4 text-sm lg:text-base font-medium text-black">
+        <div className="flex items-center justify-center md:space-x-8 space-x-[18px] text-[10px] lg:text-base font-medium text-black">
           <div className="flex items-center space-x-1 lg:space-x-2 uppercase ">
             <FaLocationDot className="text-[#F34C73]" />
             <span>lagos,nigeria</span>
@@ -42,9 +42,9 @@ export function HeroSection() {
             <span>October 11th, 2025</span>
           </div>
         </div>
-        <div className="flex md:flex-row flex-col items-center justify-center gap-4 mt-5 mb-10 lg:mb-0">
+        <div className="flex items-center justify-center gap-4 mt-5 mb-10 lg:mb-0">
           <Button
-            className="font-semibold text-lg lg:text-[22px] rounded-[13px] p-[34px] w-full md:w-fit"
+            className="font-semibold text-sm lg:text-[22px] rounded-[13px] p-[21px] lg:p-[34px] w-fit"
             onClick={() =>
               toast("🚀 Registration is coming soon!", {
                 // description: "Africa's biggest Web3 festival awaits you",
@@ -68,11 +68,13 @@ export function HeroSection() {
           >
             Register Now
           </Button>
-          <Link
-            href={`mailto:${contactEmail}`}
-            className="font-semibold text-lg lg:text-[22px] rounded-[13px] p-[18px]  w-full md:w-fit  border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 text-black"
-          >
-            Become a sponsor
+          <Link href={`mailto:${contactEmail}`} passHref>
+            <Button
+              asChild
+              className="lg:p-[34px] font-semibold text-sm lg:text-[22px] rounded-[13px] p-[21px] w-fit  border border-[#1B64E4] text-[#1B64E4] bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50"
+            >
+              <a>Become a sponsor</a>
+            </Button>
           </Link>
         </div>
       </div>

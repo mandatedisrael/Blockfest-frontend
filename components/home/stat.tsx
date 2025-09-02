@@ -9,10 +9,10 @@ const stats = [
 
 export function StatsSection() {
   return (
-    <section className="flex items-center justify-between space-x-3 lg:justify-evenly px-5 text-center py-[35px] bg-gradient-to-r from-[#1B64E4] to-[#031940] text-white">
+    <section className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:space-x-3 px-25 lg:px-5 text-center py-[35px] bg-gradient-to-b lg:bg-gradient-to-r from-[#1B64E4] to-[#031940] text-white">
       {stats.map((stat, index) => (
-        <div key={index} className="flex flex-col items-center lg:space-y-2">
-          <p className="font-medium text-base lg:text-[30px] lg:leading-[17.61px] tracking-[-5%]">
+        <div key={index} className="flex flex-col items-center space-y-2">
+          <p className="font-medium text-[22px] lg:text-[30px] leading-[12.71px] lg:leading-[17.61px] tracking-[-5%]">
             {stat.value}
           </p>
           <p className="font-normal text-sm lg:text-[19.5px] lg:leading-[17.61px]">
