@@ -3,7 +3,7 @@ import Image from "next/image";
 import React from "react";
 import type { Menu } from "@/types";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
-import { CiMenuBurger } from "react-icons/ci";
+// import { CiMenuBurger } from "react-icons/ci";
 import { AiOutlineClose } from "react-icons/ai";
 import localFont from "next/font/local";
 import Link from "next/link";

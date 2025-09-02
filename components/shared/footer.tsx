@@ -9,7 +9,7 @@ import {
   FaXTwitter,
   FaYoutube,
 } from "react-icons/fa6";
-import { Menu } from "@/types";
+import type { Menu } from "@/types";
 import localFont from "next/font/local";
 import { toast } from "sonner";
 
@@ -86,6 +86,7 @@ const Footer = () => {
         <nav className="hidden lg:grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-4 md:gap-x-12.5 md:gap-y-6">
           {footerMenu.map((item) => (
             <button
+            type="button"
               key={item.title}
               onClick={() => scrollToSection(item.path)}
               className="text-base xl:text-2xl font-medium cursor-pointer text-[#A4A4A4] hover:text-white transition-colors duration-300 ease-in-out text-left"

@@ -16,7 +16,7 @@ export function HeroSection() {
       className="relative w-full flex items-center justify-center bg-[url('/images/hero.webp')] bg-cover bg-center bg-no-repeat min-h-[65vh] 2xl:min-h-[65vh] xl:min-h-screen md:min-h-screen lg:min-h-screen object-contain  "
       id="home"
     >
-      <div className="flex items-center flex-col space-y-4  text-center text-black mt-50 md:my-20 lg:my-30">
+      <div className="flex items-center flex-col space-y-4  text-center text-black mt-50 mb-20 md:my-20 lg:my-30">
         <p className="font-medium text-[10px] lg:text-base lg:text-[22.3px] uppercase bg-[#F2CB45] px-4 py-3.5 lg:px-[35px] lg:py-[26px] rounded-[5px] lg:rounded-[10.71px]">
           welcome to blockfest 2025
         </p>
@@ -73,7 +73,7 @@ export function HeroSection() {
               asChild
               className="lg:p-[34px] font-semibold text-sm lg:text-[22px] rounded-[13px] p-[21px] w-fit  border border-[#1B64E4] text-[#1B64E4] bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50"
             >
-              <a>Become a sponsor</a>
+              <p>Become a sponsor</p>
             </Button>
           </Link>
         </div>
