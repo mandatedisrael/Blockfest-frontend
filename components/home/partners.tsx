@@ -11,7 +11,7 @@ export function PartnersSection() {
   return (
     <section className="flex flex-col items-center justify-center px-5 py-14 lg:py-[80px] lg:px-[70px] bg-[#1B64E4]">
       <div className="flex flex-col items-center justify-center space-y-5">
-        <h2 className="font-medium text-5xl lg:text-[69.65px] lg:leading-[82px] tracking-[-5%] md:my-[25px] lg:my-[50px] text-center text-white">
+        <h2 className="font-medium text-[39px] lg:text-[69.65px] lg:leading-[82px] tracking-[-5%] md:my-[25px] lg:my-[50px] text-center text-white">
           Our Partners
         </h2>
 
@@ -60,40 +60,49 @@ export function PartnersSection() {
       </div>
 
       <div className="flex flex-col items-center justify-center space-y-5 mt-12.5 lg:mt-[110px] text-white text-center">
-        <h1 className="font-medium text-4xl lg:text-[69.65px] lg:leading-[82.21px] tracking-[-5%] xl:w-[55%] ">
+        <h1 className="font-medium text-[39px] leading-[45.13px] lg:text-[69.65px] lg:leading-[82.21px] tracking-[-5%] xl:w-[55%] ">
           Be part of Africa&apos;s web3 Revolution
         </h1>
-        <p className="font-medium text-lg lg:text-2xl lg:leading-[1.2] xl:w-[65%]">
+        <p className="font-medium text-sm lg:text-2xl lg:leading-[1.2] w-[90%] xl:w-[65%]">
           Whether you&apos;re ready to attend, showcase your brand, or invest in
           the future Blockfest Africa offers a front-row seat to innovation,
           culture, and community. Don&apos;t just watch the future happen be
           involved.
         </p>
 
-        <div className="flex md:flex-row flex-col gap-y-4 items-center justify-center gap-x-4 mt-[25px] lg:mt-[50px]">
+        <div className="flex items-center justify-center gap-4 mt-5 mb-10 lg:mb-0">
           <Button
-            className="font-semibold text-lg xl:text-[22px] rounded-[13px] p-[34px] md:w-fit w-full border border-[#3D7BE8] bg-[#3D7BE8] text-white"
+            className="font-semibold text-sm lg:text-[22px] rounded-[13px] p-[21px] lg:p-[34px] w-fit"
             onClick={() =>
               toast("🚀 Registration is coming soon!", {
-                description: "Get ready for Africa's biggest Web3 festival",
+                // description: "Africa's biggest Web3 festival awaits you",
                 style: {
                   background:
-                    "linear-gradient(135deg, #1B64E4 0%, #3D7BE8 100%)",
-                  border: "1px solid #F2CB45",
-                  color: "#FFFFFF",
+                    "linear-gradient(145deg, #FFFFFF 0%, #F8FAFC 100%)",
+                  border: "3px solid #1B64E4",
+                  color: "#000000",
+                  borderRadius: "16px",
+                  boxShadow:
+                    "0 20px 40px rgba(27, 100, 228, 0.4), 0 6px 20px rgba(0, 0, 0, 0.15)",
+                  fontWeight: "700",
+                  backdropFilter: "blur(8px)",
+                  transform: "scale(1.02)",
                 },
-                className: "font-medium text-base",
-                duration: 5000,
+                className:
+                  "font-extrabold text-lg [&>div]:text-black [&>div>div]:text-gray-700",
+                duration: 6000,
               })
             }
           >
             Register Now
           </Button>
-          <Link
-            href={`mailto:${contactEmail}`}
-            className="font-semibold text-black text-lg lg:text-[22px] rounded-[13px] p-[18px]  w-full md:w-fit  border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50"
-          >
-            Become a sponsor
+          <Link href={`mailto:${contactEmail}`} passHref>
+            <Button
+              asChild
+              className="lg:p-[34px] font-semibold text-sm lg:text-[22px] rounded-[13px] p-[21px] w-fit  border border-white text-white bg-transparent shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50"
+            >
+              <a>Become a sponsor</a>
+            </Button>
           </Link>
         </div>
       </div>

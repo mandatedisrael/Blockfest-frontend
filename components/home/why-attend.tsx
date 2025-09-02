@@ -56,14 +56,14 @@ function FeaturesComp() {
 
   return (
     <div className="">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2.5 lg:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 lg:gap-6 mx-10 md:mx-5 lg:mx-0">
         {categories.map((category, index) => (
           <div
             key={`${category.header}-${index}`}
-            className="flex items-center gap-x-4 bg-white rounded-[11px] lg:rounded-[20px] shadow-lg hover:shadow-xl transition-shadow duration-300"
+            className="flex items-center gap-x-0 lg:gap-x-4 bg-white rounded-[11px] lg:rounded-[20px] shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
             {/* Image Section */}
-            <div className="basis-full h-[141px] md:h-[243px] md:basis-[40%] flex overflow-hidden rounded-[11px] lg:rounded-[20px] lg:flex-shrink-0">
+            <div className="basis-full h-full md:h-[243px] md:basis-[40%] flex overflow-hidden rounded-[11px] lg:rounded-[20px] lg:flex-shrink-0">
               <Image
                 src={category.image}
                 alt={`${category.header} - Blockfest Africa benefit`}
@@ -76,7 +76,7 @@ function FeaturesComp() {
             </div>
 
             {/* Content Section */}
-            <div className="flex flex-col gap-y-2.5 md:gap-y-0 justify-center md:ml-4 flex-1 text-left basis-full md:basis-[60%] lg:p-4">
+            <div className="flex flex-col gap-y-2.5 md:gap-y-0 justify-center md:ml-4 flex-1 text-left basis-full md:basis-[60%] p-2.5 lg:p-4">
               <h3 className="text-[#1B64E4] text-left font-medium text-[21px] xl:text-[41.03px] leading-[21.91px] xl:leading-[42.74px] xl:mb-2 ">
                 {category.header}
               </h3>
