@@ -10,9 +10,50 @@ export function PartnersSection() {
 
   return (
     <section className="flex flex-col items-center justify-center px-5 py-14 lg:py-[80px] lg:px-[70px] bg-[#1B64E4]">
+      {/* Media Partners Section */}
+      <div className="flex flex-col items-center justify-center space-y-5 mb-10">
+        <h2 className="font-medium text-[39px] lg:text-[69.65px] lg:leading-[82px] tracking-[-5%] md:my-[25px] lg:my-[50px] text-center text-white">
+          Media Partners
+        </h2>
+
+        {/* Media Partners Revealing Soon Design */}
+        <div className="w-full max-w-5xl mx-auto">
+          <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 lg:p-12 text-center border border-white/20">
+            <div className="mb-6">
+              <div className="w-20 h-20 lg:w-24 lg:h-24 mx-auto mb-6 bg-[#F2CB45]/20 rounded-full flex items-center justify-center">
+                <div className="text-3xl lg:text-4xl">📺</div>
+              </div>
+              <h3 className="text-2xl lg:text-4xl font-bold mb-4 text-white">
+                <span className="text-[#F2CB45]">Revealing Soon!</span>
+              </h3>
+              <p className="text-base lg:text-lg text-white/90 max-w-3xl mx-auto leading-relaxed">
+                Leading media organizations covering Africa&apos;s Web3
+                revolution.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
+              {[...Array(8)].map((_, index) => (
+                <div
+                  // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                  key={index}
+                  className="bg-white/5 rounded-2xl p-6 h-20 flex items-center justify-center border border-white/10 hover:bg-white/10 transition-all duration-300"
+                >
+                  <div
+                    className="w-3 h-3 bg-[#F2CB45] rounded-full animate-pulse"
+                    style={{ animationDelay: `${index * 200}ms` }}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Community Partners Section */}
       <div className="flex flex-col items-center justify-center space-y-5">
         <h2 className="font-medium text-[39px] lg:text-[69.65px] lg:leading-[82px] tracking-[-5%] md:my-[25px] lg:my-[50px] text-center text-white">
-          Our Partners
+          Community Partners
         </h2>
 
         {/* Revealing Soon Design */}
@@ -26,9 +67,8 @@ export function PartnersSection() {
                 <span className="text-[#F2CB45]">Revealing Soon!</span>
               </h3>
               <p className="text-base lg:text-lg text-white/90 max-w-3xl mx-auto leading-relaxed">
-                We&apos;re partnering with Africa&apos;s leading blockchain
-                companies, innovative startups, and global Web3 organizations to
-                bring you an unprecedented festival experience.
+                Africa&apos;s leading blockchain companies and innovative Web3
+                organizations.
               </p>
             </div>
 
