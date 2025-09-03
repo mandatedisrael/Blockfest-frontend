@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { umamiTrack } from "@/lib/analytics";
 
 // Extend PerformanceEntry to include optional value property for web vitals
 interface PerformanceEntryWithValue extends PerformanceEntry {
@@ -16,16 +17,13 @@ export function PerformanceMonitor() {
     if (typeof window !== "undefined" && "PerformanceObserver" in window) {
       const observer = new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
-          // Log performance metrics
-          if (typeof window !== "undefined" && window.gtag) {
-            const entryWithValue = entry as PerformanceEntryWithValue;
-            window.gtag("event", "web_vital", {
-              event_category: "Web Vitals",
-              event_label: entry.name,
-              value: Math.round(entryWithValue.value || entry.duration || 0),
-              non_interaction: true,
-            });
-          }
+          // Log performance metrics to Umami
+          const entryWithValue = entry as PerformanceEntryWithValue;
+          umamiTrack("web_vital", {
+            category: "Web Vitals",
+            name: entry.name,
+            value: Math.round(entryWithValue.value || entry.duration || 0),
+          });
         }
       });
 
@@ -45,9 +43,9 @@ export function PerformanceMonitor() {
           "navigation"
         )[0] as PerformanceNavigationTiming;
 
-        if (navigation && typeof window !== "undefined" && window.gtag) {
-          window.gtag("event", "page_load_time", {
-            event_category: "Performance",
+        if (navigation) {
+          umamiTrack("page_load_time", {
+            category: "Performance",
             value: Math.round(
               navigation.loadEventEnd - navigation.loadEventStart
             ),

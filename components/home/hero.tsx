@@ -6,8 +6,10 @@ import { Button } from "../ui/button";
 import React from "react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { useUmami } from "@/lib/hooks/use-umami";
 
 export function HeroSection() {
+  const { trackButtonClick, trackRegistration } = useUmami();
   const contactEmail =
     process.env.NEXT_PUBLIC_CONTACT_EMAIL || "partnership@blockfestafrica.com";
 
@@ -45,7 +47,9 @@ export function HeroSection() {
         <div className="flex items-center justify-center gap-4 mt-5 mb-10 lg:mb-0">
           <Button
             className="font-semibold text-sm lg:text-[22px] rounded-[13px] p-[21px] lg:p-[34px] w-fit"
-            onClick={() =>
+            onClick={() => {
+              trackButtonClick("Register Now", "Hero Section");
+              trackRegistration("hero-cta");
               toast("🚀 Registration is coming soon!", {
                 // description: "Africa's biggest Web3 festival awaits you",
                 style: {
@@ -63,8 +67,8 @@ export function HeroSection() {
                 className:
                   "font-extrabold text-lg [&>div]:text-black [&>div>div]:text-gray-700",
                 duration: 6000,
-              })
-            }
+              });
+            }}
           >
             Register Now
           </Button>
@@ -72,6 +76,9 @@ export function HeroSection() {
             <Button
               asChild
               className="lg:p-[34px] font-semibold text-sm lg:text-[22px] rounded-[13px] p-[21px] w-fit  border border-[#1B64E4] text-[#1B64E4] bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50"
+              onClick={() => {
+                trackButtonClick("Become a sponsor", "Hero Section");
+              }}
             >
               <p>Become a sponsor</p>
             </Button>
