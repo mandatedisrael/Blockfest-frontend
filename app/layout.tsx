@@ -218,28 +218,22 @@ export default function RootLayout({
           }}
         />
 
-        {/* Google Analytics */}
-        {process.env.NEXT_PUBLIC_GA_ID && (
-          <>
+        {/* Umami Analytics */}
+        {process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID &&
+          process.env.NEXT_PUBLIC_UMAMI_SRC && (
             <script
               async
-              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+              src={process.env.NEXT_PUBLIC_UMAMI_SRC}
+              data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
+              {...(process.env.NODE_ENV === "production" && {
+                "data-domains":
+                  process.env.NEXT_PUBLIC_SITE_URL?.replace(
+                    /https?:\/\//,
+                    ""
+                  ) || "blockfestafrica.com",
+              })}
             />
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-                  gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
-                    page_title: document.title,
-                    page_location: window.location.href,
-                  });
-                `,
-              }}
-            />
-          </>
-        )}
+          )}
 
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />

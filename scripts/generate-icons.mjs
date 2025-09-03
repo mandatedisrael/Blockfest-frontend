@@ -1,7 +1,7 @@
 // SEO Image Generation Script
 // Generates all required SEO images from logo.svg
 // Run: npm install sharp
-// Then: node scripts/generate-icons.js
+// Then: node scripts/generate-icons.mjs
 
 import sharp from "sharp";
 import fs from "fs";
