@@ -19,10 +19,27 @@ export function PerformanceMonitor() {
         for (const entry of list.getEntries()) {
           // Log performance metrics to Umami
           const entryWithValue = entry as PerformanceEntryWithValue;
+          let value: number;
+          switch (entry.entryType) {
+            case "paint":
+              // FP/FCP are reported via startTime (duration is 0)
+              value = Math.round(entry.startTime);
+              break;
+            case "measure":
+              value = Math.round(entry.duration);
+              break;
+            case "navigation":
+              // Avoid double-reporting; handled by page_load_time below
+              continue;
+            default:
+              value = Math.round(
+                entryWithValue.value ?? entry.duration ?? entry.startTime ?? 0
+              );
+          }
           umamiTrack("web_vital", {
             category: "Web Vitals",
             name: entry.name,
-            value: Math.round(entryWithValue.value || entry.duration || 0),
+            value,
           });
         }
       });

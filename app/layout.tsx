@@ -3,6 +3,7 @@ import "./globals.css";
 import Footer from "@/components/shared/footer";
 import Navbar from "@/components/shared/navbar";
 import { Toaster } from "@/components/ui/sonner";
+import { PerformanceMonitor } from "@/components/performance-monitor";
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL || "https://blockfestafrica.com";
@@ -260,6 +261,7 @@ export default function RootLayout({
         <meta name="msapplication-config" content="/browserconfig.xml" />
       </head>
       <body className="antialiased w-full mx-auto [@media(min-width:1920px)]:max-w-[1440px]">
+        <PerformanceMonitor />
         <Navbar />
         {children}
         <Footer />

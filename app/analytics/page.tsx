@@ -153,6 +153,8 @@ export default async function AnalyticsPage() {
                 className="w-full h-[calc(100vh-180px)] border-0 bg-white rounded-b-2xl relative z-10"
                 title="Blockfest Africa Analytics Dashboard"
                 loading="lazy"
+                sandbox="allow-scripts allow-same-origin allow-forms"
+                referrerPolicy="no-referrer-when-downgrade"
               />
             </div>
           </div>

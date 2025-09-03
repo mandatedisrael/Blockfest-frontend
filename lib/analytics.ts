@@ -32,7 +32,7 @@ export const trackEvent = ({
   label,
   value,
   umamiEvent,
-  umamiData,
+  umamiData = {},
 }: {
   action: string;
   category: string;
@@ -48,3 +48,13 @@ export const trackEvent = ({
     umamiTrack(action, { category, label, value, ...umamiData });
   }
 };
+
+// Utility function to sanitize stack traces for production analytics
+export function sanitizeStack(stack?: string | null): string | undefined {
+  if (!stack) return undefined;
+  // Drop query strings and hashes; cap length
+  return stack
+    .replace(/\?.*?(?=\s|$)/g, "")
+    .replace(/#.*?(?=\s|$)/g, "")
+    .slice(0, 4000);
+}

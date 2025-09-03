@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { umamiTrack } from "@/lib/analytics";
+import { umamiTrack, sanitizeStack } from "@/lib/analytics";
 
 interface ErrorBoundaryState {
   hasError: boolean;
@@ -30,13 +30,20 @@ export class ErrorBoundary extends React.Component<
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     console.error("Error caught by boundary:", error, errorInfo);
 
-    // Log to Umami analytics
-    umamiTrack("error", {
-      errorMessage: error.message,
-      errorType: "javascript",
-      stack: error.stack,
-      componentStack: errorInfo.componentStack,
-    });
+    // Log to Umami analytics (production-only, guarded)
+    try {
+      if (process.env.NODE_ENV === "production") {
+        umamiTrack("error", {
+          errorMessage: error.message?.slice(0, 500),
+          errorType: "javascript",
+          stack: sanitizeStack(error.stack),
+          componentStack: sanitizeStack(errorInfo.componentStack),
+        });
+      }
+    } catch (analyticsErr) {
+      // Never let analytics throw inside an error boundary
+      console.warn("umamiTrack failed:", analyticsErr);
+    }
   }
 
   render() {
