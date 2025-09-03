@@ -37,8 +37,8 @@ Add these variables to your `.env.local` file:
 
 ```env
 # Umami Analytics Configuration
-NEXT_PUBLIC_UMAMI_WEBSITE_ID=f51c2cb5-95f2-4acf-a56c-8e73bed719c4
-NEXT_PUBLIC_UMAMI_SRC=https://cloud.umami.is/script.js
+NEXT_PUBLIC_UMAMI_WEBSITE_ID=YOUR_UMAMI_WEBSITE_ID
+NEXT_PUBLIC_UMAMI_SRC=YOUR_UMAMI_SCRIPT_URL   # e.g., https://cloud.umami.is/script.js
 ```
 
 ### 3. Restart Development Server
