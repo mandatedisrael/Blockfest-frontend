@@ -94,27 +94,11 @@ const nextConfig: NextConfig = {
         destination: "/",
         permanent: true,
       },
-      // {
-      //   source: "/speakers",
-      //   destination: "/",
-      //   permanent: true,
-      // },
-      // {
-      //   source: "/sponsors",
-      //   destination: "/",
-      //   permanent: true,
-      // },
+
       {
         source: "/register",
         destination: "/",
         permanent: true,
-      },
-      // Catch-all for any other non-existent paths (this should be last)
-      {
-        source:
-          "/((?!analytics|api|_next|favicon.ico|robots.txt|sitemap.xml|images/).*)",
-        destination: "/",
-        permanent: false,
       },
     ];
   },
