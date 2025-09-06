@@ -80,8 +80,8 @@ export function PartnersSection() {
               trackButtonClick("Register Now", "Partners Section");
               trackRegistration("partners-cta");
               toast("🚀 Registration Opens Tomorrow!", {
-                description:
-                  "Get ready for Africa's biggest Web3 festival - registration starts September 7th",
+                // description:
+                //   "Get ready for Africa's biggest Web3 festival - registration starts September 7th",
                 style: {
                   background:
                     "linear-gradient(145deg, #FFFFFF 0%, #F8FAFC 100%)",
