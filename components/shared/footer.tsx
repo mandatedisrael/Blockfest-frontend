@@ -12,6 +12,7 @@ import {
 import type { Menu } from "@/types";
 import localFont from "next/font/local";
 import { useUmami } from "@/lib/hooks/use-umami";
+import { toast } from "sonner";
 
 const Gotham = localFont({
   src: "../../app/fonts/Gotham-Medium.otf",
@@ -131,23 +132,30 @@ const Footer = () => {
       </div>
 
       <div className="hidden md:block">
-        {/* <Link
-          href="https://luma.com/gf1ye3cw?tk=AQAG9o"
-          target="_blank"
-          rel="noopener noreferrer"
-        > */}
         <Button
           type="button"
           variant="ghost"
           onClick={() => {
             trackButtonClick("Register Now", "Footer Section");
             trackRegistration("footer-cta");
+            toast("🚀 Registration Opens Tomorrow!", {
+              description:
+                "Get ready for Africa's biggest Web3 festival - registration starts September 7th",
+              style: {
+                background: "linear-gradient(145deg, #000000 0%, #1A3461 100%)",
+                border: "1px solid #F2CB45",
+                color: "#FFFFFF",
+                borderRadius: "10px",
+                backdropFilter: "blur(10px)",
+              },
+              className: "font-medium text-base",
+              duration: 5000,
+            });
           }}
           className="text-white border-2 px-[38px] py-5 text-lg font-semibold cursor-pointer rounded-[12px]"
         >
           Register
         </Button>
-        {/* </Link> */}
       </div>
     </footer>
   );
