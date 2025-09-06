@@ -11,7 +11,7 @@ import {
 } from "react-icons/fa6";
 import type { Menu } from "@/types";
 import localFont from "next/font/local";
-import { toast } from "sonner";
+import { useUmami } from "@/lib/hooks/use-umami";
 
 const Gotham = localFont({
   src: "../../app/fonts/Gotham-Medium.otf",
@@ -34,6 +34,7 @@ const scrollToSection = (id: string) => {
 };
 
 const Footer = () => {
+  const { trackButtonClick, trackRegistration } = useUmami();
   const contactEmail =
     process.env.NEXT_PUBLIC_CONTACT_EMAIL || "partnership@blockfestafrica.com";
   const twitterHandle = (
@@ -86,7 +87,7 @@ const Footer = () => {
         <nav className="hidden lg:grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-4 md:gap-x-12.5 md:gap-y-6">
           {footerMenu.map((item) => (
             <button
-            type="button"
+              type="button"
               key={item.title}
               onClick={() => scrollToSection(item.path)}
               className="text-base xl:text-2xl font-medium cursor-pointer text-[#A4A4A4] hover:text-white transition-colors duration-300 ease-in-out text-left"
@@ -130,27 +131,23 @@ const Footer = () => {
       </div>
 
       <div className="hidden md:block">
-        <Button
-          type="button"
-          variant="ghost"
-          onClick={() =>
-            toast("� Registration is coming soon!", {
-              description: "Stay tuned for the biggest Web3 event in Africa",
-              style: {
-                background: "linear-gradient(145deg, #000000 0%, #1A3461 100%)",
-                border: "1px solid #F2CB45",
-                color: "#FFFFFF",
-                borderRadius: "10px",
-                backdropFilter: "blur(10px)",
-              },
-              className: "font-medium text-base",
-              duration: 4500,
-            })
-          }
-          className="text-white border-2 px-[38px] py-5 text-lg font-semibold cursor-pointer rounded-[12px]"
+        <Link
+          href="https://luma.com/gf1ye3cw?tk=AQAG9o"
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          Register
-        </Button>
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={() => {
+              trackButtonClick("Register Now", "Footer Section");
+              trackRegistration("footer-cta");
+            }}
+            className="text-white border-2 px-[38px] py-5 text-lg font-semibold cursor-pointer rounded-[12px]"
+          >
+            Register
+          </Button>
+        </Link>
       </div>
     </footer>
   );
