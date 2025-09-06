@@ -5,7 +5,6 @@ import { IoCalendarClearOutline } from "react-icons/io5";
 import { Button } from "../ui/button";
 import React from "react";
 import Link from "next/link";
-import { toast } from "sonner";
 import { useUmami } from "@/lib/hooks/use-umami";
 
 export function HeroSection() {
@@ -45,33 +44,21 @@ export function HeroSection() {
           </div>
         </div>
         <div className="flex items-center justify-center gap-4 mt-5 mb-10 lg:mb-0">
-          <Button
-            className="font-semibold text-sm lg:text-[22px] rounded-[13px] p-[21px] lg:p-[34px] w-fit"
-            onClick={() => {
-              trackButtonClick("Register Now", "Hero Section");
-              trackRegistration("hero-cta");
-              toast("🚀 Registration is coming soon!", {
-                // description: "Africa's biggest Web3 festival awaits you",
-                style: {
-                  background:
-                    "linear-gradient(145deg, #FFFFFF 0%, #F8FAFC 100%)",
-                  border: "3px solid #1B64E4",
-                  color: "#000000",
-                  borderRadius: "16px",
-                  boxShadow:
-                    "0 20px 40px rgba(27, 100, 228, 0.4), 0 6px 20px rgba(0, 0, 0, 0.15)",
-                  fontWeight: "700",
-                  backdropFilter: "blur(8px)",
-                  transform: "scale(1.02)",
-                },
-                className:
-                  "font-extrabold text-lg [&>div]:text-black [&>div>div]:text-gray-700",
-                duration: 6000,
-              });
-            }}
+          <Link
+            href="https://luma.com/gf1ye3cw?tk=AQAG9o"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            Register Now
-          </Button>
+            <Button
+              className="font-semibold text-sm lg:text-[22px] rounded-[13px] p-[21px] lg:p-[34px] w-fit"
+              onClick={() => {
+                trackButtonClick("Register Now", "Hero Section");
+                trackRegistration("hero-cta");
+              }}
+            >
+              Register Now
+            </Button>
+          </Link>
           <Link href={`mailto:${contactEmail}`} passHref>
             <Button
               asChild
