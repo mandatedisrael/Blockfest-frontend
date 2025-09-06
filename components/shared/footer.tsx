@@ -131,23 +131,23 @@ const Footer = () => {
       </div>
 
       <div className="hidden md:block">
-        <Link
+        {/* <Link
           href="https://luma.com/gf1ye3cw?tk=AQAG9o"
           target="_blank"
           rel="noopener noreferrer"
+        > */}
+        <Button
+          type="button"
+          variant="ghost"
+          onClick={() => {
+            trackButtonClick("Register Now", "Footer Section");
+            trackRegistration("footer-cta");
+          }}
+          className="text-white border-2 px-[38px] py-5 text-lg font-semibold cursor-pointer rounded-[12px]"
         >
-          <Button
-            type="button"
-            variant="ghost"
-            onClick={() => {
-              trackButtonClick("Register Now", "Footer Section");
-              trackRegistration("footer-cta");
-            }}
-            className="text-white border-2 px-[38px] py-5 text-lg font-semibold cursor-pointer rounded-[12px]"
-          >
-            Register
-          </Button>
-        </Link>
+          Register
+        </Button>
+        {/* </Link> */}
       </div>
     </footer>
   );

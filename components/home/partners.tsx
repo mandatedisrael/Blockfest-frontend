@@ -73,21 +73,21 @@ export function PartnersSection() {
         </p>
 
         <div className="flex items-center justify-center gap-4 mt-5 mb-10 lg:mb-0">
-          <Link
+          {/* <Link
             href="https://luma.com/gf1ye3cw?tk=AQAG9o"
             target="_blank"
             rel="noopener noreferrer"
+          > */}
+          <Button
+            className="font-semibold text-sm lg:text-[22px] rounded-[13px] p-[21px] lg:p-[34px] w-fit"
+            onClick={() => {
+              trackButtonClick("Register Now", "Partners Section");
+              trackRegistration("partners-cta");
+            }}
           >
-            <Button
-              className="font-semibold text-sm lg:text-[22px] rounded-[13px] p-[21px] lg:p-[34px] w-fit"
-              onClick={() => {
-                trackButtonClick("Register Now", "Partners Section");
-                trackRegistration("partners-cta");
-              }}
-            >
-              Register Now
-            </Button>
-          </Link>
+            Register Now
+          </Button>
+          {/* </Link> */}
           <Link
             href={`mailto:${contactEmail}`}
             passHref
