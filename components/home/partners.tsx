@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "../ui/button";
 import React, { useState, useEffect } from "react";
 import { useUmami } from "@/lib/hooks/use-umami";
@@ -103,55 +104,225 @@ export function PartnersSection() {
   };
 
   return (
-    <section className="flex flex-col items-center justify-center px-5 py-14 lg:py-[80px] lg:px-[70px] bg-[#1B64E4]">
+    <section className="flex flex-col items-center justify-center px-5 py-8 lg:py-[60px] lg:px-[70px] bg-[#1B64E4]">
       {/* Industry Partners Section */}
       <div className="flex flex-col items-center justify-center space-y-5">
-        <h2 className="font-medium text-[39px] lg:text-[69.65px] lg:leading-[82px] tracking-[-5%] md:my-[25px] lg:my-[50px] text-center text-white">
+        <h2 className="font-medium text-[39px] lg:text-[69.65px] lg:leading-[82px] tracking-[-5%] md:my-[15px] lg:my-[30px] text-center text-white">
           Partners
         </h2>
 
-        {/* Industry Partners Revealing Soon Design */}
-        <div className="w-full max-w-5xl mx-auto">
-          <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 lg:p-12 text-center border border-white/20">
-            <div className="mb-6">
-              <div className="w-20 h-20 lg:w-24 lg:h-24 mx-auto mb-6 bg-[#F2CB45]/20 rounded-full flex items-center justify-center">
-                <div className="text-3xl lg:text-4xl">🏢</div>
-              </div>
-              <h3 className="text-2xl lg:text-4xl font-bold mb-4 text-white">
-                <span className="text-[#F2CB45]">Revealing Soon!</span>
-              </h3>
-              <p className="text-base lg:text-lg text-white/90 max-w-3xl mx-auto leading-relaxed">
-                Leading industry partners driving Africa&apos;s Web3 ecosystem
-                forward.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
-              {[...Array(8)].map((_, index) => (
-                <div
-                  // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-                  key={index}
-                  className="bg-white/5 rounded-2xl p-6 h-20 flex items-center justify-center border border-white/10 hover:bg-white/10 transition-all duration-300"
-                >
-                  <div
-                    className="w-3 h-3 bg-[#F2CB45] rounded-full animate-pulse"
-                    style={{ animationDelay: `${index * 200}ms` }}
+        {/* Sponsors Section */}
+        <div className="w-full max-w-6xl mx-auto space-y-6">
+          {/* Diamond Sponsors */}
+          <div className="text-center">
+            <h3 className="text-2xl lg:text-3xl font-bold text-[#F2CB45] mb-4">
+              💎 Diamond Sponsors
+            </h3>
+            <div className="flex justify-center">
+              <Link
+                href="https://jeroid.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 lg:p-8 border border-white/20 hover:bg-white/15 transition-all duration-300 flex items-center justify-center cursor-pointer h-24 lg:h-28 w-64 lg:w-80">
+                  <Image
+                    src="/images/sponsors/jeroid-logo.png"
+                    alt="Jeroid"
+                    width={250}
+                    height={100}
+                    className="h-16 lg:h-20 w-auto object-contain"
                   />
                 </div>
-              ))}
+              </Link>
+              {/* <Link
+                href="https://0g.ai"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 lg:p-8 border border-white/20 hover:bg-white/15 transition-all duration-300 flex items-center justify-center cursor-pointer h-24 lg:h-28">
+                  <Image
+                    src="/images/sponsors/0g-lab-logo.png"
+                    alt="0G Labs"
+                    width={250}
+                    height={100}
+                    className="h-16 lg:h-20 w-auto object-contain"
+                  />
+                </div>
+              </Link> */}
+            </div>
+          </div>
+
+          {/* Gold Sponsors */}
+          <div className="text-center">
+            <h3 className="text-2xl lg:text-3xl font-bold text-[#FFD700] mb-4">
+              🥇 Gold Sponsors
+            </h3>
+            <div className="flex justify-center">
+              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 lg:p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 flex items-center justify-center cursor-pointer h-20 lg:h-24 w-64 lg:w-80">
+                <div className="text-center">
+                  <div className="text-3xl lg:text-4xl mb-2">🏢</div>
+                  <p className="text-white/60 text-sm lg:text-base font-medium">
+                    Coming Soon
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+              <Link
+                href="https://hyperbridge.network"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 lg:p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 flex items-center justify-center cursor-pointer h-20 lg:h-24">
+                  <Image
+                    src="/images/sponsors/hyperbridge-logo.png"
+                    alt="Hyperbridge"
+                    width={220}
+                    height={88}
+                    className="h-14 lg:h-18 w-auto object-contain"
+                  />
+                </div>
+              </Link>
+              <Link
+                href="https://polkadot.africa"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 lg:p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 flex items-center justify-center cursor-pointer h-20 lg:h-24">
+                  <Image
+                    src="/images/sponsors/polkadot-africa-logo.webp"
+                    alt="Polkadot Africa"
+                    width={220}
+                    height={88}
+                    className="h-14 lg:h-18 w-auto object-contain"
+                  />
+                </div>
+              </Link>
+            </div> */}
+
+          {/* Silver Sponsors */}
+          <div className="text-center">
+            <h3 className="text-2xl lg:text-3xl font-bold text-[#C0C0C0] mb-4">
+              🥈 Silver Sponsors
+            </h3>
+            <div className="flex justify-center">
+              <Link
+                href="https://gidi.africa"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 lg:p-4 border border-white/20 hover:bg-white/15 transition-all duration-300 flex items-center justify-center cursor-pointer h-18 lg:h-20 w-40 lg:w-48">
+                  <Image
+                    src="/images/sponsors/gidi-logo.png"
+                    alt="Gidi"
+                    width={180}
+                    height={72}
+                    className="h-16 lg:h-18 w-auto object-contain"
+                  />
+                </div>
+              </Link>
             </div>
           </div>
         </div>
 
-        {/* Original partners grid commented out */}
-        {/* <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 w-full mt-[30px] place-items-center">
-          {[...Array(6)].map((_, index) => (
-            <div
-              key={index}
-              className=" h-[50px] w-[50px] md:aspect-[195/116] bg-[#D9D9D9] 2xl:w-[195px] 2xl:h-[116px] 2xl:aspect-[195/116] xl:w-[120px] xl:h-[80px] md:rounded-[16px] rounded-full flex items-center justify-center"
-            />
-          ))}
-        </div> */}
+        {/* Community Partners Section */}
+        <div className="w-full max-w-6xl mx-auto pt-4">
+          <div className="text-center mb-4">
+            <h3 className="text-2xl lg:text-3xl font-bold text-white mb-4">
+              🤝 Community Partners
+            </h3>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
+            <Link
+              href="https://www.web3bridgeafrica.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 lg:p-4 border border-white/20 hover:bg-white/15 transition-all duration-300 flex items-center justify-center cursor-pointer h-18 lg:h-20">
+                <Image
+                  src="/images/community/web3bridge-logo.webp"
+                  alt="Web3Bridge"
+                  width={150}
+                  height={64}
+                  className="h-10 lg:h-12 w-auto object-contain"
+                />
+              </div>
+            </Link>
+
+            <Link
+              href="https://web3afrika.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 lg:p-4 border border-white/20 hover:bg-white/15 transition-all duration-300 flex items-center justify-center cursor-pointer h-18 lg:h-20">
+                <Image
+                  src="/images/community/web3afrika-logo.png"
+                  alt="Web3Afrika"
+                  width={150}
+                  height={64}
+                  className="h-10 lg:h-12 w-auto object-contain"
+                />
+              </div>
+            </Link>
+            <Link
+              href="https://bchainafrica.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 lg:p-4 border border-white/20 hover:bg-white/15 transition-all duration-300 flex items-center justify-center cursor-pointer h-18 lg:h-20">
+                <Image
+                  src="/images/community/bchain-logo.jpg"
+                  alt="Bchain"
+                  width={150}
+                  height={64}
+                  className="h-10 lg:h-12 w-auto object-contain"
+                />
+              </div>
+            </Link>
+            <Link
+              href="https://womenindefi.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-1 lg:p-1 border border-white/20 hover:bg-white/15 transition-all duration-300 flex items-center justify-center cursor-pointer h-18 lg:h-20">
+                <Image
+                  src="/images/community/wid-logo.png"
+                  alt="WID"
+                  width={300}
+                  height={120}
+                  className="h-full lg:h-full w-auto object-cover scale-150"
+                />
+              </div>
+            </Link>
+          </div>
+        </div>
+
+        {/* Media Partners Section */}
+        <div className="w-full max-w-6xl mx-auto pt-4">
+          <div className="text-center mb-4">
+            <h3 className="text-2xl lg:text-3xl font-bold text-white mb-4">
+              📺 Media Partners
+            </h3>
+          </div>
+          <div className="flex justify-center">
+            <Link
+              href="https://amdmediaworld.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 lg:p-4 border border-white/20 hover:bg-white/15 transition-all duration-300 flex items-center justify-center cursor-pointer h-18 lg:h-20 w-40 lg:w-48">
+                <Image
+                  src="/images/media/amd-logo.webp"
+                  alt="AMD"
+                  width={150}
+                  height={64}
+                  className="h-10 lg:h-12 w-auto object-contain"
+                />
+              </div>
+            </Link>
+          </div>
+        </div>
       </div>
 
       <div className="flex flex-col items-center justify-center space-y-5 mt-12.5 lg:mt-[110px] text-white text-center">
