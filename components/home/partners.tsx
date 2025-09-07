@@ -291,10 +291,25 @@ export function PartnersSection() {
                   alt="WID"
                   width={300}
                   height={120}
-                  className="h-full lg:h-full w-auto object-cover scale-150"
+                  className="h-full lg:h-full w-auto object-cover scale-170"
                 />
               </div>
             </Link>
+            {/* <Link
+              href="https://x.com/web3unilag"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-1 lg:p-1 border border-white/20 hover:bg-white/15 transition-all duration-300 flex items-center justify-center cursor-pointer h-18 lg:h-20">
+                <Image
+                  src="/images/community/web3unilag.png"
+                  alt="Web3 Unilag"
+                  width={200}
+                  height={80}
+                  className="h-full lg:h-full w-auto object-cover scale-130"
+                />
+              </div>
+            </Link> */}
           </div>
         </div>
 
