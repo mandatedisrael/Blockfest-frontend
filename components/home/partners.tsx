@@ -13,18 +13,20 @@ export function PartnersSection() {
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
 
   useEffect(() => {
-    const checkRegistrationTime = () => {
-      const now = new Date();
-      // Set to September 7th, 2025 at 6:00 PM GMT+1 (17:00 UTC)
-      const registrationOpenTime = new Date("2025-09-07T17:00:00.000Z");
-      setIsRegistrationOpen(now >= registrationOpenTime);
-    };
-
-    checkRegistrationTime();
-    // Check every minute
-    const interval = setInterval(checkRegistrationTime, 60000);
-
-    return () => clearInterval(interval);
+    const openAtMs = Date.parse(
+      process.env.NEXT_PUBLIC_REGISTRATION_OPEN_AT ?? "2025-09-07T17:15:00.000Z"
+    );
+    const nowMs = Date.now();
+    if (nowMs >= openAtMs) {
+      setIsRegistrationOpen(true);
+      return;
+    }
+    setIsRegistrationOpen(false);
+    const timer = window.setTimeout(
+      () => setIsRegistrationOpen(true),
+      openAtMs - nowMs
+    );
+    return () => window.clearTimeout(timer);
   }, []);
 
   const handleRegistrationClick = () => {
@@ -39,9 +41,22 @@ export function PartnersSection() {
         "noopener,noreferrer"
       );
     } else {
-      // Show X Space invitation toast
-      toast("🎤 Join our X Space Today at 6pm GMT+1!", {
-        description: "Registration link coming soon!!",
+      // Show X Space invitation toast with dynamic date formatting
+      const openAt = new Date(
+        process.env.NEXT_PUBLIC_REGISTRATION_OPEN_AT ??
+          "2025-09-07T17:15:00.000Z"
+      );
+      const whenLagos = openAt.toLocaleString(undefined, {
+        timeZone: "Africa/Lagos",
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      });
+      toast(`🎤 Join our X Space ${whenLagos} WAT.`, {
+        description: "The registration link will be posted here once it opens.",
         style: {
           background:
             "linear-gradient(145deg, #000000 0%, #1DA1F2 15%, #000000 100%)",
