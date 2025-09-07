@@ -212,13 +212,13 @@ export function PartnersSection() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 lg:p-4 border border-white/20 hover:bg-white/15 transition-all duration-300 flex items-center justify-center cursor-pointer h-18 lg:h-20 w-40 lg:w-48">
+                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-1 lg:p-2 border border-white/20 hover:bg-white/15 transition-all duration-300 flex items-center justify-center cursor-pointer h-18 lg:h-20 w-40 lg:w-48">
                   <Image
                     src="/images/sponsors/gidi-logo.png"
                     alt="Gidi"
-                    width={180}
-                    height={72}
-                    className="h-16 lg:h-18 w-auto object-contain"
+                    width={240}
+                    height={96}
+                    className="h-full lg:h-full w-auto object-cover scale-125"
                   />
                 </div>
               </Link>
