@@ -165,15 +165,17 @@ const Footer = () => {
       id="contact"
     >
       <div className="">
-        <Image
-          src="/images/footer-logo.svg"
-          alt="Blockfest Africa Footer Logo"
-          width={150}
-          height={49}
-          sizes="(max-width: 768px) 124px, 150px"
-          loading="lazy"
-          className="xl:w-[150px] w-[124px] h-[42px] xl:h-[49px] aspect-[124/42] xl:aspect-[150/49]"
-        />
+        <Link href="/" className="inline-block cursor-pointer">
+          <Image
+            src="/images/footer-logo.svg"
+            alt="Blockfest Africa Footer Logo"
+            width={150}
+            height={49}
+            sizes="(max-width: 768px) 124px, 150px"
+            loading="lazy"
+            className="xl:w-[150px] w-[124px] h-[42px] xl:h-[49px] aspect-[124/42] xl:aspect-[150/49] hover:opacity-80 transition-opacity duration-200"
+          />
+        </Link>
       </div>
 
       <div className="flex flex-col md:flex-row md:items-end md:gap-x-12.5 gap-y-10">
