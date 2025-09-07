@@ -45,8 +45,6 @@ const Navbar = () => {
           priority
           className="xl:w-[140px] xl:h-[38px] xl:aspect-[140/38] aspect-[124/24] w-[124px] h-[24px] block md:hidden"
         />
-      </Link>
-      <Link href="/" className="cursor-pointer">
         <Image
           src="/images/logo.svg"
           alt="Blockfest Africa Logo"
