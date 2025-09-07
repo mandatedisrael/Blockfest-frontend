@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import {
@@ -38,6 +38,66 @@ const Footer = () => {
   const { trackButtonClick, trackRegistration } = useUmami();
   const contactEmail =
     process.env.NEXT_PUBLIC_CONTACT_EMAIL || "partnership@blockfestafrica.com";
+
+  const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
+
+  useEffect(() => {
+    const checkRegistrationTime = () => {
+      const now = new Date();
+      // Set to September 7th, 2025 at 6:00 PM GMT+1 (17:00 UTC)
+      const registrationOpenTime = new Date("2025-09-07T17:00:00.000Z");
+      setIsRegistrationOpen(now >= registrationOpenTime);
+    };
+
+    checkRegistrationTime();
+    // Check every minute
+    const interval = setInterval(checkRegistrationTime, 60000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleRegistrationClick = () => {
+    trackButtonClick("Register Now", "Footer Section");
+    trackRegistration("footer-cta");
+
+    if (isRegistrationOpen) {
+      // Registration is open - redirect to Luma
+      window.open(
+        "https://luma.com/gf1ye3cw?tk=AQAG9o",
+        "_blank",
+        "noopener,noreferrer"
+      );
+    } else {
+      // Show X Space invitation toast
+      toast("🎤 Join our X Space Today at 6pm GMT+1!", {
+        description: "Registration link coming soon!!",
+        style: {
+          background:
+            "linear-gradient(145deg, #000000 0%, #1DA1F2 15%, #000000 100%)",
+          border: "2px solid #1DA1F2",
+          color: "#FFFFFF",
+          borderRadius: "16px",
+          boxShadow:
+            "0 20px 40px rgba(29, 161, 242, 0.4), 0 6px 20px rgba(0, 0, 0, 0.3)",
+          fontWeight: "600",
+          backdropFilter: "blur(12px)",
+        },
+        className:
+          "font-bold text-lg [&>div]:text-white [&>div>div]:text-gray-200",
+        duration: 7000,
+        action: {
+          label: "Join X Space",
+          onClick: () =>
+            window.open(
+              "https://twitter.com/i/spaces/1kvJpMYEXALxE",
+              "_blank",
+              "noopener,noreferrer"
+            ),
+        },
+      });
+    }
+  };
+
   const twitterHandle = (
     process.env.NEXT_PUBLIC_TWITTER_HANDLE || "@blockfestafrica"
   ).replace("@", "");
@@ -135,23 +195,7 @@ const Footer = () => {
         <Button
           type="button"
           variant="ghost"
-          onClick={() => {
-            trackButtonClick("Register Now", "Footer Section");
-            trackRegistration("footer-cta");
-            toast("🚀 Registration Opens Tomorrow!", {
-              description:
-                "Get ready for Africa's biggest Web3 festival - registration starts September 7th",
-              style: {
-                background: "linear-gradient(145deg, #000000 0%, #1A3461 100%)",
-                border: "1px solid #F2CB45",
-                color: "#FFFFFF",
-                borderRadius: "10px",
-                backdropFilter: "blur(10px)",
-              },
-              className: "font-medium text-base",
-              duration: 5000,
-            });
-          }}
+          onClick={handleRegistrationClick}
           className="text-white border-2 px-[38px] py-5 text-lg font-semibold cursor-pointer rounded-[12px]"
         >
           Register
