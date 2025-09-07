@@ -23,14 +23,16 @@ export default function NotFound() {
         <div className="max-w-2xl w-full text-center">
           {/* Logo Section */}
           <div className="mb-8">
-            <Image
-              src="/images/logo.svg"
-              alt="Blockfest Africa Logo"
-              width={180}
-              height={60}
-              className="mx-auto mb-8 opacity-90"
-              priority
-            />
+            <Link href="/" className="inline-block cursor-pointer">
+              <Image
+                src="/images/logo.svg"
+                alt="Blockfest Africa Logo"
+                width={180}
+                height={60}
+                className="mx-auto mb-8 opacity-90 hover:opacity-100 transition-opacity duration-200"
+                priority
+              />
+            </Link>
           </div>
 
           {/* Main Content */}

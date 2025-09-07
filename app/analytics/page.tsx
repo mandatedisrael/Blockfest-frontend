@@ -46,22 +46,29 @@ export default async function AnalyticsPage() {
           <div className="max-w-7xl mx-auto px-4 py-6">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-[#F2CB45] to-yellow-300 rounded-xl flex items-center justify-center">
-                  <svg
-                    className="w-6 h-6 text-black"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm5-18v4h3V3h-3z" />
-                  </svg>
-                </div>
+                <Link href="/" className="cursor-pointer">
+                  <div className="w-12 h-12 bg-gradient-to-r from-[#F2CB45] to-yellow-300 rounded-xl flex items-center justify-center hover:scale-105 transition-transform duration-200">
+                    <svg
+                      className="w-6 h-6 text-black"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm5-18v4h3V3h-3z" />
+                    </svg>
+                  </div>
+                </Link>
                 <div>
-                  <h1 className="text-3xl lg:text-4xl font-bold text-white bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                    Analytics Dashboard
-                  </h1>
-                  <p className="mt-1 text-lg text-gray-300 font-medium">
-                    Blockfest Africa • Real-time Insights
-                  </p>
+                  <Link
+                    href="/"
+                    className="hover:opacity-80 transition-opacity"
+                  >
+                    <h1 className="text-3xl lg:text-4xl font-bold text-white bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                      Analytics Dashboard
+                    </h1>
+                    <p className="mt-1 text-lg text-gray-300 font-medium">
+                      Blockfest Africa • Real-time Insights
+                    </p>
+                  </Link>
                 </div>
               </div>
 
