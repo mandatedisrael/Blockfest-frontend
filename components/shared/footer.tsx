@@ -42,20 +42,29 @@ const Footer = () => {
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
 
   useEffect(() => {
-    const openAtMs = Date.parse(
-      process.env.NEXT_PUBLIC_REGISTRATION_OPEN_AT ?? "2025-09-07T17:15:00.000Z"
-    );
-    const nowMs = Date.now();
-    if (nowMs >= openAtMs) {
-      setIsRegistrationOpen(true);
-      return;
-    }
-    setIsRegistrationOpen(false);
-    const timer = window.setTimeout(
-      () => setIsRegistrationOpen(true),
-      openAtMs - nowMs
-    );
-    return () => window.clearTimeout(timer);
+    const env = process.env.NEXT_PUBLIC_REGISTRATION_OPEN_AT;
+    const fallbackIso = "2025-09-07T17:15:00.000Z";
+    const parsed = Date.parse(env ?? fallbackIso);
+    const openAtMs = Number.isFinite(parsed) ? parsed : Date.parse(fallbackIso);
+
+    let timer: number | null = null;
+    const MAX_DELAY = 2_147_483_647; // ~24.8 days
+
+    const schedule = () => {
+      const now = Date.now();
+      if (now >= openAtMs) {
+        setIsRegistrationOpen(true);
+        return;
+      }
+      setIsRegistrationOpen(false);
+      const delay = Math.min(openAtMs - now, MAX_DELAY);
+      timer = window.setTimeout(schedule, delay);
+    };
+
+    schedule();
+    return () => {
+      if (timer !== null) window.clearTimeout(timer);
+    };
   }, []);
 
   const handleRegistrationClick = () => {
@@ -71,45 +80,54 @@ const Footer = () => {
       );
     } else {
       // Show X Space invitation toast with dynamic date formatting
-      const openAt = new Date(
+      const openAtStr =
         process.env.NEXT_PUBLIC_REGISTRATION_OPEN_AT ??
-          "2025-09-07T17:15:00.000Z"
+        "2025-09-07T17:15:00.000Z";
+      const openAt = new Date(openAtStr);
+      const isValidOpenAt = !Number.isNaN(openAt.getTime());
+      const whenLagos = isValidOpenAt
+        ? openAt.toLocaleString("en-NG", {
+            timeZone: "Africa/Lagos",
+            weekday: "short",
+            month: "short",
+            day: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+            hour12: true,
+          })
+        : "soon";
+      toast(
+        `🎤 Join our X Space ${
+          isValidOpenAt ? `${whenLagos} WAT` : whenLagos
+        }!`,
+        {
+          description:
+            "The registration link will be posted here once it opens.",
+          style: {
+            background:
+              "linear-gradient(145deg, #000000 0%, #1DA1F2 15%, #000000 100%)",
+            border: "2px solid #1DA1F2",
+            color: "#FFFFFF",
+            borderRadius: "16px",
+            boxShadow:
+              "0 20px 40px rgba(29, 161, 242, 0.4), 0 6px 20px rgba(0, 0, 0, 0.3)",
+            fontWeight: "600",
+            backdropFilter: "blur(12px)",
+          },
+          className:
+            "font-bold text-lg [&>div]:text-white [&>div>div]:text-gray-200",
+          duration: 7000,
+          action: {
+            label: "Join X Space",
+            onClick: () =>
+              window.open(
+                "https://twitter.com/i/spaces/1kvJpMYEXALxE",
+                "_blank",
+                "noopener,noreferrer"
+              ),
+          },
+        }
       );
-      const whenLagos = openAt.toLocaleString(undefined, {
-        timeZone: "Africa/Lagos",
-        weekday: "short",
-        month: "short",
-        day: "numeric",
-        hour: "numeric",
-        minute: "2-digit",
-        hour12: true,
-      });
-      toast(`🎤 Join our X Space ${whenLagos} WAT.`, {
-        description: "The registration link will be posted here once it opens.",
-        style: {
-          background:
-            "linear-gradient(145deg, #000000 0%, #1DA1F2 15%, #000000 100%)",
-          border: "2px solid #1DA1F2",
-          color: "#FFFFFF",
-          borderRadius: "16px",
-          boxShadow:
-            "0 20px 40px rgba(29, 161, 242, 0.4), 0 6px 20px rgba(0, 0, 0, 0.3)",
-          fontWeight: "600",
-          backdropFilter: "blur(12px)",
-        },
-        className:
-          "font-bold text-lg [&>div]:text-white [&>div>div]:text-gray-200",
-        duration: 7000,
-        action: {
-          label: "Join X Space",
-          onClick: () =>
-            window.open(
-              "https://twitter.com/i/spaces/1kvJpMYEXALxE",
-              "_blank",
-              "noopener,noreferrer"
-            ),
-        },
-      });
     }
   };
 
