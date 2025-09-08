@@ -1047,21 +1047,50 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
   };
 }
 
-// Function to load guest data from CSV file
+// Function to load guest data from CSV file or environment variable
 async function loadGuestData(): Promise<GuestRegistration[]> {
   try {
-    // Look for CSV file in the components/insights directory
-    const csvPath = path.join(
-      process.cwd(),
-      "components",
-      "insights",
-      "guest-list.csv"
-    );
+    // Option 1: Use base64-encoded CSV data from environment variable (Netlify/Vercel)
+    if (process.env.GUEST_LIST_CSV_BASE64) {
+      try {
+        const csvContent = Buffer.from(
+          process.env.GUEST_LIST_CSV_BASE64,
+          "base64"
+        ).toString("utf-8");
+        const registrations = parseGuestCSV(csvContent);
+
+        if (process.env.NODE_ENV === "development") {
+          console.log(
+            `Loaded ${registrations.length} registrations from environment variable`
+          );
+        }
+        return registrations;
+      } catch (error) {
+        if (process.env.NODE_ENV === "development") {
+          console.error("Error parsing base64 CSV from environment:", error);
+        }
+      }
+    }
+
+    // Option 2: Use file path (for local development or VPS hosting)
+    const csvPath =
+      process.env.GUEST_LIST_CSV_PATH ||
+      path.join(process.cwd(), "data", "secure", "guest-list.csv") ||
+      path.join(
+        process.cwd(),
+        "components",
+        "insights",
+        "guest-list-sample.csv"
+      );
 
     // Check if file exists
     if (!fs.existsSync(csvPath)) {
       if (process.env.NODE_ENV === "development") {
         console.warn("CSV file not found at:", csvPath);
+        console.warn(
+          "Set GUEST_LIST_CSV_BASE64 environment variable for Netlify/Vercel hosting"
+        );
+        console.warn("Or set GUEST_LIST_CSV_PATH for file-based hosting");
       }
       return [];
     }

@@ -54,3 +54,14 @@ test-credentials.*
 # Temporary security test files
 security-test.*
 auth-test.*
+
+# Personal Data & Privacy
+# CSV files containing personal information
+guest-list.csv
+registrations.csv
+*-personal-data.csv
+*-pii.csv
+
+# Secure data directory (contains sensitive information)
+/data/secure/
+data/secure/
