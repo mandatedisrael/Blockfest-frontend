@@ -49,7 +49,30 @@ function parseCSVLine(line: string): string[] {
   }
 
   result.push(current.trim());
-  return result;
+  // Remove surrounding quotes from parsed values
+  return result.map((v) => v.replace(/^"|"$/g, ""));
+}
+
+/**
+ * Parse experience text into standardized level
+ */
+function parseExperienceLevel(expText: string): string {
+  const normalized = expText.toLowerCase();
+  
+  if (normalized.includes("newcomer") || normalized.includes("just learning")) {
+    return "Newcomer";
+  }
+  if (normalized.includes("intermediate") || normalized.includes("familiar")) {
+    return "Intermediate";
+  }
+  if (normalized.includes("advanced") || normalized.includes("actively building")) {
+    return "Advanced";
+  }
+  if (normalized.includes("web2") && normalized.includes("transitioning")) {
+    return "Web2 Transitioning";
+  }
+  
+  return "Unknown";
 }
 
 // Function to normalize country names
@@ -557,23 +580,7 @@ function parseGuestCSV(csvContent: string): GuestRegistration[] {
 
       // Parse experience level more accurately
       const experienceField = fields[indices.experience] || "";
-      let experienceLevel = "Unknown";
-      const expLower = experienceField.toLowerCase();
-
-      if (expLower.includes("newcomer") || expLower.includes("just learning"))
-        experienceLevel = "Newcomer";
-      else if (
-        expLower.includes("intermediate") ||
-        expLower.includes("familiar")
-      )
-        experienceLevel = "Intermediate";
-      else if (
-        expLower.includes("advanced") ||
-        expLower.includes("actively building")
-      )
-        experienceLevel = "Advanced";
-      else if (expLower.includes("web2") && expLower.includes("transitioning"))
-        experienceLevel = "Web2 Transitioning";
+      const experienceLevel = parseExperienceLevel(experienceField);
 
       // Clean up source field
       const sourceField = fields[indices.source] || "";
