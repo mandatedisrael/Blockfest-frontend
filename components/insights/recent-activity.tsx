@@ -6,7 +6,12 @@ interface RecentActivityProps {
 export function RecentActivity({ interests, loading }: RecentActivityProps) {
   if (loading) {
     return (
-      <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 animate-pulse">
+      <div
+        className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 animate-pulse motion-reduce:animate-none"
+        role="status"
+        aria-live="polite"
+        aria-busy="true"
+      >
         <div className="space-y-4">
           <div className="h-6 bg-white/10 rounded w-1/3"></div>
           <div className="space-y-3">

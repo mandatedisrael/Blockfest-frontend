@@ -27,7 +27,13 @@ function StatCard({
 }: StatCardProps) {
   if (loading) {
     return (
-      <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 animate-pulse">
+      <div
+        className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 animate-pulse motion-reduce:animate-none"
+        role="status"
+        aria-live="polite"
+        aria-busy="true"
+        aria-label={`Loading ${title}`}
+      >
         <div className="space-y-4">
           <div className="h-4 bg-white/10 rounded w-3/4"></div>
           <div className="h-8 bg-white/10 rounded w-1/2"></div>
@@ -80,10 +86,10 @@ function StatCard({
 }
 
 export function StatsGrid({ stats, loading }: StatsGridProps) {
-  const confirmationRate = (
-    (stats.confirmedGuests / stats.totalGuests) *
-    100
-  ).toFixed(1);
+  const confirmationRate =
+    stats.totalGuests > 0
+      ? ((stats.confirmedGuests / stats.totalGuests) * 100).toFixed(1)
+      : "0.0";
 
   const statCards = [
     {
