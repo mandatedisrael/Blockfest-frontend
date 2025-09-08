@@ -560,28 +560,40 @@ function parseGuestCSV(csvContent: string): GuestRegistration[] {
         locationParts.length > 1 ? locationParts[locationParts.length - 1] : "";
       const country = normalizeCountry(rawCountry);
 
-      // Parse profession from "describes you" field with better logic
+      // Parse profession from "describes you" field - HANDLE MULTIPLE SELECTIONS
       const professionField = fields[indices.profession] || "";
-      let profession = "Other";
+      const professions: string[] = [];
       const professionLower = professionField.toLowerCase();
 
-      if (professionLower.includes("developer")) profession = "Developer";
-      else if (professionLower.includes("student")) profession = "Student";
-      else if (professionLower.includes("creator")) profession = "Creator";
-      else if (professionLower.includes("researcher"))
-        profession = "Researcher";
-      else if (
+      // Check for ALL selected professions (not just first match)
+      if (professionLower.includes("developer")) professions.push("Developer");
+      if (professionLower.includes("student")) professions.push("Student");
+      if (professionLower.includes("creator")) professions.push("Creator");
+      if (professionLower.includes("researcher"))
+        professions.push("Researcher");
+      if (
         professionLower.includes("founder") ||
         professionLower.includes("entrepreneur")
       )
-        profession = "Founder";
-      else if (professionLower.includes("designer")) profession = "Designer";
-      else if (
+        professions.push("Founder");
+      if (professionLower.includes("designer")) professions.push("Designer");
+      if (
         professionLower.includes("bd/sales") ||
         professionLower.includes("business")
       )
-        profession = "Business Development";
-      else if (professionLower.includes("marketing")) profession = "Marketing";
+        professions.push("Business Development");
+      if (professionLower.includes("marketing")) professions.push("Marketing");
+      if (
+        professionLower.includes("policy") ||
+        professionLower.includes("lawyer")
+      )
+        professions.push("Policy/Legal");
+      if (professionLower.includes("investor"))
+        professions.push("Professional Investor");
+
+      // If no matches found or empty, use "Other"
+      const profession =
+        professions.length > 0 ? professions.join(", ") : "Other";
 
       // Parse experience level more accurately
       const experienceField = fields[indices.experience] || "";
@@ -730,7 +742,7 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
         experienceScores.length
       : 0;
 
-  // Interest/Profession analysis - based on the profession categorization
+  // Interest/Profession analysis - handle multiple selections correctly
   const professionCounts: { [key: string]: number } = {};
   registrations.forEach((reg) => {
     if (
@@ -738,8 +750,17 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
       reg.profession !== "Other" &&
       reg.profession !== "Unknown"
     ) {
-      professionCounts[reg.profession] =
-        (professionCounts[reg.profession] || 0) + 1;
+      // Handle multiple professions (comma-separated)
+      const individualProfessions = reg.profession
+        .split(", ")
+        .map((p) => p.trim());
+
+      individualProfessions.forEach((profession) => {
+        if (profession && profession !== "Other" && profession !== "Unknown") {
+          professionCounts[profession] =
+            (professionCounts[profession] || 0) + 1;
+        }
+      });
     }
   });
 
@@ -936,21 +957,27 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
       percentage: totalGuests > 0 ? (count / totalGuests) * 100 : 0,
     }));
 
-  // Education Sector Analysis
+  // Education Sector Analysis - handle multiple professions
   const studentCount = registrations.filter(
     (reg) =>
-      reg.profession === "Student" ||
+      (reg.profession && reg.profession.includes("Student")) ||
       (reg.school &&
         reg.school.length > 2 &&
         reg.school.toLowerCase() !== "n/a")
   ).length;
 
-  const professionalCount = registrations.filter(
-    (reg) =>
-      reg.profession !== "Student" &&
-      reg.profession !== "Other" &&
-      reg.profession !== "Unknown"
-  ).length;
+  const professionalCount = registrations.filter((reg) => {
+    if (!reg.profession) return false;
+
+    const professions = reg.profession.split(", ");
+    // Consider as professional if they have any non-student, non-other profession
+    return professions.some(
+      (prof) =>
+        prof.trim() !== "Student" &&
+        prof.trim() !== "Other" &&
+        prof.trim() !== "Unknown"
+    );
+  }).length;
 
   const topSchools: { [key: string]: number } = {};
   registrations.forEach((reg) => {
