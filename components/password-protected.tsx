@@ -7,39 +7,81 @@ interface PasswordProtectedProps {
   children: React.ReactNode;
 }
 
-const INSIGHTS_PASSWORD = process.env.NEXT_PUBLIC_INSIGHTS_PASSWORD;
-
 export function PasswordProtected({ children }: PasswordProtectedProps) {
   const [password, setPassword] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
-  // Check if user is already authenticated (stored in sessionStorage)
+  // Check authentication status on mount
   useEffect(() => {
-    const stored = sessionStorage.getItem("insights_authenticated");
-    if (stored === "true") {
-      setIsAuthenticated(true);
-    }
-    setIsLoading(false);
+    checkAuthStatus();
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (password === INSIGHTS_PASSWORD) {
-      setIsAuthenticated(true);
-      setError("");
-      sessionStorage.setItem("insights_authenticated", "true");
-    } else {
-      setError("Invalid password. Please try again.");
-      setPassword("");
+  const checkAuthStatus = async () => {
+    try {
+      const response = await fetch('/api/insights/auth', {
+        method: 'GET',
+        credentials: 'include', // Include cookies
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setIsAuthenticated(data.authenticated);
+      } else {
+        setIsAuthenticated(false);
+      }
+    } catch (error) {
+      console.error('Auth check failed:', error);
+      setIsAuthenticated(false);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    sessionStorage.removeItem("insights_authenticated");
-    setPassword("");
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+
+    try {
+      const response = await fetch('/api/insights/auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include', // Include cookies
+        body: JSON.stringify({ password }),
+      });
+
+      if (response.ok) {
+        setIsAuthenticated(true);
+        setPassword('');
+      } else {
+        const data = await response.json();
+        setError(data.error || 'Invalid password. Please try again.');
+        setPassword('');
+      }
+    } catch (error) {
+      console.error('Authentication failed:', error);
+      setError('Authentication failed. Please try again.');
+      setPassword('');
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/insights/auth', {
+        method: 'DELETE',
+        credentials: 'include',
+      });
+      setIsAuthenticated(false);
+      setPassword('');
+    } catch (error) {
+      console.error('Logout failed:', error);
+      // Force logout on client side even if server request fails
+      setIsAuthenticated(false);
+      setPassword('');
+    }
   };
 
   if (isLoading) {
