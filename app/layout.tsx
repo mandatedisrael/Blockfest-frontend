@@ -260,7 +260,10 @@ export default function RootLayout({
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#7c3aed" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
       </head>
-      <body className="antialiased w-full mx-auto [@media(min-width:1920px)]:max-w-[1440px]">
+      <body
+        className="antialiased w-full mx-auto [@media(min-width:1920px)]:max-w-[1440px]"
+        suppressHydrationWarning={true}
+      >
         <PerformanceMonitor />
         <Navbar />
         {children}
