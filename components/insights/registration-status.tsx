@@ -32,9 +32,9 @@ export function RegistrationStatus({
     );
   }
 
-  const confirmedPercentage = (confirmed / total) * 100;
-  const pendingPercentage = (pending / total) * 100;
-  const cancelledPercentage = (cancelled / total) * 100;
+  const confirmedPercentage = total > 0 ? (confirmed / total) * 100 : 0;
+  const pendingPercentage = total > 0 ? (pending / total) * 100 : 0;
+  const cancelledPercentage = total > 0 ? (cancelled / total) * 100 : 0;
 
   const statusData = [
     {
@@ -215,7 +215,7 @@ export function RegistrationStatus({
         </div>
         <div className="text-center">
           <div className="text-yellow-400 text-lg font-bold">
-            {((pending / confirmed) * 100).toFixed(1)}%
+            {confirmed > 0 ? ((pending / confirmed) * 100).toFixed(1) : "0.0"}%
           </div>
           <div className="text-gray-400 text-xs">Pending Ratio</div>
         </div>
