@@ -6,6 +6,9 @@ import { RegistrationChart } from "./registration-chart";
 import { LocationBreakdown } from "./location-breakdown";
 import { RegistrationStatus } from "./registration-status";
 import { RecentActivity } from "./recent-activity";
+import { TrafficSources } from "./traffic-sources";
+import { TopCompanies } from "./top-companies";
+import { TimeAnalysis } from "./time-analysis";
 
 export interface GuestData {
   id: string;
@@ -44,6 +47,20 @@ export interface DashboardStats {
     count: number;
     percentage: number;
   }>;
+  trafficSources: Array<{
+    source: string;
+    count: number;
+    percentage: number;
+  }>;
+  topCompanies: Array<{
+    company: string;
+    count: number;
+  }>;
+  registrationTimePatterns: {
+    peakHour: { hour: number; count: number } | null;
+    byDay: Array<{ day: string; count: number }>;
+    byHour: Array<{ hour: number; count: number }>;
+  };
   recentRegistrations: GuestData[];
   lastUpdated: string;
 }
@@ -131,6 +148,13 @@ export function InsightsDashboard() {
     topInterests: [],
     registrationTrend: [],
     locationBreakdown: [],
+    trafficSources: [],
+    topCompanies: [],
+    registrationTimePatterns: {
+      peakHour: null,
+      byDay: [],
+      byHour: [],
+    },
     recentRegistrations: [],
     lastUpdated: new Date().toISOString(),
   });
@@ -253,6 +277,19 @@ export function InsightsDashboard() {
         </div>
         <div>
           <RecentActivity interests={stats.topInterests} loading={loading} />
+        </div>
+      </div>
+
+      {/* New Analytics Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+        <div>
+          <TrafficSources data={stats.trafficSources} loading={loading} />
+        </div>
+        <div>
+          <TopCompanies data={stats.topCompanies} loading={loading} />
+        </div>
+        <div className="lg:col-span-2 xl:col-span-1">
+          <TimeAnalysis data={stats.registrationTimePatterns} loading={loading} />
         </div>
       </div>
     </div>

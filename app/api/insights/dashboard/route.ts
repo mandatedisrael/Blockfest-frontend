@@ -792,6 +792,118 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
       percentage: totalGuests > 0 ? (count / totalGuests) * 100 : 0,
     }));
 
+  // Traffic Sources Analysis
+  const sourceCounts: { [key: string]: number } = {};
+  registrations.forEach((reg) => {
+    const source = reg.source || "Unknown";
+    // Normalize source names for better grouping
+    let normalizedSource = source;
+    if (
+      source.toLowerCase().includes("x (twitter)") ||
+      source.toLowerCase().includes("twitter")
+    ) {
+      normalizedSource = "X (Twitter)";
+    } else if (source.toLowerCase().includes("instagram")) {
+      normalizedSource = "Instagram";
+    } else if (source.toLowerCase().includes("linkedin")) {
+      normalizedSource = "LinkedIn";
+    } else if (
+      source.toLowerCase().includes("friend") ||
+      source.toLowerCase().includes("referral")
+    ) {
+      normalizedSource = "Friend/Referral";
+    } else if (
+      source.toLowerCase().includes("other") ||
+      source.toLowerCase().includes("unknown")
+    ) {
+      normalizedSource = source === "Unknown" ? "Unknown" : "Other";
+    }
+
+    sourceCounts[normalizedSource] = (sourceCounts[normalizedSource] || 0) + 1;
+  });
+
+  const trafficSources = Object.entries(sourceCounts)
+    .sort(([, a], [, b]) => b - a)
+    .map(([source, count]) => ({
+      source,
+      count,
+      percentage: totalGuests > 0 ? (count / totalGuests) * 100 : 0,
+    }));
+
+  // Company/Project Analysis
+  const companyCounts: { [key: string]: number } = {};
+  registrations.forEach((reg) => {
+    const company = reg.company?.trim();
+    if (
+      company &&
+      company.toLowerCase() !== "n/a" &&
+      company.toLowerCase() !== "none" &&
+      company.toLowerCase() !== "nil" &&
+      company.toLowerCase() !== "nill" &&
+      company.toLowerCase() !== "non" &&
+      company.toLowerCase() !== "none for now" &&
+      company.toLowerCase() !== "myself" &&
+      company !== "" &&
+      company.length > 2
+    ) {
+      companyCounts[company] = (companyCounts[company] || 0) + 1;
+    }
+  });
+
+  const topCompanies = Object.entries(companyCounts)
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, 10)
+    .map(([company, count]) => ({ company, count }));
+
+  // Registration Time Patterns
+  const registrationsByHour: { [key: number]: number } = {};
+  const registrationsByDay: { [key: string]: number } = {};
+
+  registrations.forEach((reg) => {
+    try {
+      const date = new Date(reg.timestamp);
+      if (!isNaN(date.getTime())) {
+        // Hour analysis (0-23)
+        const hour = date.getHours();
+        registrationsByHour[hour] = (registrationsByHour[hour] || 0) + 1;
+
+        // Day of week analysis
+        const days = [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ];
+        const dayName = days[date.getDay()];
+        registrationsByDay[dayName] = (registrationsByDay[dayName] || 0) + 1;
+      }
+    } catch {
+      // Skip invalid timestamps
+    }
+  });
+
+  const peakRegistrationHour = Object.entries(registrationsByHour).sort(
+    ([, a], [, b]) => b - a
+  )[0];
+
+  const registrationTimePatterns = {
+    peakHour: peakRegistrationHour
+      ? {
+          hour: parseInt(peakRegistrationHour[0]),
+          count: peakRegistrationHour[1],
+        }
+      : null,
+    byDay: Object.entries(registrationsByDay)
+      .sort(([, a], [, b]) => b - a)
+      .map(([day, count]) => ({ day, count })),
+    byHour: Object.entries(registrationsByHour)
+      .map(([hour, count]) => ({ hour: parseInt(hour), count }))
+      .sort((a, b) => a.hour - b.hour),
+  };
+
   return {
     totalGuests,
     confirmedGuests,
@@ -807,6 +919,9 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
     topInterests,
     registrationTrend,
     locationBreakdown,
+    trafficSources,
+    topCompanies,
+    registrationTimePatterns,
     recentRegistrations: registrations
       .filter((r) => r.status === "confirmed")
       .sort((a, b) => {
