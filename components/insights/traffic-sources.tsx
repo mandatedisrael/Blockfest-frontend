@@ -27,16 +27,22 @@ export function TrafficSources({ data, loading }: TrafficSourcesProps) {
     );
   }
 
-  const maxCount = data.length ? Math.max(...data.map((item) => item.count)) : 0;
+  const maxCount = data.length
+    ? Math.max(...data.map((item) => item.count))
+    : 0;
 
   return (
-    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
+    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 h-full flex flex-col">
       <div className="mb-6">
-        <h3 className="text-lg font-semibold text-white mb-2">Traffic Sources</h3>
-        <p className="text-gray-300 text-sm">How attendees discovered the event</p>
+        <h3 className="text-lg font-semibold text-white mb-2">
+          Traffic Sources
+        </h3>
+        <p className="text-gray-300 text-sm">
+          How attendees discovered the event
+        </p>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 flex-1">
         {data.slice(0, 7).map((item, index) => {
           const barWidth = maxCount > 0 ? (item.count / maxCount) * 100 : 0;
           const isTopSource = index === 0;

@@ -64,7 +64,7 @@ export function RegistrationStatus({
   ];
 
   return (
-    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
+    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 h-full flex flex-col">
       <div className="mb-6">
         <h3 className="text-lg font-semibold text-white mb-2">
           Registration Status
@@ -75,7 +75,7 @@ export function RegistrationStatus({
       </div>
 
       {/* Donut Chart */}
-      <div className="flex items-center justify-center mb-8">
+      <div className="flex items-center justify-center mb-8 flex-1">
         <div className="relative">
           <svg
             width="200"
