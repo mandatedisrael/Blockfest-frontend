@@ -215,9 +215,9 @@ export function RegistrationStatus({
         </div>
         <div className="text-center">
           <div className="text-yellow-400 text-lg font-bold">
-            {confirmed > 0 ? ((pending / confirmed) * 100).toFixed(1) : "0.0"}%
+            {pendingPercentage.toFixed(1)}%
           </div>
-          <div className="text-gray-400 text-xs">Pending Ratio</div>
+          <div className="text-gray-400 text-xs">Pending Rate</div>
         </div>
       </div>
     </div>
