@@ -5,7 +5,6 @@ import path from "path";
 // Add headers to exclude from analytics tracking
 const PRIVATE_HEADERS = {
   "X-Robots-Tag": "noindex, nofollow, noarchive, nosnippet",
-  "Cache-Control": "private, no-cache, no-store, must-revalidate",
 };
 
 // This would typically connect to your actual database
@@ -649,7 +648,10 @@ function parseGuestCSV(csvContent: string): GuestRegistration[] {
     }
   }
 
-  console.log(`Parsed ${registrations.length} registrations from CSV`);
+  // Only log in development
+  if (process.env.NODE_ENV === "development") {
+    console.log(`Parsed ${registrations.length} registrations from CSV`);
+  }
   return registrations;
 }
 
@@ -796,11 +798,14 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
         registrationsByWeek[weekKey] = (registrationsByWeek[weekKey] || 0) + 1;
       }
     } catch {
-      console.warn(
-        "Invalid timestamp for registration:",
-        reg.id,
-        reg.timestamp
-      );
+      // Only warn in development
+      if (process.env.NODE_ENV === "development") {
+        console.warn(
+          "Invalid timestamp for registration:",
+          reg.id,
+          reg.timestamp
+        );
+      }
     }
   });
 
@@ -1055,20 +1060,28 @@ async function loadGuestData(): Promise<GuestRegistration[]> {
 
     // Check if file exists
     if (!fs.existsSync(csvPath)) {
-      console.warn("CSV file not found at:", csvPath);
+      if (process.env.NODE_ENV === "development") {
+        console.warn("CSV file not found at:", csvPath);
+      }
       return [];
     }
 
     // Read and parse CSV file
     const csvContent = fs.readFileSync(csvPath, "utf8");
-    console.log(`CSV file size: ${csvContent.length} characters`);
-    console.log(`First 200 characters: ${csvContent.substring(0, 200)}`);
+
+    // Only log debug info in development
+    if (process.env.NODE_ENV === "development") {
+      console.log(`CSV file size: ${csvContent.length} characters`);
+      console.log(`First 200 characters: ${csvContent.substring(0, 200)}`);
+    }
 
     const registrations = parseGuestCSV(csvContent);
 
-    console.log(`Loaded ${registrations.length} registrations from CSV`);
-    if (registrations.length > 0) {
-      console.log(`First registration:`, registrations[0]);
+    if (process.env.NODE_ENV === "development") {
+      console.log(`Loaded ${registrations.length} registrations from CSV`);
+      if (registrations.length > 0) {
+        console.log(`First registration:`, registrations[0]);
+      }
     }
     return registrations;
   } catch (error) {

@@ -39,3 +39,18 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Security & Testing
+# Cookie files from testing
+*.cookies.txt
+*cookies.txt
+secure_cookies.txt
+
+# Test credentials and auth files
+*.auth
+*.session
+test-credentials.*
+
+# Temporary security test files
+security-test.*
+auth-test.*

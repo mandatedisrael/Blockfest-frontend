@@ -7,30 +7,32 @@ function validateSessionToken(token: string): boolean {
 }
 
 export function middleware(request: NextRequest) {
-  // Only protect insights pages and API routes
+  const { pathname, search } = request.nextUrl;
+
+  // Allow auth endpoint to pass through
+  if (pathname === "/api/insights/auth") {
+    return NextResponse.next();
+  }
+
+  // Protect insights pages and APIs
   if (
-    request.nextUrl.pathname.startsWith("/insights") ||
-    request.nextUrl.pathname.startsWith("/api/insights/dashboard")
+    pathname.startsWith("/insights") ||
+    pathname.startsWith("/api/insights")
   ) {
     const sessionToken = request.cookies.get("insights_session")?.value;
 
-    // Allow auth endpoint to pass through
-    if (request.nextUrl.pathname === "/api/insights/auth") {
-      return NextResponse.next();
-    }
-
-    // Check if user is authenticated
     if (!sessionToken || !validateSessionToken(sessionToken)) {
-      // For API routes, return 401
-      if (request.nextUrl.pathname.startsWith("/api/")) {
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      if (pathname.startsWith("/api/insights")) {
+        return NextResponse.json(
+          { error: "Unauthorized" },
+          { status: 401, headers: { "Cache-Control": "no-store" } }
+        );
       }
-
-      // For pages, redirect to login (handled by PasswordProtected component)
-      return NextResponse.next();
+      const url = new URL("/insights/login", request.url);
+      url.searchParams.set("next", pathname + search);
+      return NextResponse.redirect(url);
     }
   }
-
   return NextResponse.next();
 }
 

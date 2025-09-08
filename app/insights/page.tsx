@@ -98,6 +98,24 @@ export default function InsightsPage() {
             <InsightsDashboard />
           </Suspense>
         </div>
+
+        {/* Disable Umami tracking for this page */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if (typeof window !== 'undefined') {
+                // Disable Umami tracking for this page
+                if (typeof localStorage !== 'undefined') {
+                  localStorage.setItem('umami.disabled', 'true');
+                }
+                // Also disable via window object if available
+                if (window.umami) {
+                  window.umami.disabled = true;
+                }
+              }
+            `,
+          }}
+        />
       </div>
     </PasswordProtected>
   );
