@@ -19,6 +19,8 @@ interface GuestRegistration {
   interests: string;
   source: string;
   status: "confirmed" | "pending" | "cancelled";
+  gender?: string;
+  school?: string;
 }
 
 // Utility function to parse CSV line with proper quoted field handling
@@ -600,6 +602,10 @@ function parseGuestCSV(csvContent: string): GuestRegistration[] {
       else if (sourceLower.includes("other")) source = "Other";
       else if (sourceField.trim()) source = sourceField.trim();
 
+      // Parse gender and school
+      const gender = fields[indices.gender]?.trim() || "";
+      const school = fields[indices.school]?.trim() || "";
+
       const registration: GuestRegistration = {
         id: fields[indices.id] || `guest-${i}`,
         timestamp: fields[indices.timestamp] || new Date().toISOString(),
@@ -614,6 +620,8 @@ function parseGuestCSV(csvContent: string): GuestRegistration[] {
         interests: professionField || "",
         source,
         status,
+        gender: gender || undefined,
+        school: school || undefined,
       };
 
       registrations.push(registration);
@@ -904,6 +912,70 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
       .sort((a, b) => a.hour - b.hour),
   };
 
+  // Gender Distribution Analysis
+  const genderCounts: { [key: string]: number } = {};
+  registrations.forEach((reg) => {
+    if (reg.gender) {
+      const normalizedGender = reg.gender.toLowerCase().trim();
+      if (normalizedGender === "male" || normalizedGender === "m") {
+        genderCounts["Male"] = (genderCounts["Male"] || 0) + 1;
+      } else if (normalizedGender === "female" || normalizedGender === "f") {
+        genderCounts["Female"] = (genderCounts["Female"] || 0) + 1;
+      } else if (normalizedGender !== "" && normalizedGender !== "n/a") {
+        genderCounts["Other/Prefer not to say"] =
+          (genderCounts["Other/Prefer not to say"] || 0) + 1;
+      }
+    }
+  });
+
+  const genderBreakdown = Object.entries(genderCounts)
+    .sort(([, a], [, b]) => b - a)
+    .map(([gender, count]) => ({
+      gender,
+      count,
+      percentage: totalGuests > 0 ? (count / totalGuests) * 100 : 0,
+    }));
+
+  // Education Sector Analysis
+  const studentCount = registrations.filter(
+    (reg) =>
+      reg.profession === "Student" ||
+      (reg.school &&
+        reg.school.length > 2 &&
+        reg.school.toLowerCase() !== "n/a")
+  ).length;
+
+  const professionalCount = registrations.filter(
+    (reg) =>
+      reg.profession !== "Student" &&
+      reg.profession !== "Other" &&
+      reg.profession !== "Unknown"
+  ).length;
+
+  const topSchools: { [key: string]: number } = {};
+  registrations.forEach((reg) => {
+    if (
+      reg.school &&
+      reg.school.length > 2 &&
+      reg.school.toLowerCase() !== "n/a"
+    ) {
+      const school = reg.school.trim();
+      topSchools[school] = (topSchools[school] || 0) + 1;
+    }
+  });
+
+  const educationInsights = {
+    studentCount,
+    professionalCount,
+    studentPercentage: totalGuests > 0 ? (studentCount / totalGuests) * 100 : 0,
+    professionalPercentage:
+      totalGuests > 0 ? (professionalCount / totalGuests) * 100 : 0,
+    topSchools: Object.entries(topSchools)
+      .sort(([, a], [, b]) => b - a)
+      .slice(0, 10)
+      .map(([school, count]) => ({ school, count })),
+  };
+
   return {
     totalGuests,
     confirmedGuests,
@@ -922,6 +994,8 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
     trafficSources,
     topCompanies,
     registrationTimePatterns,
+    genderBreakdown,
+    educationInsights,
     recentRegistrations: registrations
       .filter((r) => r.status === "confirmed")
       .sort((a, b) => {

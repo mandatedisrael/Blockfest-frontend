@@ -26,7 +26,7 @@ export function LocationBreakdown({ data, loading }: LocationBreakdownProps) {
   const maxCount = Math.max(0, ...topCountries.map((item) => item.count));
 
   return (
-    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
+    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 h-full flex flex-col">
       <div className="mb-6">
         <h3 className="text-lg font-semibold text-white mb-2">
           Geographic Distribution
@@ -36,7 +36,7 @@ export function LocationBreakdown({ data, loading }: LocationBreakdownProps) {
         </p>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 flex-1">
         {topCountries.map((item, index) => {
           const widthPercentage =
             maxCount > 0 ? (item.count / maxCount) * 100 : 0;

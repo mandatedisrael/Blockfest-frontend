@@ -27,16 +27,22 @@ export function TopCompanies({ data, loading }: TopCompaniesProps) {
     );
   }
 
-  const maxCount = data.length ? Math.max(...data.map((item) => item.count)) : 0;
+  const maxCount = data.length
+    ? Math.max(...data.map((item) => item.count))
+    : 0;
 
   return (
-    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
+    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 h-full flex flex-col">
       <div className="mb-6">
-        <h3 className="text-lg font-semibold text-white mb-2">Top Companies & Projects</h3>
-        <p className="text-gray-300 text-sm">Organizations represented at the event</p>
+        <h3 className="text-lg font-semibold text-white mb-2">
+          Top Companies & Projects
+        </h3>
+        <p className="text-gray-300 text-sm">
+          Organizations represented at the event
+        </p>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-3 flex-1">
         {data.slice(0, 8).map((item, index) => {
           const barWidth = maxCount > 0 ? (item.count / maxCount) * 100 : 0;
           const isTop3 = index < 3;
@@ -49,7 +55,10 @@ export function TopCompanies({ data, loading }: TopCompaniesProps) {
                     {index + 1}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="text-white font-medium text-sm truncate" title={item.company}>
+                    <div
+                      className="text-white font-medium text-sm truncate"
+                      title={item.company}
+                    >
                       {item.company}
                     </div>
                     <div className="relative mt-1">
@@ -67,9 +76,11 @@ export function TopCompanies({ data, loading }: TopCompaniesProps) {
                   </div>
                 </div>
                 <div className="text-right ml-3 flex-shrink-0">
-                  <span className={`font-bold text-sm ${
-                    isTop3 ? "text-yellow-400" : "text-white"
-                  }`}>
+                  <span
+                    className={`font-bold text-sm ${
+                      isTop3 ? "text-yellow-400" : "text-white"
+                    }`}
+                  >
                     {item.count}
                   </span>
                   <span className="text-gray-400 text-xs ml-1">

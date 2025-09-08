@@ -9,6 +9,8 @@ import { RecentActivity } from "./recent-activity";
 import { TrafficSources } from "./traffic-sources";
 import { TopCompanies } from "./top-companies";
 import { TimeAnalysis } from "./time-analysis";
+import { GenderBreakdown } from "./gender-breakdown";
+import { EducationInsights } from "./education-insights";
 
 export interface GuestData {
   id: string;
@@ -60,6 +62,18 @@ export interface DashboardStats {
     peakHour: { hour: number; count: number } | null;
     byDay: Array<{ day: string; count: number }>;
     byHour: Array<{ hour: number; count: number }>;
+  };
+  genderBreakdown: Array<{
+    gender: string;
+    count: number;
+    percentage: number;
+  }>;
+  educationInsights: {
+    studentCount: number;
+    professionalCount: number;
+    studentPercentage: number;
+    professionalPercentage: number;
+    topSchools: Array<{ school: string; count: number }>;
   };
   recentRegistrations: GuestData[];
   lastUpdated: string;
@@ -155,6 +169,14 @@ export function InsightsDashboard() {
       byDay: [],
       byHour: [],
     },
+    genderBreakdown: [],
+    educationInsights: {
+      studentCount: 0,
+      professionalCount: 0,
+      studentPercentage: 0,
+      professionalPercentage: 0,
+      topSchools: [],
+    },
     recentRegistrations: [],
     lastUpdated: new Date().toISOString(),
   });
@@ -215,16 +237,14 @@ export function InsightsDashboard() {
   }
 
   return (
-    <div className="space-y-8 p-1">
-      {" "}
-      {/* Added small padding to prevent edge cutoff */}
+    <div className="space-y-6 sm:space-y-8 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
       {/* Header with refresh info */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-white mb-2">
+          <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
             Dashboard Overview
           </h2>
-          <p className="text-gray-300 text-sm">
+          <p className="text-gray-300 text-xs sm:text-sm">
             Last updated: {formatDate(stats.lastUpdated)} • Next refresh:{" "}
             {formatTime(nextRefresh)}
           </p>
@@ -234,7 +254,7 @@ export function InsightsDashboard() {
           <button
             onClick={fetchData}
             disabled={loading}
-            className="flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-lg border border-white/20 transition-all duration-200 disabled:opacity-50"
+            className="flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white px-3 sm:px-4 py-2 rounded-lg border border-white/20 transition-all duration-200 disabled:opacity-50 text-sm"
           >
             <svg
               className={`w-4 h-4 ${loading ? "animate-spin" : ""}`}
@@ -256,7 +276,7 @@ export function InsightsDashboard() {
       {/* Stats Grid */}
       <StatsGrid stats={stats} loading={loading} />
       {/* Charts and Breakdown - Enhanced Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
         <div className="min-h-[400px]">
           <RegistrationChart data={stats.registrationTrend} loading={loading} />
         </div>
@@ -264,9 +284,10 @@ export function InsightsDashboard() {
           <LocationBreakdown data={stats.locationBreakdown} loading={loading} />
         </div>
       </div>
-      {/* Bottom Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
+
+      {/* Registration Status & Recent Activity */}
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6">
+        <div className="xl:col-span-2">
           <RegistrationStatus
             confirmed={stats.confirmedGuests}
             pending={stats.pendingGuests}
@@ -280,16 +301,29 @@ export function InsightsDashboard() {
         </div>
       </div>
 
-      {/* New Analytics Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-        <div>
+      {/* Marketing & Engagement Analytics */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+        <div className="md:col-span-1 min-h-[400px]">
           <TrafficSources data={stats.trafficSources} loading={loading} />
         </div>
-        <div>
+        <div className="md:col-span-1 min-h-[400px]">
           <TopCompanies data={stats.topCompanies} loading={loading} />
         </div>
-        <div className="lg:col-span-2 xl:col-span-1">
-          <TimeAnalysis data={stats.registrationTimePatterns} loading={loading} />
+        <div className="md:col-span-2 xl:col-span-1 min-h-[400px]">
+          <TimeAnalysis
+            data={stats.registrationTimePatterns}
+            loading={loading}
+          />
+        </div>
+      </div>
+
+      {/* Demographics & Education Analytics */}
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
+        <div className="min-h-[500px]">
+          <GenderBreakdown data={stats.genderBreakdown} loading={loading} />
+        </div>
+        <div className="min-h-[500px]">
+          <EducationInsights data={stats.educationInsights} loading={loading} />
         </div>
       </div>
     </div>

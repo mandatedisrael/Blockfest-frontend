@@ -33,13 +33,13 @@ export function RecentActivity({ interests, loading }: RecentActivityProps) {
     : 0;
 
   return (
-    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
+    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 h-full flex flex-col">
       <div className="mb-6">
         <h3 className="text-lg font-semibold text-white mb-2">Top Interests</h3>
         <p className="text-gray-300 text-sm">Most popular areas of interest</p>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 flex-1">
         {interests.slice(0, 5).map((item, index) => {
           const percentage =
             totalCount > 0 ? (item.count / totalCount) * 100 : 0;
