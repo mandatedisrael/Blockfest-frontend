@@ -58,20 +58,23 @@ function parseCSVLine(line: string): string[] {
  */
 function parseExperienceLevel(expText: string): string {
   const normalized = expText.toLowerCase();
-  
+
   if (normalized.includes("newcomer") || normalized.includes("just learning")) {
     return "Newcomer";
   }
   if (normalized.includes("intermediate") || normalized.includes("familiar")) {
     return "Intermediate";
   }
-  if (normalized.includes("advanced") || normalized.includes("actively building")) {
+  if (
+    normalized.includes("advanced") ||
+    normalized.includes("actively building")
+  ) {
     return "Advanced";
   }
   if (normalized.includes("web2") && normalized.includes("transitioning")) {
     return "Web2 Transitioning";
   }
-  
+
   return "Unknown";
 }
 
