@@ -22,8 +22,10 @@ export function RecentActivity({ interests, loading }: RecentActivityProps) {
     );
   }
 
-  const maxCount = Math.max(...interests.map((item) => item.count));
   const totalCount = interests.reduce((sum, item) => sum + item.count, 0);
+  const maxCount = interests.length
+    ? Math.max(...interests.map((item) => item.count))
+    : 0;
 
   return (
     <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
@@ -34,8 +36,9 @@ export function RecentActivity({ interests, loading }: RecentActivityProps) {
 
       <div className="space-y-4">
         {interests.slice(0, 5).map((item, index) => {
-          const percentage = (item.count / totalCount) * 100;
-          const barWidth = (item.count / maxCount) * 100;
+          const percentage =
+            totalCount > 0 ? (item.count / totalCount) * 100 : 0;
+          const barWidth = maxCount > 0 ? (item.count / maxCount) * 100 : 0;
 
           return (
             <div key={item.interest} className="group">
@@ -100,7 +103,9 @@ export function RecentActivity({ interests, loading }: RecentActivityProps) {
           </div>
           <div className="text-gray-400 text-sm">Total Interest Selections</div>
           <div className="text-gray-400 text-xs mt-1">
-            Avg. {(totalCount / interests.length).toFixed(0)} per category
+            Avg.{" "}
+            {interests.length ? Math.round(totalCount / interests.length) : 0}{" "}
+            per category
           </div>
         </div>
       </div>

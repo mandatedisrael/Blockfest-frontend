@@ -26,9 +26,11 @@ export default function InsightsPage() {
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div className="flex items-center gap-4">
-              <Link href="/" className="cursor-pointer">
+              <Link href="/" aria-label="Home">
                 <div className="w-12 h-12 bg-gradient-to-r from-[#F2CB45] to-yellow-300 rounded-xl flex items-center justify-center hover:scale-105 transition-transform duration-200">
                   <svg
+                    aria-hidden="true"
+                    focusable="false"
                     className="w-6 h-6 text-black"
                     fill="currentColor"
                     viewBox="0 0 24 24"
