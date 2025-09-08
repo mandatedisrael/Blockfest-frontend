@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
 
 interface PasswordProtectedProps {
   children: React.ReactNode;
@@ -10,15 +10,15 @@ interface PasswordProtectedProps {
 const INSIGHTS_PASSWORD = process.env.NEXT_PUBLIC_INSIGHTS_PASSWORD;
 
 export function PasswordProtected({ children }: PasswordProtectedProps) {
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   // Check if user is already authenticated (stored in sessionStorage)
   useEffect(() => {
-    const stored = sessionStorage.getItem('insights_authenticated');
-    if (stored === 'true') {
+    const stored = sessionStorage.getItem("insights_authenticated");
+    if (stored === "true") {
       setIsAuthenticated(true);
     }
     setIsLoading(false);
@@ -28,18 +28,18 @@ export function PasswordProtected({ children }: PasswordProtectedProps) {
     e.preventDefault();
     if (password === INSIGHTS_PASSWORD) {
       setIsAuthenticated(true);
-      setError('');
-      sessionStorage.setItem('insights_authenticated', 'true');
+      setError("");
+      sessionStorage.setItem("insights_authenticated", "true");
     } else {
-      setError('Invalid password. Please try again.');
-      setPassword('');
+      setError("Invalid password. Please try again.");
+      setPassword("");
     }
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    sessionStorage.removeItem('insights_authenticated');
-    setPassword('');
+    sessionStorage.removeItem("insights_authenticated");
+    setPassword("");
   };
 
   if (isLoading) {
@@ -63,11 +63,23 @@ export function PasswordProtected({ children }: PasswordProtectedProps) {
           <div className="bg-black/20 backdrop-blur-sm border border-white/10 rounded-2xl p-8 shadow-2xl">
             <div className="text-center mb-8">
               <div className="w-16 h-16 bg-gradient-to-r from-[#F2CB45] to-yellow-300 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m0 0h.01M12 17H12m6-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <svg
+                  className="w-8 h-8 text-black"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 15v2m0 0h.01M12 17H12m6-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
                 </svg>
               </div>
-              <h1 className="text-2xl font-bold text-white mb-2">Access Restricted</h1>
+              <h1 className="text-2xl font-bold text-white mb-2">
+                Access Restricted
+              </h1>
               <p className="text-gray-300">
                 Enter the password to view event insights
               </p>
@@ -75,7 +87,10 @@ export function PasswordProtected({ children }: PasswordProtectedProps) {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-200 mb-2">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-200 mb-2"
+                >
                   Password
                 </label>
                 <input
@@ -84,7 +99,7 @@ export function PasswordProtected({ children }: PasswordProtectedProps) {
                   value={password}
                   onChange={(e) => {
                     setPassword(e.target.value);
-                    setError('');
+                    setError("");
                   }}
                   className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F2CB45] focus:border-transparent"
                   placeholder="Enter password..."
@@ -98,8 +113,8 @@ export function PasswordProtected({ children }: PasswordProtectedProps) {
                 </div>
               )}
 
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 className="w-full bg-gradient-to-r from-[#F2CB45] to-yellow-300 text-black font-semibold py-3 rounded-lg hover:from-yellow-300 hover:to-[#F2CB45] transition-all duration-200"
               >
                 Access Insights
