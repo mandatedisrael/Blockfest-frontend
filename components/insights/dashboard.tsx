@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { StatsGrid } from "./stats-grid";
 import { RegistrationChart } from "./registration-chart";
 import { LocationBreakdown } from "./location-breakdown";
@@ -49,7 +49,9 @@ export interface DashboardStats {
 }
 
 // API functions
-async function fetchDashboardStats(): Promise<DashboardStats> {
+async function fetchDashboardStats(
+  signal?: AbortSignal
+): Promise<DashboardStats> {
   try {
     // Replace with actual API endpoint
     const response = await fetch("/api/insights/dashboard", {
@@ -58,15 +60,21 @@ async function fetchDashboardStats(): Promise<DashboardStats> {
         "Content-Type": "application/json",
       },
       cache: "no-store",
+      signal,
     });
 
     if (!response.ok) {
-      throw new Error("Failed to fetch dashboard data");
+      throw new Error(
+        `Failed to fetch dashboard data: ${response.status} ${response.statusText}`
+      );
     }
 
     const data = await response.json();
     return data;
   } catch (error) {
+    if (error instanceof Error && error.name === "AbortError") {
+      throw new Error("Request timeout");
+    }
     console.error("Error fetching dashboard stats:", error);
     throw error;
   }
@@ -79,7 +87,8 @@ function formatDate(dateString: string): string {
     if (isNaN(date.getTime())) return "Invalid date";
 
     // Use consistent format: Sep 8, 2025, 11:38 AM
-    return date.toLocaleDateString("en-US", {
+    return date.toLocaleString("en-US", {
+      timeZone: "UTC",
       year: "numeric",
       month: "short",
       day: "numeric",
@@ -98,6 +107,7 @@ function formatTime(date: Date): string {
 
     // Use consistent format: 11:38 AM
     return date.toLocaleTimeString("en-US", {
+      timeZone: "UTC",
       hour: "2-digit",
       minute: "2-digit",
       hour12: true,
@@ -129,31 +139,34 @@ export function InsightsDashboard() {
   const [lastRefresh, setLastRefresh] = useState<Date>(new Date());
 
   // Data fetching function
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     setError(null);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
 
     try {
-      const data = await fetchDashboardStats();
+      const data = await fetchDashboardStats(controller.signal);
       setStats(data);
       setLastRefresh(new Date());
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load data");
     } finally {
+      clearTimeout(timeoutId);
       setLoading(false);
     }
-  };
+  }, []);
 
   // Initial data load
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   // Auto-refresh data every 6 hours
   useEffect(() => {
     const interval = setInterval(fetchData, 6 * 60 * 60 * 1000); // 6 hours
     return () => clearInterval(interval);
-  }, []);
+  }, [fetchData]);
 
   const nextRefresh = new Date(lastRefresh.getTime() + 6 * 60 * 60 * 1000);
 
