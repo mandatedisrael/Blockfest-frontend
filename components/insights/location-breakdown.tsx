@@ -23,7 +23,7 @@ export function LocationBreakdown({ data, loading }: LocationBreakdownProps) {
   }
 
   const topCountries = data.slice(0, 6);
-  const maxCount = Math.max(...topCountries.map((item) => item.count));
+  const maxCount = Math.max(0, ...topCountries.map((item) => item.count));
 
   return (
     <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
@@ -38,7 +38,8 @@ export function LocationBreakdown({ data, loading }: LocationBreakdownProps) {
 
       <div className="space-y-4">
         {topCountries.map((item, index) => {
-          const widthPercentage = (item.count / maxCount) * 100;
+          const widthPercentage =
+            maxCount > 0 ? (item.count / maxCount) * 100 : 0;
 
           return (
             <div key={item.country} className="group">
@@ -110,9 +111,9 @@ export function LocationBreakdown({ data, loading }: LocationBreakdownProps) {
           </div>
           <div>
             <div className="text-white text-lg font-bold">
-              {data
-                .find((item) => item.country === "Others")
-                ?.percentage.toFixed(1) || "0"}
+              {(
+                data.find((item) => item.country === "Others")?.percentage ?? 0
+              ).toFixed(1)}
               %
             </div>
             <div className="text-gray-400 text-xs">Others</div>
