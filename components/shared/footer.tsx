@@ -165,7 +165,7 @@ const Footer = () => {
       id="contact"
     >
       <div className="">
-        <Link href="/" className="inline-block cursor-pointer">
+        <Link href="/insights" className="inline-block cursor-pointer">
           <Image
             src="/images/footer-logo.svg"
             alt="Blockfest Africa Footer Logo"
