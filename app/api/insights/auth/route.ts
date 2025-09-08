@@ -7,7 +7,7 @@ const INSIGHTS_PASSWORD = process.env.INSIGHTS_PASSWORD;
 
 // Generate secure session token
 function generateSessionToken(): string {
-  return crypto.randomBytes(32).toString('hex');
+  return crypto.randomBytes(32).toString("hex");
 }
 
 // Validate session token
@@ -23,15 +23,12 @@ export async function POST(request: NextRequest) {
 
     // Validate password server-side
     if (password !== INSIGHTS_PASSWORD) {
-      return NextResponse.json(
-        { error: "Invalid password" },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: "Invalid password" }, { status: 401 });
     }
 
     // Generate secure session token
     const sessionToken = generateSessionToken();
-    
+
     // Set secure HTTP-only cookie
     const response = NextResponse.json(
       { success: true, message: "Authentication successful" },
@@ -61,21 +58,12 @@ export async function GET(request: NextRequest) {
     const sessionToken = request.cookies.get("insights_session")?.value;
 
     if (!sessionToken || !validateSessionToken(sessionToken)) {
-      return NextResponse.json(
-        { authenticated: false },
-        { status: 401 }
-      );
+      return NextResponse.json({ authenticated: false }, { status: 401 });
     }
 
-    return NextResponse.json(
-      { authenticated: true },
-      { status: 200 }
-    );
+    return NextResponse.json({ authenticated: true }, { status: 200 });
   } catch (error) {
-    return NextResponse.json(
-      { authenticated: false },
-      { status: 500 }
-    );
+    return NextResponse.json({ authenticated: false }, { status: 500 });
   }
 }
 

@@ -20,9 +20,9 @@ export function PasswordProtected({ children }: PasswordProtectedProps) {
 
   const checkAuthStatus = async () => {
     try {
-      const response = await fetch('/api/insights/auth', {
-        method: 'GET',
-        credentials: 'include', // Include cookies
+      const response = await fetch("/api/insights/auth", {
+        method: "GET",
+        credentials: "include", // Include cookies
       });
 
       if (response.ok) {
@@ -32,7 +32,7 @@ export function PasswordProtected({ children }: PasswordProtectedProps) {
         setIsAuthenticated(false);
       }
     } catch (error) {
-      console.error('Auth check failed:', error);
+      console.error("Auth check failed:", error);
       setIsAuthenticated(false);
     } finally {
       setIsLoading(false);
@@ -41,46 +41,46 @@ export function PasswordProtected({ children }: PasswordProtectedProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     try {
-      const response = await fetch('/api/insights/auth', {
-        method: 'POST',
+      const response = await fetch("/api/insights/auth", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        credentials: 'include', // Include cookies
+        credentials: "include", // Include cookies
         body: JSON.stringify({ password }),
       });
 
       if (response.ok) {
         setIsAuthenticated(true);
-        setPassword('');
+        setPassword("");
       } else {
         const data = await response.json();
-        setError(data.error || 'Invalid password. Please try again.');
-        setPassword('');
+        setError(data.error || "Invalid password. Please try again.");
+        setPassword("");
       }
     } catch (error) {
-      console.error('Authentication failed:', error);
-      setError('Authentication failed. Please try again.');
-      setPassword('');
+      console.error("Authentication failed:", error);
+      setError("Authentication failed. Please try again.");
+      setPassword("");
     }
   };
 
   const handleLogout = async () => {
     try {
-      await fetch('/api/insights/auth', {
-        method: 'DELETE',
-        credentials: 'include',
+      await fetch("/api/insights/auth", {
+        method: "DELETE",
+        credentials: "include",
       });
       setIsAuthenticated(false);
-      setPassword('');
+      setPassword("");
     } catch (error) {
-      console.error('Logout failed:', error);
+      console.error("Logout failed:", error);
       // Force logout on client side even if server request fails
       setIsAuthenticated(false);
-      setPassword('');
+      setPassword("");
     }
   };
 
