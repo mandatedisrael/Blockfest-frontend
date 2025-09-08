@@ -2,6 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 
+// Add headers to exclude from analytics tracking
+const PRIVATE_HEADERS = {
+  'X-Robots-Tag': 'noindex, nofollow, noarchive, nosnippet',
+  'Cache-Control': 'private, no-cache, no-store, must-revalidate',
+};
+
 // This would typically connect to your actual database
 // For now, we'll structure it to work with CSV data processing
 
@@ -1081,6 +1087,7 @@ export async function GET() {
 
     return NextResponse.json(stats, {
       headers: {
+        ...PRIVATE_HEADERS,
         "Cache-Control": "no-cache, no-store, must-revalidate",
         Pragma: "no-cache",
         Expires: "0",

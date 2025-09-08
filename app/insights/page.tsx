@@ -3,17 +3,19 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { InsightsDashboard } from "@/components/insights/dashboard";
 import { DashboardSkeleton } from "@/components/insights/skeleton";
+import { PasswordProtected } from "@/components/password-protected";
 
 export const metadata: Metadata = {
   title: "Event Insights | Blockfest Africa",
   description:
     "Real-time event analytics and guest insights for Blockfest Africa 2025",
-  robots: "noindex, nofollow", // Keep private
+  robots: "noindex, nofollow, noarchive, nosnippet", // Keep completely private
 };
 
 export default function InsightsPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 relative overflow-hidden">
+    <PasswordProtected>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 relative overflow-hidden" data-umami-ignore="true">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-[#F2CB45] rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
@@ -91,5 +93,6 @@ export default function InsightsPage() {
         </Suspense>
       </div>
     </div>
+    </PasswordProtected>
   );
 }
