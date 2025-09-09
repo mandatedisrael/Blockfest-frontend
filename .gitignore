@@ -50,9 +50,9 @@ secure_cookies.txt
 *.auth
 
 # Secure data files - NEVER commit sensitive data
-# Temporarily commented for deployment - REMEMBER to uncomment after deployment
-# /data/secure/
-# data/secure/
+/data/secure/
+data/secure/
+*.csv
 *.session
 test-credentials.*
 

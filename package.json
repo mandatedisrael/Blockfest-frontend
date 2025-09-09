@@ -4,14 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "node scripts/upload-data-to-blobs.js && next build --turbopack",
-    "build:local": "next build --turbopack",
+    "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint",
-    "upload-data": "node scripts/upload-data-to-blobs.js"
+    "lint": "eslint"
   },
   "dependencies": {
-    "@netlify/blobs": "^10.0.10",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-slot": "^1.2.3",
     "class-variance-authority": "^0.7.1",

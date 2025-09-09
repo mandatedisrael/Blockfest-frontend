@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getStore } from "@netlify/blobs";
 import fs from "fs";
 import path from "path";
 
@@ -1048,85 +1047,26 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
   };
 }
 
-// Function to load guest data from Google Sheets, Netlify Blobs, environment variable, or local file
+// Simple function to load guest data from Google Sheets or local file (dev only)
 async function loadGuestData(): Promise<GuestRegistration[]> {
   try {
-    // Option 1: Try Google Sheets URL first (easiest solution)
+    // Option 1: Google Sheets URL (production and development)
     if (process.env.GOOGLE_SHEETS_CSV_URL) {
-      try {
-        const response = await fetch(process.env.GOOGLE_SHEETS_CSV_URL);
-        if (response.ok) {
-          const csvContent = await response.text();
-          const registrations = parseGuestCSV(csvContent);
-
-          if (process.env.NODE_ENV === "development") {
-            console.log(
-              `🌐 Loaded ${registrations.length} registrations from Google Sheets`
-            );
-          }
-          return registrations;
-        }
-      } catch (sheetsError) {
-        if (process.env.NODE_ENV === "development") {
-          console.warn(
-            "Google Sheets not available:",
-            sheetsError instanceof Error
-              ? sheetsError.message
-              : String(sheetsError)
-          );
-          console.log("Falling back to other data sources...");
-        }
-      }
-    }
-
-    // Option 2: Try Netlify Blobs (production-ready solution)
-    try {
-      const store = getStore("event-data");
-      const csvContent = await store.get("guest-list.csv", { type: "text" });
-
-      if (csvContent) {
+      const response = await fetch(process.env.GOOGLE_SHEETS_CSV_URL);
+      if (response.ok) {
+        const csvContent = await response.text();
         const registrations = parseGuestCSV(csvContent);
 
         if (process.env.NODE_ENV === "development") {
           console.log(
-            `✅ Loaded ${registrations.length} registrations from Netlify Blobs`
+            `🌐 Loaded ${registrations.length} registrations from Google Sheets`
           );
         }
         return registrations;
       }
-    } catch (blobError) {
-      if (process.env.NODE_ENV === "development") {
-        console.warn(
-          "Netlify Blobs not available:",
-          blobError instanceof Error ? blobError.message : String(blobError)
-        );
-        console.log("Falling back to alternative data sources...");
-      }
     }
 
-    // Option 3: Use base64-encoded CSV data from environment variable (fallback)
-    if (process.env.GUEST_LIST_DATA) {
-      try {
-        const csvContent = Buffer.from(
-          process.env.GUEST_LIST_DATA,
-          "base64"
-        ).toString("utf-8");
-        const registrations = parseGuestCSV(csvContent);
-
-        if (process.env.NODE_ENV === "development") {
-          console.log(
-            `📦 Loaded ${registrations.length} registrations from environment variable`
-          );
-        }
-        return registrations;
-      } catch (error) {
-        if (process.env.NODE_ENV === "development") {
-          console.error("Error parsing base64 CSV from environment:", error);
-        }
-      }
-    }
-
-    // Option 3: Use local file as final fallback (development)
+    // Option 2: Local file (development fallback only)
     const csvPath = path.join(
       process.cwd(),
       "data",
@@ -1134,37 +1074,25 @@ async function loadGuestData(): Promise<GuestRegistration[]> {
       "guest-list.csv"
     );
 
-    // Check if file exists
-    if (!fs.existsSync(csvPath)) {
+    if (fs.existsSync(csvPath)) {
+      const csvContent = fs.readFileSync(csvPath, "utf8");
+      const registrations = parseGuestCSV(csvContent);
+
       if (process.env.NODE_ENV === "development") {
-        console.warn("CSV file not found at:", csvPath);
-        console.warn(
-          "Expected data sources: 1) GOOGLE_SHEETS_CSV_URL, 2) GUEST_LIST_DATA env var, 3) local file"
+        console.log(
+          `� Loaded ${registrations.length} registrations from local file`
         );
       }
-      return [];
+      return registrations;
     }
 
-    // Read and parse CSV file
-    const csvContent = fs.readFileSync(csvPath, "utf8");
-
-    // Only log debug info in development
+    // No data source available
     if (process.env.NODE_ENV === "development") {
-      console.log(`📁 CSV file size: ${csvContent.length} characters`);
-      console.log(`First 200 characters: ${csvContent.substring(0, 200)}`);
-    }
-
-    const registrations = parseGuestCSV(csvContent);
-
-    if (process.env.NODE_ENV === "development") {
-      console.log(
-        `📊 Loaded ${registrations.length} registrations from secure CSV file`
+      console.warn(
+        "⚠️ No data source available. Please set GOOGLE_SHEETS_CSV_URL environment variable."
       );
-      if (registrations.length > 0) {
-        console.log(`Sample registration:`, registrations[0]);
-      }
     }
-    return registrations;
+    return [];
   } catch (error) {
     console.error("❌ Error loading guest data:", error);
     return [];
