@@ -1048,10 +1048,38 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
   };
 }
 
-// Function to load guest data from Netlify Blobs, environment variable, or local file
+// Function to load guest data from Google Sheets, Netlify Blobs, environment variable, or local file
 async function loadGuestData(): Promise<GuestRegistration[]> {
   try {
-    // Option 1: Try Netlify Blobs first (production-ready solution)
+    // Option 1: Try Google Sheets URL first (easiest solution)
+    if (process.env.GOOGLE_SHEETS_CSV_URL) {
+      try {
+        const response = await fetch(process.env.GOOGLE_SHEETS_CSV_URL);
+        if (response.ok) {
+          const csvContent = await response.text();
+          const registrations = parseGuestCSV(csvContent);
+
+          if (process.env.NODE_ENV === "development") {
+            console.log(
+              `🌐 Loaded ${registrations.length} registrations from Google Sheets`
+            );
+          }
+          return registrations;
+        }
+      } catch (sheetsError) {
+        if (process.env.NODE_ENV === "development") {
+          console.warn(
+            "Google Sheets not available:",
+            sheetsError instanceof Error
+              ? sheetsError.message
+              : String(sheetsError)
+          );
+          console.log("Falling back to other data sources...");
+        }
+      }
+    }
+
+    // Option 2: Try Netlify Blobs (production-ready solution)
     try {
       const store = getStore("event-data");
       const csvContent = await store.get("guest-list.csv", { type: "text" });
@@ -1076,7 +1104,7 @@ async function loadGuestData(): Promise<GuestRegistration[]> {
       }
     }
 
-    // Option 2: Use base64-encoded CSV data from environment variable (fallback)
+    // Option 3: Use base64-encoded CSV data from environment variable (fallback)
     if (process.env.GUEST_LIST_DATA) {
       try {
         const csvContent = Buffer.from(
@@ -1098,17 +1126,20 @@ async function loadGuestData(): Promise<GuestRegistration[]> {
       }
     }
 
-    // Option 3: Use file path (for local development and production)
-    const csvPath =
-      process.env.GUEST_LIST_CSV_PATH ||
-      path.join(process.cwd(), "data", "secure", "guest-list.csv");
+    // Option 3: Use local file as final fallback (development)
+    const csvPath = path.join(
+      process.cwd(),
+      "data",
+      "secure",
+      "guest-list.csv"
+    );
 
     // Check if file exists
     if (!fs.existsSync(csvPath)) {
       if (process.env.NODE_ENV === "development") {
         console.warn("CSV file not found at:", csvPath);
         console.warn(
-          "Expected order: 1) Netlify Blobs, 2) GUEST_LIST_DATA env var, 3) secure data file"
+          "Expected data sources: 1) GOOGLE_SHEETS_CSV_URL, 2) GUEST_LIST_DATA env var, 3) local file"
         );
       }
       return [];
