@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getStore } from "@netlify/blobs";
 import fs from "fs";
 import path from "path";
 
@@ -1047,21 +1048,46 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
   };
 }
 
-// Function to load guest data from CSV file or environment variable
+// Function to load guest data from Netlify Blobs, environment variable, or local file
 async function loadGuestData(): Promise<GuestRegistration[]> {
   try {
-    // Option 1: Use base64-encoded CSV data from environment variable (Netlify/Vercel)
-    if (process.env.GUEST_LIST_CSV_BASE64) {
+    // Option 1: Try Netlify Blobs first (production-ready solution)
+    try {
+      const store = getStore("event-data");
+      const csvContent = await store.get("guest-list.csv", { type: "text" });
+
+      if (csvContent) {
+        const registrations = parseGuestCSV(csvContent);
+
+        if (process.env.NODE_ENV === "development") {
+          console.log(
+            `✅ Loaded ${registrations.length} registrations from Netlify Blobs`
+          );
+        }
+        return registrations;
+      }
+    } catch (blobError) {
+      if (process.env.NODE_ENV === "development") {
+        console.warn(
+          "Netlify Blobs not available:",
+          blobError instanceof Error ? blobError.message : String(blobError)
+        );
+        console.log("Falling back to alternative data sources...");
+      }
+    }
+
+    // Option 2: Use base64-encoded CSV data from environment variable (fallback)
+    if (process.env.GUEST_LIST_DATA) {
       try {
         const csvContent = Buffer.from(
-          process.env.GUEST_LIST_CSV_BASE64,
+          process.env.GUEST_LIST_DATA,
           "base64"
         ).toString("utf-8");
         const registrations = parseGuestCSV(csvContent);
 
         if (process.env.NODE_ENV === "development") {
           console.log(
-            `Loaded ${registrations.length} registrations from environment variable`
+            `📦 Loaded ${registrations.length} registrations from environment variable`
           );
         }
         return registrations;
@@ -1072,25 +1098,18 @@ async function loadGuestData(): Promise<GuestRegistration[]> {
       }
     }
 
-    // Option 2: Use file path (for local development or VPS hosting)
+    // Option 3: Use file path (for local development and production)
     const csvPath =
       process.env.GUEST_LIST_CSV_PATH ||
-      path.join(process.cwd(), "data", "secure", "guest-list.csv") ||
-      path.join(
-        process.cwd(),
-        "components",
-        "insights",
-        "guest-list-sample.csv"
-      );
+      path.join(process.cwd(), "data", "secure", "guest-list.csv");
 
     // Check if file exists
     if (!fs.existsSync(csvPath)) {
       if (process.env.NODE_ENV === "development") {
         console.warn("CSV file not found at:", csvPath);
         console.warn(
-          "Set GUEST_LIST_CSV_BASE64 environment variable for Netlify/Vercel hosting"
+          "Expected order: 1) Netlify Blobs, 2) GUEST_LIST_DATA env var, 3) secure data file"
         );
-        console.warn("Or set GUEST_LIST_CSV_PATH for file-based hosting");
       }
       return [];
     }
@@ -1100,21 +1119,23 @@ async function loadGuestData(): Promise<GuestRegistration[]> {
 
     // Only log debug info in development
     if (process.env.NODE_ENV === "development") {
-      console.log(`CSV file size: ${csvContent.length} characters`);
+      console.log(`📁 CSV file size: ${csvContent.length} characters`);
       console.log(`First 200 characters: ${csvContent.substring(0, 200)}`);
     }
 
     const registrations = parseGuestCSV(csvContent);
 
     if (process.env.NODE_ENV === "development") {
-      console.log(`Loaded ${registrations.length} registrations from CSV`);
+      console.log(
+        `📊 Loaded ${registrations.length} registrations from secure CSV file`
+      );
       if (registrations.length > 0) {
-        console.log(`First registration:`, registrations[0]);
+        console.log(`Sample registration:`, registrations[0]);
       }
     }
     return registrations;
   } catch (error) {
-    console.error("Error loading guest data:", error);
+    console.error("❌ Error loading guest data:", error);
     return [];
   }
 }

@@ -1,0 +1,33 @@
+[build]
+  # Build command includes data upload to Netlify Blobs
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  # Node.js version for functions
+  NODE_VERSION = "18"
+  
+[functions]
+  # Configure functions directory
+  directory = ".netlify/functions"
+  
+[[redirects]]
+  from = "/insights/*"
+  to = "/insights/:splat"
+  status = 200
+  force = false
+
+[[headers]]
+  for = "/api/insights/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive, nosnippet"
+    Cache-Control = "private, no-cache, no-store, must-revalidate"
+    
+# Security headers for the insights pages
+[[headers]]
+  for = "/insights/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive, nosnippet"
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
