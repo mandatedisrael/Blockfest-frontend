@@ -1014,6 +1014,307 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
       .map(([school, count]) => ({ school, count })),
   };
 
+  // Approval Status Analysis by Profession
+  const developerStats = {
+    approved: registrations.filter(
+      (r) => r.profession?.includes("Developer") && r.status === "confirmed"
+    ).length,
+    pending: registrations.filter(
+      (r) => r.profession?.includes("Developer") && r.status === "pending"
+    ).length,
+    declined: registrations.filter(
+      (r) => r.profession?.includes("Developer") && r.status === "cancelled"
+    ).length,
+    total: registrations.filter((r) => r.profession?.includes("Developer"))
+      .length,
+  };
+
+  const designerStats = {
+    approved: registrations.filter(
+      (r) => r.profession?.includes("Creator") && r.status === "confirmed"
+    ).length,
+    pending: registrations.filter(
+      (r) => r.profession?.includes("Creator") && r.status === "pending"
+    ).length,
+    declined: registrations.filter(
+      (r) => r.profession?.includes("Creator") && r.status === "cancelled"
+    ).length,
+    total: registrations.filter((r) => r.profession?.includes("Creator"))
+      .length,
+  };
+
+  const founderStats = {
+    approved: registrations.filter(
+      (r) => r.profession?.includes("Founder") && r.status === "confirmed"
+    ).length,
+    pending: registrations.filter(
+      (r) => r.profession?.includes("Founder") && r.status === "pending"
+    ).length,
+    declined: registrations.filter(
+      (r) => r.profession?.includes("Founder") && r.status === "cancelled"
+    ).length,
+    total: registrations.filter((r) => r.profession?.includes("Founder"))
+      .length,
+  };
+
+  const studentStats = {
+    approved: registrations.filter(
+      (r) => r.profession?.includes("Student") && r.status === "confirmed"
+    ).length,
+    pending: registrations.filter(
+      (r) => r.profession?.includes("Student") && r.status === "pending"
+    ).length,
+    declined: registrations.filter(
+      (r) => r.profession?.includes("Student") && r.status === "cancelled"
+    ).length,
+    total: registrations.filter((r) => r.profession?.includes("Student"))
+      .length,
+  };
+
+  const approvalBreakdown = {
+    approvedDevelopers: developerStats.approved,
+    pendingDevelopers: developerStats.pending,
+    declinedDevelopers: developerStats.declined,
+    totalDevelopers: developerStats.total,
+    approvalRate:
+      developerStats.total > 0
+        ? (developerStats.approved / developerStats.total) * 100
+        : 0,
+    approvedCreators: designerStats.approved,
+    pendingCreators: designerStats.pending,
+    declinedCreators: designerStats.declined,
+    totalCreators: designerStats.total,
+    approvedFounders: founderStats.approved,
+    pendingFounders: founderStats.pending,
+    declinedFounders: founderStats.declined,
+    totalFounders: founderStats.total,
+    approvedStudents: studentStats.approved,
+    pendingStudents: studentStats.pending,
+    declinedStudents: studentStats.declined,
+    totalStudents: studentStats.total,
+    overallApprovalRate:
+      totalGuests > 0 ? (confirmedGuests / totalGuests) * 100 : 0,
+  };
+
+  // Advanced Analytics Breakdown
+  // 1. Application Quality Analysis
+  const completeApplications = registrations.filter(
+    (r) =>
+      r.email &&
+      r.firstName &&
+      r.lastName &&
+      r.country &&
+      r.city &&
+      r.profession &&
+      r.company &&
+      r.experience
+  ).length;
+  const partialApplications = totalGuests - completeApplications;
+  const completionRate =
+    totalGuests > 0 ? (completeApplications / totalGuests) * 100 : 0;
+
+  // 2. Source Quality Analysis
+  const sourceQualityMap: {
+    [key: string]: { applications: number; approved: number };
+  } = {};
+  registrations.forEach((r) => {
+    const source = r.source || "Unknown";
+    if (!sourceQualityMap[source]) {
+      sourceQualityMap[source] = { applications: 0, approved: 0 };
+    }
+    sourceQualityMap[source].applications++;
+    if (r.status === "confirmed") {
+      sourceQualityMap[source].approved++;
+    }
+  });
+
+  const sourceQuality = Object.entries(sourceQualityMap)
+    .map(([source, stats]) => ({
+      source,
+      applications: stats.applications,
+      approvalRate:
+        stats.applications > 0
+          ? (stats.approved / stats.applications) * 100
+          : 0,
+      qualityScore:
+        stats.applications > 0
+          ? (stats.approved / stats.applications) * 100
+          : 0,
+    }))
+    .sort((a, b) => b.applications - a.applications)
+    .slice(0, 5);
+
+  // 3. Geographic Analysis
+  const africanCountriesSet = new Set();
+  const cityCountMap: {
+    [key: string]: { city: string; country: string; count: number };
+  } = {};
+
+  registrations.forEach((r) => {
+    if (r.country && r.country !== "Unknown") {
+      africanCountriesSet.add(r.country);
+
+      if (r.city && r.city !== "Unknown") {
+        const key = `${r.city}, ${r.country}`;
+        if (!cityCountMap[key]) {
+          cityCountMap[key] = { city: r.city, country: r.country, count: 0 };
+        }
+        cityCountMap[key].count++;
+      }
+    }
+  });
+
+  const africanCountries = africanCountriesSet.size;
+  const topAfricanCities = Object.values(cityCountMap)
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 5);
+
+  // Diversity score based on country distribution
+  const countryDistribution = Array.from(africanCountriesSet).length;
+  const diversityScore = Math.min((countryDistribution / 10) * 100, 100); // Max score at 10+ countries
+
+  // 4. Experience Distribution with Approval Rates
+  const expStats = {
+    newcomer: { total: 0, approved: 0 },
+    intermediate: { total: 0, approved: 0 },
+    advanced: { total: 0, approved: 0 },
+    web2Transitioning: { total: 0, approved: 0 },
+  };
+
+  registrations.forEach((r) => {
+    const exp = r.experience?.toLowerCase();
+    if (exp?.includes("newcomer")) {
+      expStats.newcomer.total++;
+      if (r.status === "confirmed") expStats.newcomer.approved++;
+    } else if (exp?.includes("intermediate")) {
+      expStats.intermediate.total++;
+      if (r.status === "confirmed") expStats.intermediate.approved++;
+    } else if (exp?.includes("advanced")) {
+      expStats.advanced.total++;
+      if (r.status === "confirmed") expStats.advanced.approved++;
+    } else if (exp?.includes("web2") || exp?.includes("transitioning")) {
+      expStats.web2Transitioning.total++;
+      if (r.status === "confirmed") expStats.web2Transitioning.approved++;
+    }
+  });
+
+  const experienceDistribution = {
+    newcomer: {
+      count: expStats.newcomer.total,
+      percentage:
+        totalGuests > 0 ? (expStats.newcomer.total / totalGuests) * 100 : 0,
+      approvalRate:
+        expStats.newcomer.total > 0
+          ? (expStats.newcomer.approved / expStats.newcomer.total) * 100
+          : 0,
+    },
+    intermediate: {
+      count: expStats.intermediate.total,
+      percentage:
+        totalGuests > 0 ? (expStats.intermediate.total / totalGuests) * 100 : 0,
+      approvalRate:
+        expStats.intermediate.total > 0
+          ? (expStats.intermediate.approved / expStats.intermediate.total) * 100
+          : 0,
+    },
+    advanced: {
+      count: expStats.advanced.total,
+      percentage:
+        totalGuests > 0 ? (expStats.advanced.total / totalGuests) * 100 : 0,
+      approvalRate:
+        expStats.advanced.total > 0
+          ? (expStats.advanced.approved / expStats.advanced.total) * 100
+          : 0,
+    },
+    web2Transitioning: {
+      count: expStats.web2Transitioning.total,
+      percentage:
+        totalGuests > 0
+          ? (expStats.web2Transitioning.total / totalGuests) * 100
+          : 0,
+      approvalRate:
+        expStats.web2Transitioning.total > 0
+          ? (expStats.web2Transitioning.approved /
+              expStats.web2Transitioning.total) *
+            100
+          : 0,
+    },
+  };
+
+  // 5. Community & Company Analysis
+  const uniqueCompanies = new Set(
+    registrations.map((r) => r.company).filter((c) => c && c.trim() !== "")
+  ).size;
+  const referralCount = registrations.filter(
+    (r) =>
+      r.source?.toLowerCase().includes("referral") ||
+      r.source?.toLowerCase().includes("friend")
+  ).length;
+  const referralRate =
+    totalGuests > 0 ? (referralCount / totalGuests) * 100 : 0;
+
+  // Company type classification
+  const companyTypeMap: { [key: string]: number } = {};
+  registrations.forEach((r) => {
+    if (r.company && r.company.trim() !== "") {
+      const company = r.company.toLowerCase();
+      let type = "Other";
+
+      if (
+        company.includes("startup") ||
+        company.includes("tech") ||
+        company.includes("software")
+      ) {
+        type = "Tech Startup";
+      } else if (
+        company.includes("university") ||
+        company.includes("college") ||
+        company.includes("school")
+      ) {
+        type = "Educational";
+      } else if (
+        company.includes("bank") ||
+        company.includes("finance") ||
+        company.includes("fintech")
+      ) {
+        type = "Financial Services";
+      } else if (
+        company.includes("consulting") ||
+        company.includes("advisory")
+      ) {
+        type = "Consulting";
+      }
+
+      companyTypeMap[type] = (companyTypeMap[type] || 0) + 1;
+    }
+  });
+
+  const topCompanyTypes = Object.entries(companyTypeMap)
+    .map(([type, count]) => ({
+      type,
+      count,
+      percentage: totalGuests > 0 ? (count / totalGuests) * 100 : 0,
+    }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 5);
+
+  const analyticsBreakdown = {
+    completeApplications,
+    partialApplications,
+    completionRate,
+    sourceQuality,
+    africanCountries,
+    topAfricanCities,
+    diversityScore,
+    experienceDistribution,
+    averageDecisionTime: 0, // Would need timestamp analysis for actual calculation
+    pendingApplications: pendingGuests,
+    conversionRate: totalGuests > 0 ? (confirmedGuests / totalGuests) * 100 : 0,
+    uniqueCompanies,
+    referralRate,
+    topCompanyTypes,
+  };
+
   return {
     totalGuests,
     confirmedGuests,
@@ -1034,6 +1335,8 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
     registrationTimePatterns,
     genderBreakdown,
     educationInsights,
+    approvalBreakdown,
+    analyticsBreakdown,
     recentRegistrations: registrations
       .filter((r) => r.status === "confirmed")
       .sort((a, b) => {

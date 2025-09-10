@@ -11,6 +11,8 @@ import { TopCompanies } from "./top-companies";
 import { TimeAnalysis } from "./time-analysis";
 import { GenderBreakdown } from "./gender-breakdown";
 import { EducationInsights } from "./education-insights";
+import { ApprovalInsights } from "./approval-insights";
+import { AnalyticsInsights } from "./analytics-insights";
 
 export interface GuestData {
   id: string;
@@ -74,6 +76,75 @@ export interface DashboardStats {
     studentPercentage: number;
     professionalPercentage: number;
     topSchools: Array<{ school: string; count: number }>;
+  };
+  approvalBreakdown: {
+    approvedDevelopers: number;
+    pendingDevelopers: number;
+    declinedDevelopers: number;
+    totalDevelopers: number;
+    approvalRate: number;
+    approvedCreators: number;
+    pendingCreators: number;
+    declinedCreators: number;
+    totalCreators: number;
+    approvedFounders: number;
+    pendingFounders: number;
+    declinedFounders: number;
+    totalFounders: number;
+    approvedStudents: number;
+    pendingStudents: number;
+    declinedStudents: number;
+    totalStudents: number;
+    overallApprovalRate: number;
+  };
+  analyticsBreakdown: {
+    // Application Quality
+    completeApplications: number;
+    partialApplications: number;
+    completionRate: number;
+
+    // Source Quality
+    sourceQuality: Array<{
+      source: string;
+      applications: number;
+      approvalRate: number;
+      qualityScore: number;
+    }>;
+
+    // Geographic Insights
+    africanCountries: number;
+    topAfricanCities: Array<{
+      city: string;
+      country: string;
+      count: number;
+    }>;
+    diversityScore: number;
+
+    // Experience Distribution
+    experienceDistribution: {
+      newcomer: { count: number; percentage: number; approvalRate: number };
+      intermediate: { count: number; percentage: number; approvalRate: number };
+      advanced: { count: number; percentage: number; approvalRate: number };
+      web2Transitioning: {
+        count: number;
+        percentage: number;
+        approvalRate: number;
+      };
+    };
+
+    // Pipeline Health
+    averageDecisionTime: number;
+    pendingApplications: number;
+    conversionRate: number;
+
+    // Community Value
+    uniqueCompanies: number;
+    referralRate: number;
+    topCompanyTypes: Array<{
+      type: string;
+      count: number;
+      percentage: number;
+    }>;
   };
   recentRegistrations: GuestData[];
   lastUpdated: string;
@@ -177,6 +248,47 @@ export function InsightsDashboard() {
       professionalPercentage: 0,
       topSchools: [],
     },
+    approvalBreakdown: {
+      approvedDevelopers: 0,
+      pendingDevelopers: 0,
+      declinedDevelopers: 0,
+      totalDevelopers: 0,
+      approvalRate: 0,
+      approvedCreators: 0,
+      pendingCreators: 0,
+      declinedCreators: 0,
+      totalCreators: 0,
+      approvedFounders: 0,
+      pendingFounders: 0,
+      declinedFounders: 0,
+      totalFounders: 0,
+      approvedStudents: 0,
+      pendingStudents: 0,
+      declinedStudents: 0,
+      totalStudents: 0,
+      overallApprovalRate: 0,
+    },
+    analyticsBreakdown: {
+      completeApplications: 0,
+      partialApplications: 0,
+      completionRate: 0,
+      sourceQuality: [],
+      africanCountries: 0,
+      topAfricanCities: [],
+      diversityScore: 0,
+      experienceDistribution: {
+        newcomer: { count: 0, percentage: 0, approvalRate: 0 },
+        intermediate: { count: 0, percentage: 0, approvalRate: 0 },
+        advanced: { count: 0, percentage: 0, approvalRate: 0 },
+        web2Transitioning: { count: 0, percentage: 0, approvalRate: 0 },
+      },
+      averageDecisionTime: 0,
+      pendingApplications: 0,
+      conversionRate: 0,
+      uniqueCompanies: 0,
+      referralRate: 0,
+      topCompanyTypes: [],
+    },
     recentRegistrations: [],
     lastUpdated: new Date().toISOString(),
   });
@@ -275,6 +387,13 @@ export function InsightsDashboard() {
       </div>
       {/* Stats Grid */}
       <StatsGrid stats={stats} loading={loading} />
+
+      {/* Approval Insights */}
+      <ApprovalInsights stats={stats} loading={loading} />
+
+      {/* Advanced Analytics */}
+      <AnalyticsInsights stats={stats} loading={loading} />
+
       {/* Charts and Breakdown - Enhanced Grid */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
         <div className="min-h-[400px]">
