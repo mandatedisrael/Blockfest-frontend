@@ -785,15 +785,17 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
       if (isNaN(date.getTime())) {
         // Use current date if timestamp is invalid
         const fallbackDate = new Date();
-        const weekStart = new Date(
-          fallbackDate.setDate(fallbackDate.getDate() - fallbackDate.getDay())
-        );
+        // Create new date object to avoid mutation
+        const weekStart = new Date(fallbackDate);
+        weekStart.setDate(weekStart.getDate() - weekStart.getDay());
+        weekStart.setHours(0, 0, 0, 0); // Start of day
         const weekKey = weekStart.toISOString().split("T")[0];
         registrationsByWeek[weekKey] = (registrationsByWeek[weekKey] || 0) + 1;
       } else {
-        const weekStart = new Date(
-          date.setDate(date.getDate() - date.getDay())
-        );
+        // Create new date object to avoid mutation
+        const weekStart = new Date(date);
+        weekStart.setDate(weekStart.getDate() - weekStart.getDay());
+        weekStart.setHours(0, 0, 0, 0); // Start of day
         const weekKey = weekStart.toISOString().split("T")[0];
         registrationsByWeek[weekKey] = (registrationsByWeek[weekKey] || 0) + 1;
       }
@@ -812,7 +814,36 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
   const registrationTrend = Object.entries(registrationsByWeek)
     .sort(([a], [b]) => a.localeCompare(b))
     .slice(-8) // Last 8 weeks
-    .map(([date, count]) => ({ date, count }));
+    .map(([date, count]) => ({
+      date,
+      count: count > registrations.length ? registrations.length : count, // Cap at total registrations as sanity check
+    }));
+
+  // Debug logging in development
+  if (process.env.NODE_ENV === "development") {
+    const totalTrendCount = registrationTrend.reduce(
+      (sum, t) => sum + t.count,
+      0
+    );
+    console.log("Registration Trends Debug:", {
+      totalRegistrations: registrations.length,
+      weekCounts: registrationsByWeek,
+      trendData: registrationTrend,
+      trendTotal: totalTrendCount,
+      possibleIssue:
+        totalTrendCount > registrations.length
+          ? "POTENTIAL DATA DUPLICATION DETECTED"
+          : "Data looks normal",
+      maxWeeklyCount: Math.max(...registrationTrend.map((t) => t.count)),
+      avgWeeklyCount:
+        registrationTrend.length > 0
+          ? Math.round(
+              registrationTrend.reduce((sum, t) => sum + t.count, 0) /
+                registrationTrend.length
+            )
+          : 0,
+    });
+  }
 
   // Location breakdown - countries are already normalized during parsing
   const locationCounts: { [key: string]: number } = {};
