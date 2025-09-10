@@ -1,5 +1,6 @@
 "use client";
 
+import { memo, useMemo } from "react";
 import { DashboardStats } from "./dashboard";
 
 interface ApprovalInsightsProps {
@@ -162,101 +163,107 @@ function ApprovalCard({
   );
 }
 
-export function ApprovalInsights({ stats, loading }: ApprovalInsightsProps) {
-  const approvalCards = [
-    {
-      title: "Developers",
-      category: "developers",
-      approved: stats.approvalBreakdown?.approvedDevelopers || 0,
-      pending: stats.approvalBreakdown?.pendingDevelopers || 0,
-      declined: stats.approvalBreakdown?.declinedDevelopers || 0,
-      total: stats.approvalBreakdown?.totalDevelopers || 0,
-      icon: (
-        <svg
-          className="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
-          />
-        </svg>
-      ),
-    },
-    {
-      title: "Founders",
-      category: "founders",
-      approved: stats.approvalBreakdown?.approvedFounders || 0,
-      pending: stats.approvalBreakdown?.pendingFounders || 0,
-      declined: stats.approvalBreakdown?.declinedFounders || 0,
-      total: stats.approvalBreakdown?.totalFounders || 0,
-      icon: (
-        <svg
-          className="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M13 10V3L4 14h7v7l9-11h-7z"
-          />
-        </svg>
-      ),
-    },
-    {
-      title: "Students",
-      category: "students",
-      approved: stats.approvalBreakdown?.approvedStudents || 0,
-      pending: stats.approvalBreakdown?.pendingStudents || 0,
-      declined: stats.approvalBreakdown?.declinedStudents || 0,
-      total: stats.approvalBreakdown?.totalStudents || 0,
-      icon: (
-        <svg
-          className="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M12 14l9-5-9-5-9 5 9 5z M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"
-          />
-        </svg>
-      ),
-    },
-    {
-      title: "Creators",
-      category: "creators",
-      approved: stats.approvalBreakdown?.approvedCreators || 0,
-      pending: stats.approvalBreakdown?.pendingCreators || 0,
-      declined: stats.approvalBreakdown?.declinedCreators || 0,
-      total: stats.approvalBreakdown?.totalCreators || 0,
-      icon: (
-        <svg
-          className="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-          />
-        </svg>
-      ),
-    },
-  ];
+export const ApprovalInsights = memo(function ApprovalInsights({
+  stats,
+  loading,
+}: ApprovalInsightsProps) {
+  const approvalCards = useMemo(
+    () => [
+      {
+        title: "Developers",
+        category: "developers",
+        approved: stats.approvalBreakdown?.approvedDevelopers || 0,
+        pending: stats.approvalBreakdown?.pendingDevelopers || 0,
+        declined: stats.approvalBreakdown?.declinedDevelopers || 0,
+        total: stats.approvalBreakdown?.totalDevelopers || 0,
+        icon: (
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+            />
+          </svg>
+        ),
+      },
+      {
+        title: "Founders",
+        category: "founders",
+        approved: stats.approvalBreakdown?.approvedFounders || 0,
+        pending: stats.approvalBreakdown?.pendingFounders || 0,
+        declined: stats.approvalBreakdown?.declinedFounders || 0,
+        total: stats.approvalBreakdown?.totalFounders || 0,
+        icon: (
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M13 10V3L4 14h7v7l9-11h-7z"
+            />
+          </svg>
+        ),
+      },
+      {
+        title: "Students",
+        category: "students",
+        approved: stats.approvalBreakdown?.approvedStudents || 0,
+        pending: stats.approvalBreakdown?.pendingStudents || 0,
+        declined: stats.approvalBreakdown?.declinedStudents || 0,
+        total: stats.approvalBreakdown?.totalStudents || 0,
+        icon: (
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 14l9-5-9-5-9 5 9 5z M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"
+            />
+          </svg>
+        ),
+      },
+      {
+        title: "Creators",
+        category: "creators",
+        approved: stats.approvalBreakdown?.approvedCreators || 0,
+        pending: stats.approvalBreakdown?.pendingCreators || 0,
+        declined: stats.approvalBreakdown?.declinedCreators || 0,
+        total: stats.approvalBreakdown?.totalCreators || 0,
+        icon: (
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+            />
+          </svg>
+        ),
+      },
+    ],
+    [stats.approvalBreakdown]
+  );
 
   return (
     <div className="space-y-6">
@@ -277,4 +284,4 @@ export function ApprovalInsights({ stats, loading }: ApprovalInsightsProps) {
       </div>
     </div>
   );
-}
+});

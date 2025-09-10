@@ -1,5 +1,6 @@
 "use client";
 
+import { memo, useMemo } from "react";
 import { DashboardStats } from "./dashboard";
 
 interface AnalyticsInsightsProps {
@@ -208,8 +209,89 @@ function InfoCard({
   );
 }
 
-export function AnalyticsInsights({ stats, loading }: AnalyticsInsightsProps) {
+export const AnalyticsInsights = memo(function AnalyticsInsights({
+  stats,
+  loading,
+}: AnalyticsInsightsProps) {
   const analytics = stats.analyticsBreakdown;
+
+  // Memoize expensive calculations
+  const qualityMetrics = useMemo(() => {
+    if (!analytics) return null;
+
+    return {
+      totalApplications:
+        (analytics.completeApplications || 0) +
+        (analytics.partialApplications || 0),
+      completionDescription: `${
+        analytics.completeApplications || 0
+      } complete out of ${
+        (analytics.completeApplications || 0) +
+        (analytics.partialApplications || 0)
+      } total`,
+      uniqueCompaniesCount: analytics.uniqueCompanies || 0,
+      communityDescription: `${
+        analytics.uniqueCompanies || 0
+      } unique companies`,
+    };
+  }, [analytics]);
+
+  const sourceQualityItems = useMemo(() => {
+    return (
+      analytics?.sourceQuality?.map((source) => ({
+        label: source.source,
+        value: source.applications,
+        percentage: source.approvalRate,
+      })) || []
+    );
+  }, [analytics]);
+
+  const topAfricanCitiesItems = useMemo(() => {
+    if (!analytics?.topAfricanCities) return [];
+
+    // Calculate total count for percentage calculation
+    const totalCityCount = analytics.topAfricanCities.reduce(
+      (sum, city) => sum + city.count,
+      0
+    );
+
+    return analytics.topAfricanCities.map((city) => ({
+      label: `${city.city}, ${city.country}`,
+      value: city.count,
+      percentage:
+        totalCityCount > 0
+          ? Math.round((city.count / totalCityCount) * 100)
+          : 0,
+    }));
+  }, [analytics]);
+
+  const experienceDistributionItems = useMemo(() => {
+    if (!analytics?.experienceDistribution) return [];
+
+    return [
+      {
+        label: "Advanced",
+        value: analytics.experienceDistribution.advanced.count,
+        percentage: analytics.experienceDistribution.advanced.percentage,
+      },
+      {
+        label: "Intermediate",
+        value: analytics.experienceDistribution.intermediate.count,
+        percentage: analytics.experienceDistribution.intermediate.percentage,
+      },
+      {
+        label: "Newcomer",
+        value: analytics.experienceDistribution.newcomer.count,
+        percentage: analytics.experienceDistribution.newcomer.percentage,
+      },
+    ];
+  }, [analytics]);
+
+  const experienceLevelsCount = useMemo(() => {
+    return analytics?.experienceDistribution
+      ? Object.keys(analytics.experienceDistribution).length.toString()
+      : "0";
+  }, [analytics]);
 
   return (
     <div className="space-y-8">
@@ -225,12 +307,9 @@ export function AnalyticsInsights({ stats, loading }: AnalyticsInsightsProps) {
         <QualityScoreCard
           title="Application Quality"
           score={analytics?.completionRate || 0}
-          description={`${
-            analytics?.completeApplications || 0
-          } complete out of ${
-            (analytics?.completeApplications || 0) +
-            (analytics?.partialApplications || 0)
-          } total`}
+          description={
+            qualityMetrics?.completionDescription || "No data available"
+          }
           color="green"
           loading={loading}
           icon={
@@ -301,7 +380,9 @@ export function AnalyticsInsights({ stats, loading }: AnalyticsInsightsProps) {
         <QualityScoreCard
           title="Community Strength"
           score={analytics?.referralRate || 0}
-          description={`${analytics?.uniqueCompanies || 0} unique companies`}
+          description={
+            qualityMetrics?.communityDescription || "No data available"
+          }
           color="yellow"
           loading={loading}
           icon={
@@ -328,13 +409,7 @@ export function AnalyticsInsights({ stats, loading }: AnalyticsInsightsProps) {
           title="Top Traffic Sources"
           value={analytics?.sourceQuality?.length || 0}
           subtitle="Sources tracked"
-          items={
-            analytics?.sourceQuality?.map((source) => ({
-              label: source.source,
-              value: source.applications,
-              percentage: source.approvalRate,
-            })) || []
-          }
+          items={sourceQualityItems}
           loading={loading}
           icon={
             <svg
@@ -357,12 +432,7 @@ export function AnalyticsInsights({ stats, loading }: AnalyticsInsightsProps) {
           title="Top African Cities"
           value={analytics?.topAfricanCities?.length || 0}
           subtitle="City hotspots"
-          items={
-            analytics?.topAfricanCities?.map((city) => ({
-              label: `${city.city}, ${city.country}`,
-              value: city.count,
-            })) || []
-          }
+          items={topAfricanCitiesItems}
           loading={loading}
           icon={
             <svg
@@ -389,36 +459,9 @@ export function AnalyticsInsights({ stats, loading }: AnalyticsInsightsProps) {
 
         <InfoCard
           title="Experience Distribution"
-          value={
-            analytics?.experienceDistribution
-              ? Object.keys(analytics.experienceDistribution).length.toString()
-              : "0"
-          }
+          value={experienceLevelsCount}
           subtitle="Experience levels"
-          items={
-            analytics?.experienceDistribution
-              ? [
-                  {
-                    label: "Advanced",
-                    value: analytics.experienceDistribution.advanced.count,
-                    percentage:
-                      analytics.experienceDistribution.advanced.percentage,
-                  },
-                  {
-                    label: "Intermediate",
-                    value: analytics.experienceDistribution.intermediate.count,
-                    percentage:
-                      analytics.experienceDistribution.intermediate.percentage,
-                  },
-                  {
-                    label: "Newcomer",
-                    value: analytics.experienceDistribution.newcomer.count,
-                    percentage:
-                      analytics.experienceDistribution.newcomer.percentage,
-                  },
-                ]
-              : []
-          }
+          items={experienceDistributionItems}
           loading={loading}
           icon={
             <svg
@@ -439,4 +482,4 @@ export function AnalyticsInsights({ stats, loading }: AnalyticsInsightsProps) {
       </div>
     </div>
   );
-}
+});

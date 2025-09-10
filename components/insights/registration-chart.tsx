@@ -1,9 +1,16 @@
+"use client";
+
+import { memo } from "react";
+
 interface RegistrationChartProps {
   data: Array<{ date: string; count: number }>;
   loading?: boolean;
 }
 
-export function RegistrationChart({ data, loading }: RegistrationChartProps) {
+const RegistrationChart = memo(function RegistrationChart({
+  data,
+  loading,
+}: RegistrationChartProps) {
   // Debug logging in development
   if (process.env.NODE_ENV === "development" && data?.length > 0) {
     console.log("Registration Trends Data:", {
@@ -194,4 +201,6 @@ export function RegistrationChart({ data, loading }: RegistrationChartProps) {
       </div>
     </div>
   );
-}
+});
+
+export { RegistrationChart };

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo, memo } from "react";
 import { StatsGrid } from "./stats-grid";
 import { RegistrationChart } from "./registration-chart";
 import { LocationBreakdown } from "./location-breakdown";
@@ -221,7 +221,7 @@ function formatTime(date: Date): string {
   }
 }
 
-export function InsightsDashboard() {
+export const InsightsDashboard = memo(function InsightsDashboard() {
   const [stats, setStats] = useState<DashboardStats>({
     totalGuests: 0,
     confirmedGuests: 0,
@@ -342,7 +342,34 @@ export function InsightsDashboard() {
     return () => clearInterval(interval);
   }, [fetchData]);
 
-  const nextRefresh = new Date(lastRefresh.getTime() + 6 * 60 * 60 * 1000);
+  // Memoize expensive calculations
+  const memoizedStats = useMemo(
+    () => ({
+      registrationStatusData: {
+        confirmed: stats.confirmedGuests,
+        pending: stats.pendingGuests,
+        cancelled: stats.cancelledGuests,
+        total: stats.totalGuests,
+      },
+      timeAnalysisData: stats.registrationTimePatterns,
+      chartData: stats.registrationTrend,
+      locationData: stats.locationBreakdown,
+      trafficData: stats.trafficSources,
+      companyData: stats.topCompanies,
+      genderData: stats.genderBreakdown,
+      educationData: stats.educationInsights,
+      topInterests: stats.topInterests,
+    }),
+    [stats]
+  );
+
+  const formattedDates = useMemo(() => {
+    const nextRefresh = new Date(lastRefresh.getTime() + 6 * 60 * 60 * 1000);
+    return {
+      lastUpdated: formatDate(stats.lastUpdated),
+      nextRefresh: formatTime(nextRefresh),
+    };
+  }, [stats.lastUpdated, lastRefresh]);
 
   // Error state
   if (error) {
@@ -373,8 +400,8 @@ export function InsightsDashboard() {
             Dashboard Overview
           </h2>
           <p className="text-gray-300 text-xs sm:text-sm">
-            Last updated: {formatDate(stats.lastUpdated)} • Next refresh:{" "}
-            {formatTime(nextRefresh)}
+            Last updated: {formattedDates.lastUpdated} • Next refresh:{" "}
+            {formattedDates.nextRefresh}
           </p>
         </div>
 
@@ -413,10 +440,13 @@ export function InsightsDashboard() {
       {/* Charts and Breakdown - Enhanced Grid */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
         <div className="min-h-[400px]">
-          <RegistrationChart data={stats.registrationTrend} loading={loading} />
+          <RegistrationChart data={memoizedStats.chartData} loading={loading} />
         </div>
         <div className="min-h-[400px]">
-          <LocationBreakdown data={stats.locationBreakdown} loading={loading} />
+          <LocationBreakdown
+            data={memoizedStats.locationData}
+            loading={loading}
+          />
         </div>
       </div>
 
@@ -424,29 +454,32 @@ export function InsightsDashboard() {
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6">
         <div className="xl:col-span-2">
           <RegistrationStatus
-            confirmed={stats.confirmedGuests}
-            pending={stats.pendingGuests}
-            cancelled={stats.cancelledGuests}
-            total={stats.totalGuests}
+            confirmed={memoizedStats.registrationStatusData.confirmed}
+            pending={memoizedStats.registrationStatusData.pending}
+            cancelled={memoizedStats.registrationStatusData.cancelled}
+            total={memoizedStats.registrationStatusData.total}
             loading={loading}
           />
         </div>
         <div>
-          <RecentActivity interests={stats.topInterests} loading={loading} />
+          <RecentActivity
+            interests={memoizedStats.topInterests}
+            loading={loading}
+          />
         </div>
       </div>
 
       {/* Marketing & Engagement Analytics */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
         <div className="md:col-span-1 min-h-[400px]">
-          <TrafficSources data={stats.trafficSources} loading={loading} />
+          <TrafficSources data={memoizedStats.trafficData} loading={loading} />
         </div>
         <div className="md:col-span-1 min-h-[400px]">
-          <TopCompanies data={stats.topCompanies} loading={loading} />
+          <TopCompanies data={memoizedStats.companyData} loading={loading} />
         </div>
         <div className="md:col-span-2 xl:col-span-1 min-h-[400px]">
           <TimeAnalysis
-            data={stats.registrationTimePatterns}
+            data={memoizedStats.timeAnalysisData}
             loading={loading}
           />
         </div>
@@ -455,12 +488,15 @@ export function InsightsDashboard() {
       {/* Demographics & Education Analytics */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
         <div className="min-h-[500px]">
-          <GenderBreakdown data={stats.genderBreakdown} loading={loading} />
+          <GenderBreakdown data={memoizedStats.genderData} loading={loading} />
         </div>
         <div className="min-h-[500px]">
-          <EducationInsights data={stats.educationInsights} loading={loading} />
+          <EducationInsights
+            data={memoizedStats.educationData}
+            loading={loading}
+          />
         </div>
       </div>
     </div>
   );
-}
+});
