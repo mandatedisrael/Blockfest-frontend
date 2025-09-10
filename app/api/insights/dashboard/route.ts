@@ -1031,16 +1031,27 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
 
   const designerStats = {
     approved: registrations.filter(
-      (r) => r.profession?.includes("Creator") && r.status === "confirmed"
+      (r) =>
+        (r.profession?.includes("Creator") ||
+          r.profession?.includes("Designer")) &&
+        r.status === "confirmed"
     ).length,
     pending: registrations.filter(
-      (r) => r.profession?.includes("Creator") && r.status === "pending"
+      (r) =>
+        (r.profession?.includes("Creator") ||
+          r.profession?.includes("Designer")) &&
+        r.status === "pending"
     ).length,
     declined: registrations.filter(
-      (r) => r.profession?.includes("Creator") && r.status === "cancelled"
+      (r) =>
+        (r.profession?.includes("Creator") ||
+          r.profession?.includes("Designer")) &&
+        r.status === "cancelled"
     ).length,
-    total: registrations.filter((r) => r.profession?.includes("Creator"))
-      .length,
+    total: registrations.filter(
+      (r) =>
+        r.profession?.includes("Creator") || r.profession?.includes("Designer")
+    ).length,
   };
 
   const founderStats = {
@@ -1076,7 +1087,7 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
     pendingDevelopers: developerStats.pending,
     declinedDevelopers: developerStats.declined,
     totalDevelopers: developerStats.total,
-    approvalRate:
+    developerApprovalRate:
       developerStats.total > 0
         ? (developerStats.approved / developerStats.total) * 100
         : 0,
@@ -1084,14 +1095,26 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
     pendingCreators: designerStats.pending,
     declinedCreators: designerStats.declined,
     totalCreators: designerStats.total,
+    creatorApprovalRate:
+      designerStats.total > 0
+        ? (designerStats.approved / designerStats.total) * 100
+        : 0,
     approvedFounders: founderStats.approved,
     pendingFounders: founderStats.pending,
     declinedFounders: founderStats.declined,
     totalFounders: founderStats.total,
+    founderApprovalRate:
+      founderStats.total > 0
+        ? (founderStats.approved / founderStats.total) * 100
+        : 0,
     approvedStudents: studentStats.approved,
     pendingStudents: studentStats.pending,
     declinedStudents: studentStats.declined,
     totalStudents: studentStats.total,
+    studentApprovalRate:
+      studentStats.total > 0
+        ? (studentStats.approved / studentStats.total) * 100
+        : 0,
     overallApprovalRate:
       totalGuests > 0 ? (confirmedGuests / totalGuests) * 100 : 0,
   };
@@ -1182,17 +1205,17 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
   };
 
   registrations.forEach((r) => {
-    const exp = r.experience?.toLowerCase();
-    if (exp?.includes("newcomer")) {
+    const exp = r.experience; // Already normalized by parseExperienceLevel
+    if (exp === "Newcomer") {
       expStats.newcomer.total++;
       if (r.status === "confirmed") expStats.newcomer.approved++;
-    } else if (exp?.includes("intermediate")) {
+    } else if (exp === "Intermediate") {
       expStats.intermediate.total++;
       if (r.status === "confirmed") expStats.intermediate.approved++;
-    } else if (exp?.includes("advanced")) {
+    } else if (exp === "Advanced") {
       expStats.advanced.total++;
       if (r.status === "confirmed") expStats.advanced.approved++;
-    } else if (exp?.includes("web2") || exp?.includes("transitioning")) {
+    } else if (exp === "Web2 Transitioning") {
       expStats.web2Transitioning.total++;
       if (r.status === "confirmed") expStats.web2Transitioning.approved++;
     }
@@ -1307,7 +1330,6 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
     topAfricanCities,
     diversityScore,
     experienceDistribution,
-    averageDecisionTime: 0, // Would need timestamp analysis for actual calculation
     pendingApplications: pendingGuests,
     conversionRate: totalGuests > 0 ? (confirmedGuests / totalGuests) * 100 : 0,
     uniqueCompanies,

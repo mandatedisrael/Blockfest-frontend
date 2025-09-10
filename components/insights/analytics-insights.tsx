@@ -44,7 +44,6 @@ interface AnalyticsInsightsProps {
       };
 
       // Pipeline Health
-      averageDecisionTime: number;
       pendingApplications: number;
       conversionRate: number;
 
@@ -390,7 +389,11 @@ export function AnalyticsInsights({ stats, loading }: AnalyticsInsightsProps) {
 
         <InfoCard
           title="Experience Distribution"
-          value="4"
+          value={
+            analytics?.experienceDistribution
+              ? Object.keys(analytics.experienceDistribution).length.toString()
+              : "0"
+          }
           subtitle="Experience levels"
           items={
             analytics?.experienceDistribution

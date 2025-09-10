@@ -82,19 +82,22 @@ export interface DashboardStats {
     pendingDevelopers: number;
     declinedDevelopers: number;
     totalDevelopers: number;
-    approvalRate: number;
+    developerApprovalRate: number;
     approvedCreators: number;
     pendingCreators: number;
     declinedCreators: number;
     totalCreators: number;
+    creatorApprovalRate: number;
     approvedFounders: number;
     pendingFounders: number;
     declinedFounders: number;
     totalFounders: number;
+    founderApprovalRate: number;
     approvedStudents: number;
     pendingStudents: number;
     declinedStudents: number;
     totalStudents: number;
+    studentApprovalRate: number;
     overallApprovalRate: number;
   };
   analyticsBreakdown: {
@@ -133,7 +136,6 @@ export interface DashboardStats {
     };
 
     // Pipeline Health
-    averageDecisionTime: number;
     pendingApplications: number;
     conversionRate: number;
 
@@ -253,19 +255,22 @@ export function InsightsDashboard() {
       pendingDevelopers: 0,
       declinedDevelopers: 0,
       totalDevelopers: 0,
-      approvalRate: 0,
+      developerApprovalRate: 0,
       approvedCreators: 0,
       pendingCreators: 0,
       declinedCreators: 0,
       totalCreators: 0,
+      creatorApprovalRate: 0,
       approvedFounders: 0,
       pendingFounders: 0,
       declinedFounders: 0,
       totalFounders: 0,
+      founderApprovalRate: 0,
       approvedStudents: 0,
       pendingStudents: 0,
       declinedStudents: 0,
       totalStudents: 0,
+      studentApprovalRate: 0,
       overallApprovalRate: 0,
     },
     analyticsBreakdown: {
@@ -282,7 +287,6 @@ export function InsightsDashboard() {
         advanced: { count: 0, percentage: 0, approvalRate: 0 },
         web2Transitioning: { count: 0, percentage: 0, approvalRate: 0 },
       },
-      averageDecisionTime: 0,
       pendingApplications: 0,
       conversionRate: 0,
       uniqueCompanies: 0,
@@ -305,7 +309,19 @@ export function InsightsDashboard() {
 
     try {
       const data = await fetchDashboardStats(controller.signal);
-      setStats(data);
+      // Safe merge to prevent runtime breaks when API omits new nested keys
+      setStats((prev) => ({
+        ...prev,
+        ...data,
+        approvalBreakdown: {
+          ...prev.approvalBreakdown,
+          ...(data.approvalBreakdown || {}),
+        },
+        analyticsBreakdown: {
+          ...prev.analyticsBreakdown,
+          ...(data.analyticsBreakdown || {}),
+        },
+      }));
       setLastRefresh(new Date());
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load data");
