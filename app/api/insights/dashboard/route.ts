@@ -86,6 +86,38 @@ function parseExperienceLevel(expText: string): string {
   return "Unknown";
 }
 
+// Normalizes a free-text Lagos location for analytics display and grouping.
+function normalizeTransportLocation(input: string): string {
+  if (!input) return "";
+  // Lowercase, collapse spaces, remove quotes, canonicalize common synonyms, strip standalone numbers
+  let s = input.toLowerCase().replace(/["'']/g, "").replace(/\s+/g, " ").trim();
+  // Canonicalize "VI" variants to "victoria island"
+  s = s.replace(/\b(v\.?\s*\/?\s*i)\b/g, "victoria island");
+  // Trim obvious address numerals to reduce PII risk (keeps words)
+  s = s
+    .replace(/\b\d+\b/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  // Title Case for nicer display
+  return s.replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+// Classify to major zones with word boundaries to avoid false positives.
+function classifyTransportZone(displayLocation: string): string {
+  const l = displayLocation.toLowerCase();
+  if (/\bikeja\b|\bmaryland\b|\bojota\b/.test(l)) return "Ikeja/Maryland Axis";
+  if (/\bsurulere\b|\byaba\b|\blagos island\b/.test(l))
+    return "Lagos Island/Surulere";
+  if (/\bfestac\b|\bsatellite\b|\bamuwo\b/.test(l))
+    return "Festac/Satellite Town";
+  if (/\bajah\b|\blekki\b|\bvictoria island\b|\bvi\b/.test(l))
+    return "Lekki/VI Axis";
+  if (/\biyana?\s*ipaja\b|\balimosho\b|\begbeda\b/.test(l))
+    return "Alimosho/Iyana Ipaja";
+  if (/\bikorodu\b|\bkosofe\b/.test(l)) return "Ikorodu/Kosofe";
+  return "Other";
+}
+
 // Function to normalize country names
 function normalizeCountry(country: string): string {
   if (!country) return "Nigeria"; // Default for Nigerian event
@@ -1356,6 +1388,8 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
     .slice(0, 5);
 
   // Transportation Analytics
+  // Privacy-first approach: normalize locations to prevent PII exposure
+  // and apply k-anonymity to only show locations with sufficient count
   const transportationRequests = registrations.filter(
     (r) => r.transportation && r.transportation.trim() !== ""
   );
@@ -1367,7 +1401,7 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
   const transportationLocationCounts = new Map<string, number>();
   transportationRequests.forEach((r) => {
     if (r.transportation) {
-      const location = r.transportation.trim();
+      const location = normalizeTransportLocation(r.transportation);
       transportationLocationCounts.set(
         location,
         (transportationLocationCounts.get(location) || 0) + 1
@@ -1375,9 +1409,11 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
     }
   });
 
+  const MIN_K = 3; // k-anonymity threshold to reduce PII risk
   const topTransportationLocations = Array.from(
     transportationLocationCounts.entries()
   )
+    .filter(([, count]) => count >= MIN_K)
     .map(([location, count]) => ({
       location,
       count,
@@ -1393,45 +1429,8 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
   const transportationZones = new Map<string, number>();
   transportationRequests.forEach((r) => {
     if (r.transportation) {
-      const location = r.transportation.trim().toLowerCase();
-      let zone = "Other";
-
-      // Categorize by major Lagos areas
-      if (
-        location.includes("ikeja") ||
-        location.includes("maryland") ||
-        location.includes("ojota")
-      ) {
-        zone = "Ikeja/Maryland Axis";
-      } else if (
-        location.includes("surulere") ||
-        location.includes("yaba") ||
-        location.includes("lagos island")
-      ) {
-        zone = "Lagos Island/Surulere";
-      } else if (
-        location.includes("festac") ||
-        location.includes("satellite") ||
-        location.includes("amuwo")
-      ) {
-        zone = "Festac/Satellite Town";
-      } else if (
-        location.includes("ajah") ||
-        location.includes("lekki") ||
-        location.includes("victoria island") ||
-        location.includes("vi")
-      ) {
-        zone = "Lekki/VI Axis";
-      } else if (
-        location.includes("iyana ipaja") ||
-        location.includes("alimosho") ||
-        location.includes("egbeda")
-      ) {
-        zone = "Alimosho/Iyana Ipaja";
-      } else if (location.includes("ikorodu") || location.includes("kosofe")) {
-        zone = "Ikorodu/Kosofe";
-      }
-
+      const location = normalizeTransportLocation(r.transportation);
+      const zone = classifyTransportZone(location);
       transportationZones.set(zone, (transportationZones.get(zone) || 0) + 1);
     }
   });
@@ -1450,7 +1449,12 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
   const transportationInsights = {
     totalTransportationRequests,
     transportationPercentage,
-    topLocations: topTransportationLocations,
+    // Only expose detailed locations in development or when explicitly enabled
+    topLocations:
+      process.env.NODE_ENV === "development" ||
+      process.env.SHOW_TRANSPORT_DETAILS === "true"
+        ? topTransportationLocations
+        : [],
     transportationBreakdown,
   };
 
