@@ -357,7 +357,7 @@ export function PartnersSection() {
           </div>
           <div className="flex justify-center">
             <Link
-              href="https://amdmediaworld.com"
+              href="https://ambcrypto.com/"
               target="_blank"
               rel="noopener noreferrer"
             >
