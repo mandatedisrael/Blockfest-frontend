@@ -13,6 +13,10 @@ import { GenderBreakdown } from "./gender-breakdown";
 import { EducationInsights } from "./education-insights";
 import { ApprovalInsights } from "./approval-insights";
 import { AnalyticsInsights } from "./analytics-insights";
+import {
+  TransportationInsights,
+  TransportationData,
+} from "./transportation-insights";
 
 export interface GuestData {
   id: string;
@@ -148,6 +152,7 @@ export interface DashboardStats {
       percentage: number;
     }>;
   };
+  transportationInsights: TransportationData;
   recentRegistrations: GuestData[];
   lastUpdated: string;
 }
@@ -293,6 +298,12 @@ export const InsightsDashboard = memo(function InsightsDashboard() {
       referralRate: 0,
       topCompanyTypes: [],
     },
+    transportationInsights: {
+      totalTransportationRequests: 0,
+      transportationPercentage: 0,
+      topLocations: [],
+      transportationBreakdown: [],
+    },
     recentRegistrations: [],
     lastUpdated: new Date().toISOString(),
   });
@@ -355,6 +366,10 @@ export const InsightsDashboard = memo(function InsightsDashboard() {
           ...prev.educationInsights,
           ...(data.educationInsights ?? {}),
         },
+        transportationInsights: {
+          ...prev.transportationInsights,
+          ...(data.transportationInsights ?? {}),
+        },
       }));
       setLastRefresh(new Date());
     } catch (err) {
@@ -392,6 +407,7 @@ export const InsightsDashboard = memo(function InsightsDashboard() {
       companyData: stats.topCompanies,
       genderData: stats.genderBreakdown,
       educationData: stats.educationInsights,
+      transportationData: stats.transportationInsights,
       topInterests: stats.topInterests,
     }),
     [stats]
@@ -514,6 +530,16 @@ export const InsightsDashboard = memo(function InsightsDashboard() {
         <div className="md:col-span-2 xl:col-span-1 min-h-[400px]">
           <TimeAnalysis
             data={memoizedStats.timeAnalysisData}
+            loading={loading}
+          />
+        </div>
+      </div>
+
+      {/* Transportation Analytics */}
+      <div className="grid grid-cols-1 gap-4 sm:gap-6">
+        <div className="min-h-[400px]">
+          <TransportationInsights
+            data={memoizedStats.transportationData}
             loading={loading}
           />
         </div>

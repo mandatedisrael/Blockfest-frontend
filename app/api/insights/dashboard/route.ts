@@ -26,6 +26,7 @@ interface GuestRegistration {
   status: "confirmed" | "pending" | "cancelled";
   gender?: string;
   school?: string;
+  transportation?: string;
 }
 
 // Utility function to parse CSV line with proper quoted field handling
@@ -619,9 +620,10 @@ function parseGuestCSV(csvContent: string): GuestRegistration[] {
       else if (sourceLower.includes("other")) source = "Other";
       else if (sourceField.trim()) source = sourceField.trim();
 
-      // Parse gender and school
+      // Parse gender, school, and transportation
       const gender = fields[indices.gender]?.trim() || "";
       const school = fields[indices.school]?.trim() || "";
+      const transportation = fields[indices.transportation]?.trim() || "";
 
       const registration: GuestRegistration = {
         id: fields[indices.id] || `guest-${i}`,
@@ -639,6 +641,7 @@ function parseGuestCSV(csvContent: string): GuestRegistration[] {
         status,
         gender: gender || undefined,
         school: school || undefined,
+        transportation: transportation || undefined,
       };
 
       registrations.push(registration);
@@ -1352,6 +1355,105 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
     .sort((a, b) => b.count - a.count)
     .slice(0, 5);
 
+  // Transportation Analytics
+  const transportationRequests = registrations.filter(
+    (r) => r.transportation && r.transportation.trim() !== ""
+  );
+  const totalTransportationRequests = transportationRequests.length;
+  const transportationPercentage =
+    totalGuests > 0 ? (totalTransportationRequests / totalGuests) * 100 : 0;
+
+  // Count transportation locations
+  const transportationLocationCounts = new Map<string, number>();
+  transportationRequests.forEach((r) => {
+    if (r.transportation) {
+      const location = r.transportation.trim();
+      transportationLocationCounts.set(
+        location,
+        (transportationLocationCounts.get(location) || 0) + 1
+      );
+    }
+  });
+
+  const topTransportationLocations = Array.from(
+    transportationLocationCounts.entries()
+  )
+    .map(([location, count]) => ({
+      location,
+      count,
+      percentage:
+        totalTransportationRequests > 0
+          ? (count / totalTransportationRequests) * 100
+          : 0,
+    }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 15);
+
+  // Group by transportation zones (major areas)
+  const transportationZones = new Map<string, number>();
+  transportationRequests.forEach((r) => {
+    if (r.transportation) {
+      const location = r.transportation.trim().toLowerCase();
+      let zone = "Other";
+
+      // Categorize by major Lagos areas
+      if (
+        location.includes("ikeja") ||
+        location.includes("maryland") ||
+        location.includes("ojota")
+      ) {
+        zone = "Ikeja/Maryland Axis";
+      } else if (
+        location.includes("surulere") ||
+        location.includes("yaba") ||
+        location.includes("lagos island")
+      ) {
+        zone = "Lagos Island/Surulere";
+      } else if (
+        location.includes("festac") ||
+        location.includes("satellite") ||
+        location.includes("amuwo")
+      ) {
+        zone = "Festac/Satellite Town";
+      } else if (
+        location.includes("ajah") ||
+        location.includes("lekki") ||
+        location.includes("victoria island") ||
+        location.includes("vi")
+      ) {
+        zone = "Lekki/VI Axis";
+      } else if (
+        location.includes("iyana ipaja") ||
+        location.includes("alimosho") ||
+        location.includes("egbeda")
+      ) {
+        zone = "Alimosho/Iyana Ipaja";
+      } else if (location.includes("ikorodu") || location.includes("kosofe")) {
+        zone = "Ikorodu/Kosofe";
+      }
+
+      transportationZones.set(zone, (transportationZones.get(zone) || 0) + 1);
+    }
+  });
+
+  const transportationBreakdown = Array.from(transportationZones.entries())
+    .map(([zone, count]) => ({
+      zone,
+      count,
+      percentage:
+        totalTransportationRequests > 0
+          ? (count / totalTransportationRequests) * 100
+          : 0,
+    }))
+    .sort((a, b) => b.count - a.count);
+
+  const transportationInsights = {
+    totalTransportationRequests,
+    transportationPercentage,
+    topLocations: topTransportationLocations,
+    transportationBreakdown,
+  };
+
   const analyticsBreakdown = {
     completeApplications,
     partialApplications,
@@ -1390,6 +1492,7 @@ function calculateDashboardStats(registrations: GuestRegistration[]) {
     educationInsights,
     approvalBreakdown,
     analyticsBreakdown,
+    transportationInsights,
     recentRegistrations: registrations
       .filter((r) => r.status === "confirmed")
       .sort((a, b) => {
