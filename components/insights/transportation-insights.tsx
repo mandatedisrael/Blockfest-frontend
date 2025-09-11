@@ -21,11 +21,13 @@ export interface TransportationData {
 interface TransportationInsightsProps {
   data: TransportationData;
   loading?: boolean;
+  maxLocations?: number;
 }
 
 export const TransportationInsights = memo(function TransportationInsights({
   data,
   loading = false,
+  maxLocations = 8,
 }: TransportationInsightsProps) {
   if (loading) {
     return (
@@ -132,7 +134,7 @@ export const TransportationInsights = memo(function TransportationInsights({
                 Top Pickup Locations
               </h4>
               <div className="space-y-3">
-                {data.topLocations.slice(0, 8).map((location, index) => (
+                {data.topLocations.slice(0, maxLocations).map((location, index) => (
                   <div
                     key={location.location}
                     className="flex items-center justify-between bg-white/5 rounded-lg p-3 hover:bg-white/10 transition-colors duration-200"
