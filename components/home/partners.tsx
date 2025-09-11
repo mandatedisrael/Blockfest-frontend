@@ -157,7 +157,7 @@ export function PartnersSection() {
             <h3 className="text-2xl lg:text-3xl font-bold text-[#FFD700] mb-4">
               🥇 Gold Sponsors
             </h3>
-            <div className="flex justify-center">
+            <div className="flex flex-wrap justify-center gap-4 lg:gap-6">
               <Link
                 href="https://hyperbridge.network"
                 target="_blank"
@@ -170,6 +170,21 @@ export function PartnersSection() {
                     width={200}
                     height={80}
                     className="h-12 lg:h-16 w-auto object-contain scale-[2]"
+                  />
+                </div>
+              </Link>
+              <Link
+                href="https://cakewallet.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 lg:p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 flex items-center justify-center cursor-pointer h-20 lg:h-24 w-48 lg:w-56">
+                  <Image
+                    src="/images/sponsors/cake-wallet-logo.png"
+                    alt="Cake Wallet"
+                    width={200}
+                    height={80}
+                    className="h-12 lg:h-16 w-auto object-contain"
                   />
                 </div>
               </Link>
