@@ -1,16 +1,12 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import localFont from "next/font/local";
-
-const Gotham = localFont({
-  src: "./fonts/Gotham-Medium.otf",
-});
+import { gotham } from "@/lib/fonts";
 
 export default function NotFound() {
   return (
     <div
-      className={`${Gotham.className} min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 relative overflow-hidden`}
+      className={`${gotham.className} min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 relative overflow-hidden`}
     >
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
