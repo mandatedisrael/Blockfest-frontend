@@ -55,33 +55,13 @@ export default function NotFound() {
               </p>
             </div>
 
-            {/* Action Buttons */}
-            <div className="space-y-4 mb-8">
+            {/* Action Button */}
+            <div className="mb-8">
               <Link href="/">
                 <Button className="w-full md:w-auto px-8 py-4 bg-gradient-to-r from-[#F2CB45] to-yellow-300 hover:from-yellow-300 hover:to-[#F2CB45] text-black font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
                   🏠 Return Home
                 </Button>
               </Link>
-
-              <div className="flex flex-col md:flex-row gap-4 justify-center">
-                <Link href="/#about">
-                  <Button
-                    variant="outline"
-                    className="w-full md:w-auto px-6 py-3 border-2 border-white/30 text-white hover:bg-white/10 rounded-xl transition-all duration-300 hover:border-[#F2CB45] hover:text-[#F2CB45]"
-                  >
-                    📖 About Blockfest Africa
-                  </Button>
-                </Link>
-
-                <Link href="/#speakers">
-                  <Button
-                    variant="outline"
-                    className="w-full md:w-auto px-6 py-3 border-2 border-white/30 text-white hover:bg-white/10 rounded-xl transition-all duration-300 hover:border-[#F2CB45] hover:text-[#F2CB45]"
-                  >
-                    🎤 View Speakers
-                  </Button>
-                </Link>
-              </div>
             </div>
 
             {/* Help Section */}

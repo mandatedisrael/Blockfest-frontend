@@ -7,6 +7,7 @@ const STATIC_CACHE_URLS = [
   "/images/mobile-logo.svg",
   "/icon-192.png",
   "/icon-512.png",
+  "/offline.html",
 ];
 
 // Install event - cache static assets
@@ -22,15 +23,21 @@ self.addEventListener("install", (event) => {
 // Activate event - clean old caches
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME) {
-            return caches.delete(cacheName);
-          }
-        })
+    (async () => {
+      // Clean old caches (scoped to our prefix)
+      const cacheNames = await caches.keys();
+      await Promise.all(
+        cacheNames
+          .filter(
+            (name) => name.startsWith("blockfest-") && name !== CACHE_NAME
+          )
+          .map((name) => caches.delete(name))
       );
-    })
+      // Enable navigation preload when available
+      if ("navigationPreload" in self.registration) {
+        await self.registration.navigationPreload.enable();
+      }
+    })()
   );
   self.clients.claim();
 });
@@ -46,6 +53,29 @@ self.addEventListener("fetch", (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
+  // Handle navigations explicitly with offline fallback and preload
+  if (request.mode === "navigate") {
+    event.respondWith(
+      (async () => {
+        const cache = await caches.open(CACHE_NAME);
+        try {
+          const preload =
+            "preloadResponse" in event ? await event.preloadResponse : null;
+          if (preload) return preload;
+          const networkResponse = await fetch(request);
+          if (networkResponse && networkResponse.ok) {
+            event.waitUntil(cache.put(request, networkResponse.clone()));
+          }
+          return networkResponse;
+        } catch {
+          const cached = await caches.match(request);
+          return cached || (await cache.match("/offline.html"));
+        }
+      })()
+    );
+    return;
+  }
+
   // Cache-first strategy for static assets
   if (
     request.destination === "image" ||
@@ -57,11 +87,13 @@ self.addEventListener("fetch", (event) => {
 
         return fetch(request).then((response) => {
           // Only cache successful responses
-          if (response.status === 200) {
+          if (response.ok) {
             const responseClone = response.clone();
-            caches.open(CACHE_NAME).then((cache) => {
-              cache.put(request, responseClone);
-            });
+            event.waitUntil(
+              caches
+                .open(CACHE_NAME)
+                .then((cache) => cache.put(request, responseClone))
+            );
           }
           return response;
         });
@@ -78,11 +110,13 @@ self.addEventListener("fetch", (event) => {
       fetch(request)
         .then((response) => {
           // Cache successful API responses for 5 minutes
-          if (response.status === 200) {
+          if (response.ok) {
             const responseClone = response.clone();
-            caches.open(CACHE_NAME).then((cache) => {
-              cache.put(request, responseClone);
-            });
+            event.waitUntil(
+              caches
+                .open(CACHE_NAME)
+                .then((cache) => cache.put(request, responseClone))
+            );
           }
           return response;
         })
@@ -98,10 +132,12 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(
       caches.match(request).then((response) => {
         const fetchPromise = fetch(request).then((networkResponse) => {
-          if (networkResponse.status === 200) {
-            caches.open(CACHE_NAME).then((cache) => {
-              cache.put(request, networkResponse.clone());
-            });
+          if (networkResponse.ok) {
+            event.waitUntil(
+              caches
+                .open(CACHE_NAME)
+                .then((cache) => cache.put(request, networkResponse.clone()))
+            );
           }
           return networkResponse;
         });
