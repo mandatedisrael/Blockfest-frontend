@@ -309,17 +309,51 @@ export const InsightsDashboard = memo(function InsightsDashboard() {
 
     try {
       const data = await fetchDashboardStats(controller.signal);
-      // Safe merge to prevent runtime breaks when API omits new nested keys
+      // Safe deep merge to prevent runtime breaks when API omits nested keys
       setStats((prev) => ({
         ...prev,
         ...data,
         approvalBreakdown: {
           ...prev.approvalBreakdown,
-          ...(data.approvalBreakdown || {}),
+          ...(data.approvalBreakdown ?? {}),
         },
         analyticsBreakdown: {
           ...prev.analyticsBreakdown,
-          ...(data.analyticsBreakdown || {}),
+          ...(data.analyticsBreakdown ?? {}),
+          experienceDistribution: {
+            ...prev.analyticsBreakdown.experienceDistribution,
+            ...(data.analyticsBreakdown?.experienceDistribution ?? {}),
+            // Deep merge individual experience levels to prevent missing nested properties
+            newcomer: {
+              ...prev.analyticsBreakdown.experienceDistribution.newcomer,
+              ...(data.analyticsBreakdown?.experienceDistribution?.newcomer ??
+                {}),
+            },
+            intermediate: {
+              ...prev.analyticsBreakdown.experienceDistribution.intermediate,
+              ...(data.analyticsBreakdown?.experienceDistribution
+                ?.intermediate ?? {}),
+            },
+            advanced: {
+              ...prev.analyticsBreakdown.experienceDistribution.advanced,
+              ...(data.analyticsBreakdown?.experienceDistribution?.advanced ??
+                {}),
+            },
+            web2Transitioning: {
+              ...prev.analyticsBreakdown.experienceDistribution
+                .web2Transitioning,
+              ...(data.analyticsBreakdown?.experienceDistribution
+                ?.web2Transitioning ?? {}),
+            },
+          },
+        },
+        registrationTimePatterns: {
+          ...prev.registrationTimePatterns,
+          ...(data.registrationTimePatterns ?? {}),
+        },
+        educationInsights: {
+          ...prev.educationInsights,
+          ...(data.educationInsights ?? {}),
         },
       }));
       setLastRefresh(new Date());
