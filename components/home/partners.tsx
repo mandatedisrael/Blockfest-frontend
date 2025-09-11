@@ -173,7 +173,7 @@ export function PartnersSection() {
                   />
                 </div>
               </Link>
-              <Link
+              {/* <Link
                 href="https://cakewallet.com"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -187,7 +187,7 @@ export function PartnersSection() {
                     className="h-12 lg:h-16 w-auto object-contain"
                   />
                 </div>
-              </Link>
+              </Link> */}
             </div>
           </div>
 
