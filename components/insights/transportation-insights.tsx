@@ -134,40 +134,42 @@ export const TransportationInsights = memo(function TransportationInsights({
                 Top Pickup Locations
               </h4>
               <div className="space-y-3">
-                {data.topLocations.slice(0, maxLocations).map((location, index) => (
-                  <div
-                    key={location.location}
-                    className="flex items-center justify-between bg-white/5 rounded-lg p-3 hover:bg-white/10 transition-colors duration-200"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-gradient-to-r from-blue-500/20 to-orange-500/20 rounded-lg flex items-center justify-center text-sm font-semibold text-white">
-                        {index + 1}
-                      </div>
-                      <div>
-                        <div className="text-sm font-medium text-white">
-                          {location.location || "Not specified"}
+                {data.topLocations
+                  .slice(0, maxLocations)
+                  .map((location, index) => (
+                    <div
+                      key={location.location}
+                      className="flex items-center justify-between bg-white/5 rounded-lg p-3 hover:bg-white/10 transition-colors duration-200"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 bg-gradient-to-r from-blue-500/20 to-orange-500/20 rounded-lg flex items-center justify-center text-sm font-semibold text-white">
+                          {index + 1}
                         </div>
-                        <div className="text-xs text-gray-400">
-                          {location.count} attendee
-                          {location.count !== 1 ? "s" : ""}
+                        <div>
+                          <div className="text-sm font-medium text-white">
+                            {location.location || "Not specified"}
+                          </div>
+                          <div className="text-xs text-gray-400">
+                            {location.count} attendee
+                            {location.count !== 1 ? "s" : ""}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="text-sm font-semibold text-orange-400">
+                          {location.percentage.toFixed(1)}%
+                        </div>
+                        <div className="w-12 bg-white/10 rounded-full h-2 overflow-hidden">
+                          <div
+                            className="h-full bg-gradient-to-r from-orange-500 to-orange-400"
+                            style={{
+                              width: `${Math.min(location.percentage, 100)}%`,
+                            }}
+                          />
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <div className="text-sm font-semibold text-orange-400">
-                        {location.percentage.toFixed(1)}%
-                      </div>
-                      <div className="w-12 bg-white/10 rounded-full h-2 overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-orange-500 to-orange-400"
-                          style={{
-                            width: `${Math.min(location.percentage, 100)}%`,
-                          }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                  ))}
               </div>
             </div>
           ) : (
